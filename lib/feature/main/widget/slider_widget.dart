@@ -36,191 +36,194 @@ class _SliderWidgetState extends State<SliderWidget> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: ListView(
-          children: [
-            15.verticalSpace,
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                tabBTN(
-                  imagePath: Images.home,
-                  title: 'Home'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Statistics'.tr,
-                        page: 0,
-                      ),
-                      subTabBTN(
-                        title: 'Settings'.tr,
-                        page: 1,
-                      ),
-                      subTabBTN(
-                        title: 'Delivery times'.tr,
-                        page: 2,
-                      ),
-                      subTabBTN(
-                        title: 'Notification settings'.tr,
-                        page: 3,
-                      ),
-                      subTabBTN(
-                        title: 'Show notifications'.tr,
-                        page: 4,
-                      ),
-                    ],
+        child: SizedBox(
+          height: double.infinity,
+          child: ListView(
+            children: [
+              15.verticalSpace,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  tabBTN(
+                    imagePath: Images.home,
+                    title: 'Home'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Statistics'.tr,
+                          page: 0,
+                        ),
+                        subTabBTN(
+                          title: 'Settings'.tr,
+                          page: 1,
+                        ),
+                        subTabBTN(
+                          title: 'Delivery times'.tr,
+                          page: 2,
+                        ),
+                        subTabBTN(
+                          title: 'Notification settings'.tr,
+                          page: 3,
+                        ),
+                        subTabBTN(
+                          title: 'Show notifications'.tr,
+                          page: 4,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.coupon,
-                  title: 'Coupon'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Show coupons'.tr,
-                        page: 5,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 6,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.coupon,
+                    title: 'Coupon'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Show coupons'.tr,
+                          page: 5,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 6,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.deal,
-                  title: 'Deals'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Show deals'.tr,
-                        page: 7,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 8,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.deal,
+                    title: 'Deals'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Show deals'.tr,
+                          page: 7,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 8,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.home_work,
-                  title: 'Work Area'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Added domains'.tr,
-                        page: 9,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 10,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.home_work,
+                    title: 'Work Area'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Added domains'.tr,
+                          page: 9,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 10,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.users,
-                  title: 'Users'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Managers'.tr,
-                        page: 11,
-                      ),
-                      subTabBTN(
-                        title: 'Waiters'.tr,
-                        page: 12,
-                      ),
-                      subTabBTN(
-                        title: 'Customers'.tr,
-                        page: 13,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.users,
+                    title: 'Users'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Managers'.tr,
+                          page: 11,
+                        ),
+                        subTabBTN(
+                          title: 'Waiters'.tr,
+                          page: 12,
+                        ),
+                        subTabBTN(
+                          title: 'Customers'.tr,
+                          page: 13,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.Elements,
-                  title: 'Elements'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Most common'.tr,
-                        page: 14,
-                      ),
-                      subTabBTN(
-                        title: 'Displayed goods'.tr,
-                        page: 15,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.Elements,
+                    title: 'Elements'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Most common'.tr,
+                          page: 14,
+                        ),
+                        subTabBTN(
+                          title: 'Displayed goods'.tr,
+                          page: 15,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.questions,
-                  title: 'Questions'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Questions & Answers'.tr,
-                        page: 16,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 17,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.questions,
+                    title: 'Questions'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Questions & Answers'.tr,
+                          page: 16,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 17,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.hashtag,
-                  title: 'Hashtag'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Show hashtag'.tr,
-                        page: 18,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 10,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.hashtag,
+                    title: 'Hashtag'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Show hashtag'.tr,
+                          page: 18,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 19,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.component,
-                  title: 'Components'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Show components'.tr,
-                        page: 20,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 21,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.component,
+                    title: 'Components'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Show components'.tr,
+                          page: 20,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 21,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                tabBTN(
-                  imagePath: Images.category,
-                  title: 'Category'.tr,
-                  widget: Column(
-                    children: [
-                      subTabBTN(
-                        title: 'Show Category'.tr,
-                        page: 22,
-                      ),
-                      subTabBTN(
-                        title: 'Add new'.tr,
-                        page: 23,
-                      ),
-                    ],
+                  tabBTN(
+                    imagePath: Images.category,
+                    title: 'Category'.tr,
+                    widget: Column(
+                      children: [
+                        subTabBTN(
+                          title: 'Show Category'.tr,
+                          page: 22,
+                        ),
+                        subTabBTN(
+                          title: 'Add new'.tr,
+                          page: 23,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

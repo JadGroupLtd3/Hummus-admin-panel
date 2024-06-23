@@ -38,6 +38,14 @@ class Images {
   static String get search_icon => 'search_icon'.svg;
 
   static String get dot => 'dot'.svg;
+
+  static String get person => 'person'.svg;
+
+  static String get correct => 'correct'.svg;
+
+  static String get group => 'group'.svg;
+
+  static String get logo2 => 'Rectangle'.png;
 }
 
 extension on String {

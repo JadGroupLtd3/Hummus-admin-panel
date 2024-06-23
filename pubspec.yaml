@@ -16,6 +16,10 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.4
   expandable: ^5.0.1
+  geolocator: ^10.1.0
+  geocoding: ^2.1.0
+  google_maps_flutter: ^2.3.1
+  google_maps_flutter_web: ^0.5.8
 
 
 dev_dependencies:
@@ -37,6 +41,6 @@ flutter:
         - asset: assets/fonts/Tajawal/Tajawal_Light.ttf
           weight: 300
         - asset: assets/fonts/Tajawal/Tajawal_Regular.ttf
-          weight: 400
+          weight: 500
         - asset: assets/fonts/Tajawal/Tajawal_Bold.ttf
           weight: 700

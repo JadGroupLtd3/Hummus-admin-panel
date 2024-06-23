@@ -3,6 +3,9 @@
         android:label="hummus_admin_panel"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCERj2bYCWEkxv3cdwaFKADlrjzugGNid8" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

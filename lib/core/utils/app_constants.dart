@@ -1,6 +1,6 @@
 class AppConstants {
   /// Api
-  static const String APP_NAME = 'hummus';
+  static const String APP_NAME = 'hummus_admin_panel';
 }
 
 String validationEmail =

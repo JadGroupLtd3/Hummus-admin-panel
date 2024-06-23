@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DeliveryTimesScreen extends StatelessWidget {
-  const DeliveryTimesScreen({super.key});
+class ManagersScreen extends StatelessWidget {
+  const ManagersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delivery times'),
+        title: const Text('Managers Screen'),
       ),
     );
   }

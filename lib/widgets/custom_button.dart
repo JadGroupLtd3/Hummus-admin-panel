@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
@@ -11,7 +12,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final double? radius;
-  final Widget? widget;
+  final Widget? icon;
   final Color? color;
   final TextStyle? style;
   final Color? backGroundColor;
@@ -29,7 +30,7 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     this.radius = 5,
-    this.widget,
+    this.icon,
     this.borderColor,
     this.color,
     this.backGroundColor,
@@ -65,7 +66,7 @@ class CustomButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                widget ?? const SizedBox(),
+                icon ?? const SizedBox(),
                 Text(
                   buttonText ?? '',
                   textAlign: TextAlign.center,
@@ -77,7 +78,7 @@ class CustomButton extends StatelessWidget {
                         fontSize: fontSize ?? 16,
                         fontWeight: fontWeight ?? FontWeight.bold,
                       ),
-                ),
+                ).paddingOnly(top: 8),
               ],
             ),
           ),

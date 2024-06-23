@@ -8,7 +8,7 @@ const TajawalLight = TextStyle(
 
 const TajawalRegular = TextStyle(
   fontFamily: 'Tajawal',
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
 );
 
 const TajawalBold = TextStyle(

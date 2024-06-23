@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AddNewWorkAreaScreen extends StatelessWidget {
-  const AddNewWorkAreaScreen({super.key});
+class WaitersScreen extends StatelessWidget {
+  const WaitersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Work Area'),
+        title: const Text('Waiters Screen'),
       ),
     );
   }
