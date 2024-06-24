@@ -4,9 +4,11 @@ import 'package:hummus_admin_panel/core/utils/styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hintText;
+  final TextStyle? hintStyle;
   final String? title;
   final IconData? icon;
   final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
   final FocusNode? nextFocus;
   final TextInputType? inputType;
@@ -33,9 +35,11 @@ class CustomTextField extends StatefulWidget {
 
   const CustomTextField({super.key, 
     this.hintText = '',
+    this.hintStyle,
     this.controller,
     this.onTap,
     this.fillColor,
+    this.inputFormatters,
     this.filled,
     this.radius,
     this.fontSize,
@@ -103,8 +107,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
               ]
-            : null,
+            : widget.inputFormatters,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           constraints: const BoxConstraints(maxHeight: 60, minHeight: 35),
           border: OutlineInputBorder(
               borderSide: BorderSide(
@@ -127,7 +132,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           floatingLabelBehavior: FloatingLabelBehavior.never,
           alignLabelWithHint: true,
           hintText: widget.hintText,
-          hintStyle: TajawalLight.copyWith(
+          hintStyle: widget.hintStyle ?? TajawalLight.copyWith(
               fontSize: widget.fontSize ?? 11,
               color: Theme.of(context).hintColor.withOpacity(1)),
           prefixIcon: widget.icon != null

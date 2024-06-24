@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/feature/coupon/add_new_coupon/add_new_coupon_screen.dart';
 import 'package:hummus_admin_panel/feature/coupon/show_coupon/show_coupon_screen.dart';
 import 'package:hummus_admin_panel/feature/deals/add_new_deals/add_new_deals_screen.dart';
-import 'package:hummus_admin_panel/feature/deals/show_deals/show_deals_screen.dart';
+import 'package:hummus_admin_panel/feature/deals/show_deals/view/show_deals_screen.dart';
 import 'package:hummus_admin_panel/feature/hashtags/add_new_hashtag/view/add_new_hashtag_screen.dart';
 import 'package:hummus_admin_panel/feature/hashtags/show_hashtags/show_hashtags_screen.dart';
 import 'package:hummus_admin_panel/feature/home/delivery_times/view/delivery_time_screen.dart';
