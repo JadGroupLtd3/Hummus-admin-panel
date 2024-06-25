@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_table_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/feature/home_element/widget/most_meals_table_widget.dart';
 
-class ShowDealsScreen extends StatelessWidget {
-  const ShowDealsScreen({super.key});
+
+class MostCommonMealsScreen extends StatelessWidget {
+  const MostCommonMealsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +18,10 @@ class ShowDealsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Deals'.tr} / ${'Show deals'.tr}',
+                '${'Home'.tr} / ${'Most Common'.tr} / ${'Show Meals'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
-              ),
-              12.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OnHover(
-                    builder: (isHovered) {
-                      return CustomButton(
-                        buttonText: 'Add New'.tr,
-                        backGroundColor: MyThemeData.light.focusColor,
-                        radius: 7,
-                        width: 150,
-                        height: 45,
-                        onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(8);
-                        },
-                      );
-                    },
-                  ),
-                  7.horizontalSpace,
-                ],
               ),
               12.verticalSpace,
               Row(
@@ -67,7 +43,7 @@ class ShowDealsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsTableWidget(isDeal: true),
+                      child: const MostMealsTableWidget(),
                     ),
                   ),
                 ],

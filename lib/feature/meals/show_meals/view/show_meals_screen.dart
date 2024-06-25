@@ -5,11 +5,12 @@ import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
 import 'package:hummus_admin_panel/feature/meals/widget/meals_table_widget.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
+import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
-class ShowDealsScreen extends StatelessWidget {
-  const ShowDealsScreen({super.key});
+class ShowMealsScreen extends StatelessWidget {
+  const ShowMealsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ShowDealsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Deals'.tr} / ${'Show deals'.tr}',
+                '${'Home'.tr} / ${'Meals'.tr} / ${'Show meals'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -48,6 +49,27 @@ class ShowDealsScreen extends StatelessWidget {
                 ],
               ),
               12.verticalSpace,
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  width: MediaQuery.of(context).size.height * 1 / 1.8,
+                  height: MediaQuery.of(context).size.height * 1 / 3.2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(0, 0),
+                        color: Colors.black.withOpacity(0.02),
+                        blurRadius: 14,
+                        spreadRadius: 9,
+                      )
+                    ],
+                  ),
+                  child: const Center(child: AddPhotoWidget()),
+                ),
+              ),
+              12.verticalSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -67,7 +89,7 @@ class ShowDealsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsTableWidget(isDeal: true),
+                      child: const MealsTableWidget(isDeal: false),
                     ),
                   ),
                 ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomersScreen extends StatelessWidget {
-  const CustomersScreen({super.key});
+class AddNewTable extends StatelessWidget {
+  const AddNewTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Customers Screen'),
+        title: const Text('Add new table'),
       ),
     );
   }

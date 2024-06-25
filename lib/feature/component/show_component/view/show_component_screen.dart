@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hummus_admin_panel/widgets/table_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_table_widget.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
-class ShowDealsScreen extends StatelessWidget {
-  const ShowDealsScreen({super.key});
+
+class ShowComponentScreen extends StatelessWidget {
+  const ShowComponentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ShowDealsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Deals'.tr} / ${'Show deals'.tr}',
+                '${'Home'.tr} / ${'Component'.tr} / ${'Show component'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -39,7 +40,7 @@ class ShowDealsScreen extends StatelessWidget {
                         width: 150,
                         height: 45,
                         onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(8);
+                          Get.find<SliderPagesController>().goToTab(21);
                         },
                       );
                     },
@@ -67,7 +68,7 @@ class ShowDealsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsTableWidget(isDeal: true),
+                      child: const TableWidget(),
                     ),
                   ),
                 ],

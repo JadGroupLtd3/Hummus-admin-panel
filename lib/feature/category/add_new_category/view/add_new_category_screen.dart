@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/home/settings/widget/acount_information_fields.dart';
-import 'package:hummus_admin_panel/feature/home/settings/widget/information_widget.dart';
+import 'package:hummus_admin_panel/widgets/add_new_product_fields.dart';
+import 'package:hummus_admin_panel/theme/light_theme.dart';
+import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
+import 'package:hummus_admin_panel/widgets/custom_button.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class AddNewCategoryScreen extends StatelessWidget {
+  const AddNewCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Settings'.tr}',
+                '${'Home'.tr} / ${'Category'.tr} / ${'Add category'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -29,10 +32,9 @@ class SettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 1,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 0),
-                      height: MediaQuery.of(context).size.height * 1 / 1.26,
+                      height: MediaQuery.of(context).size.height * 1 / 2.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
@@ -45,33 +47,14 @@ class SettingsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                        child: Column(
-                          children: [
-                            InformationWidget(
-                              imagePath: Images.person,
-                              title: 'Account'.tr,
-                              subTitle: 'Account information'.tr,
-                              isBorder: true,
-                            ),
-                            20.verticalSpace,
-                            InformationWidget(
-                              imagePath: Images.group,
-                              title: 'Social Media'.tr,
-                              subTitle: 'Social media information'.tr,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: const AddNewProductFields(),
                     ),
                   ),
                   7.horizontalSpace,
                   Expanded(
-                    flex: 2,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      height: MediaQuery.of(context).size.height * 1 / 1.26,
+                      height: MediaQuery.of(context).size.height * 1 / 2.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
@@ -84,10 +67,25 @@ class SettingsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: AccountInformationFields(),
+                      child: const Center(child: AddPhotoWidget()),
                     ),
                   ),
                 ],
+              ),
+              40.verticalSpace,
+              Center(
+                child: CustomButton(
+                  buttonText: 'save'.tr,
+                  icon: SvgPicture.asset(Images.correct).paddingSymmetric(horizontal: 4),
+                  style: TajawalBold.copyWith(
+                    color: Colors.white,
+                  ),
+                  radius: 20,
+                  width: 160,
+                  height: 45,
+                  backGroundColor: MyThemeData.light.primaryColor,
+                  onPressed: () {},
+                ),
               )
             ],
           ),

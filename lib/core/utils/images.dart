@@ -45,6 +45,10 @@ class Images {
 
   static String get group => 'group'.svg;
 
+  static String get edit => 'edit'.svg;
+
+  static String get delete => 'delete'.svg;
+
   static String get logo2 => 'Rectangle'.png;
 }
 

@@ -5,14 +5,14 @@ import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/widgets/custom_switch.dart';
 import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
 
-class AddNewHashtagsFields extends StatefulWidget {
-  const AddNewHashtagsFields({super.key});
+class AddNewProductFields extends StatefulWidget {
+  const AddNewProductFields({super.key});
 
   @override
-  State<AddNewHashtagsFields> createState() => _AddNewHashtagsFieldsState();
+  State<AddNewProductFields> createState() => _AddNewProductFieldsState();
 }
 
-class _AddNewHashtagsFieldsState extends State<AddNewHashtagsFields> {
+class _AddNewProductFieldsState extends State<AddNewProductFields> {
   bool _enable = false;
   @override
   Widget build(BuildContext context) {

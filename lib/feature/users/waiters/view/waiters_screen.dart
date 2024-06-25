@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_table_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/feature/users/widget/users_table_widget.dart';
 
-class ShowDealsScreen extends StatelessWidget {
-  const ShowDealsScreen({super.key});
+class WaitersScreen extends StatelessWidget {
+  const WaitersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,32 +17,32 @@ class ShowDealsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Deals'.tr} / ${'Show deals'.tr}',
+                '${'Home'.tr} / ${'Users'.tr} / ${'Waiters'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
               ),
-              12.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OnHover(
-                    builder: (isHovered) {
-                      return CustomButton(
-                        buttonText: 'Add New'.tr,
-                        backGroundColor: MyThemeData.light.focusColor,
-                        radius: 7,
-                        width: 150,
-                        height: 45,
-                        onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(8);
-                        },
-                      );
-                    },
-                  ),
-                  7.horizontalSpace,
-                ],
-              ),
+              // 12.verticalSpace,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     OnHover(
+              //       builder: (isHovered) {
+              //         return CustomButton(
+              //           buttonText: 'Add New'.tr,
+              //           backGroundColor: MyThemeData.light.focusColor,
+              //           radius: 7,
+              //           width: 150,
+              //           height: 45,
+              //           onPressed: (){
+              //             Get.find<BottomNavBarController>().goToTab();
+              //           },
+              //         );
+              //       },
+              //     ),
+              //     7.horizontalSpace,
+              //   ],
+              // ),
               12.verticalSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +50,7 @@ class ShowDealsScreen extends StatelessWidget {
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      height: MediaQuery.of(context).size.height * 1 / 1.43,
+                      height: MediaQuery.of(context).size.height * 1 / 1.3,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
@@ -67,7 +63,12 @@ class ShowDealsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsTableWidget(isDeal: true),
+                      child: const UsersTableWidget(
+                        name: 'Waiter name',
+                        email: 'name@gmail.com',
+                        phone: '0509876543',
+                        kind: 'Waiter',
+                      ),
                     ),
                   ),
                 ],

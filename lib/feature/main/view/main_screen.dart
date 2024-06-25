@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/botton_nav_bar_controller.dart';
+import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
 import 'package:hummus_admin_panel/feature/main/widget/slider_widget.dart';
 import 'package:hummus_admin_panel/feature/main/widget/app_bar_widget.dart';
 
@@ -13,7 +13,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final BottomNavBarController bottomNavBarController = Get.put(BottomNavBarController());
+  final SliderPagesController sliderPagesController = Get.put(SliderPagesController());
   final LanguageController languageController = Get.put(LanguageController());
   @override
   void initState() {
@@ -46,11 +46,11 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Expanded(
               child: PageView(
-                onPageChanged: bottomNavBarController.animateToTab,
-                controller: bottomNavBarController.pageController,
+                onPageChanged: sliderPagesController.animateToTab,
+                controller: sliderPagesController.pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 clipBehavior: Clip.none,
-                children: [...bottomNavBarController.pages],
+                children: [...sliderPagesController.pages],
               ),
             ),
           ],

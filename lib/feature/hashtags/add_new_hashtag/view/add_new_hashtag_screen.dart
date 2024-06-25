@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/hashtags/add_new_hashtag/widget/add_new_hashtag_fields.dart';
+import 'package:hummus_admin_panel/widgets/add_new_product_fields.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
@@ -47,7 +47,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const AddNewHashtagsFields(),
+                      child: const AddNewProductFields(),
                     ),
                   ),
                   7.horizontalSpace,
