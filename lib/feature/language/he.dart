@@ -194,7 +194,7 @@ const Map<String, String> he = {
   'privacyPolicy': 'מדיניות פרטיות',
   "login_as_guest": "התחברות כאורח",
   "Add_to_cart": "הוסף לעגלה",
-  "Quantity": "כַּמוּת :",
+  "Quantity": "כַּמוּת",
   "Special_instruction": "הוראות מיוחדות",
   "Proceed_to_Checkout": "התקדם לנקודת הביקורת",
   "Checkout": "לבדוק",

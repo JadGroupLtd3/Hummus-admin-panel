@@ -194,7 +194,7 @@ const Map<String, String> ar = {
   'privacyPolicy': 'سياسة الخصوصية',
   "login_as_guest": "تسجيل الدخول كضيف",
   "Add_to_cart": "أضف إلى السلة",
-  "Quantity": "كمية :",
+  "Quantity": "كمية",
   "Special_instruction": "تعليمات خاصة",
   "Proceed_to_Checkout": "انتقل إلى الخروج",
   "Checkout": "الدفع",

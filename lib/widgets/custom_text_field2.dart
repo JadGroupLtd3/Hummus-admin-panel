@@ -35,6 +35,7 @@ class CustomTextField2 extends StatefulWidget {
   final dynamic suffixIcon;
   final double? height;
   final double? width;
+  final double? radius;
   final Color? fillColor;
   final bool? filled;
   final bool? isTitle;
@@ -76,6 +77,7 @@ class CustomTextField2 extends StatefulWidget {
     this.title,
     this.height,
     this.width,
+    this.radius,
   });
 
   @override
@@ -151,7 +153,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
                     color: const Color(0xff000000).withOpacity(0.11),
                     width: 1,
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  borderRadius:  BorderRadius.all(Radius.circular(widget.radius ?? 10))),
               enabledBorder: widget.isBorder == false
                   ? null
                   : OutlineInputBorder(
@@ -159,7 +161,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
                     color: const Color(0xff000000).withOpacity(0.11),
                     width: 1,
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(widget.radius ?? 10))),
               focusedBorder:widget.isBorder == false
                   ? null
                   : OutlineInputBorder(
@@ -167,7 +169,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
                     color: const Color(0xff000000).withOpacity(0.11),
                     width: 1,
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  borderRadius:  BorderRadius.all(Radius.circular(widget.radius ?? 10))),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               alignLabelWithHint: true,
               hintText: widget.hintText,

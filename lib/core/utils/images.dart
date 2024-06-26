@@ -19,6 +19,10 @@ class Images {
 
   static String get category => 'category'.svg;
 
+  static String get order => 'order'.svg;
+
+  static String get order_details => 'order_details'.svg;
+
   static String get component => 'component'.svg;
 
   static String get Elements => 'Elements'.svg;

@@ -317,6 +317,25 @@ class _SliderWidgetState extends State<SliderWidget> {
                           ],
                         ),
                       ),
+                      TabBTN(
+                        imagePath: Images.order,
+                        title: 'Orders'.tr,
+                        section: sliderPagesController.currentPage.value == 30
+                            ? 30
+                            : 31,
+                        widget: Column(
+                          children: [
+                            SubTabBTN(
+                              title: 'Show Orders'.tr,
+                              page: 30,
+                            ),
+                            SubTabBTN(
+                              title: 'Orders History'.tr,
+                              page: 31,
+                            ),
+                          ],
+                        ),
+                      ),
                       25.verticalSpace,
                     ],
                   ),

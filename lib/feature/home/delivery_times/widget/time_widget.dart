@@ -6,6 +6,7 @@ import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_switch.dart';
 import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
 import 'package:hummus_admin_panel/widgets/time_text_format.dart';
+import 'package:intl/intl.dart';
 
 class TimeWidget extends StatefulWidget {
   final String day;
@@ -13,10 +14,10 @@ class TimeWidget extends StatefulWidget {
   const TimeWidget({super.key, required this.day});
 
   @override
-  _TimeWidgetState createState() => _TimeWidgetState();
+  TimeWidgetState createState() => TimeWidgetState();
 }
 
-class _TimeWidgetState extends State<TimeWidget> {
+class TimeWidgetState extends State<TimeWidget> {
   bool _enable = false;
   late TextEditingController _startTimeController;
   late TextEditingController _endTimeController;
@@ -33,6 +34,19 @@ class _TimeWidgetState extends State<TimeWidget> {
     _startTimeController.dispose();
     _endTimeController.dispose();
     super.dispose();
+  }
+
+  Future<TimeOfDay?> selectTime(BuildContext context ,TextEditingController controller) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      final now = DateTime.now();
+      final selectedTime = DateTime(now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
+      controller.text = DateFormat('hh:mm a').format(selectedTime);
+    }
+    return pickedTime;
   }
 
   @override
@@ -95,18 +109,21 @@ class _TimeWidgetState extends State<TimeWidget> {
               child: CustomTextField(
                 height: 45,
                 radius: 15,
-                hintText: '00:00',
+                hintText: '00:00 AM'.tr,
                 inputFormatters: [TimeTextFormatter()],
                 hintStyle: TajawalRegular.copyWith(
                   fontSize: 13,
                 ),
+                onTap: () async {
+                  await selectTime(context,_startTimeController);
+                },
                 inputType: TextInputType.datetime,
                 controller: _startTimeController,
               ),
             ),
             const SizedBox(width: 15),
             Text(
-              'To',
+              'To'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 16,
               ),
@@ -131,13 +148,16 @@ class _TimeWidgetState extends State<TimeWidget> {
               child: CustomTextField(
                 height: 45,
                 radius: 15,
-                hintText: '00:00',
+                hintText: '00:00 PM'.tr,
                 inputFormatters: [TimeTextFormatter()],
                 hintStyle: TajawalRegular.copyWith(
                   fontSize: 13,
                 ),
                 inputType: TextInputType.datetime,
                 controller: _endTimeController,
+                onTap: () async {
+                  await selectTime(context,_endTimeController);
+                },
               ),
             ),
           ],

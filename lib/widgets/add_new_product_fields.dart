@@ -6,7 +6,9 @@ import 'package:hummus_admin_panel/widgets/custom_switch.dart';
 import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
 
 class AddNewProductFields extends StatefulWidget {
-  const AddNewProductFields({super.key});
+  final bool isCoupon;
+
+  const AddNewProductFields({super.key, this.isCoupon = false});
 
   @override
   State<AddNewProductFields> createState() => _AddNewProductFieldsState();
@@ -14,10 +16,11 @@ class AddNewProductFields extends StatefulWidget {
 
 class _AddNewProductFieldsState extends State<AddNewProductFields> {
   bool _enable = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,7 +73,7 @@ class _AddNewProductFieldsState extends State<AddNewProductFields> {
                 )
               ],
             ),
-            child:  CustomTextField(
+            child: CustomTextField(
               hintText: 'English Name'.tr,
               height: 45,
               radius: 15,
@@ -105,17 +108,21 @@ class _AddNewProductFieldsState extends State<AddNewProductFields> {
               inputType: TextInputType.text,
             ),
           ),
-          40.verticalSpace,
-          Center(
-            child: CustomSwitch(
-              value: _enable,
-              onChanged: (bool val) {
-                setState(() {
-                  _enable = val;
-                });
-              },
-            ),
-          )
+          widget.isCoupon
+              ? const SizedBox.shrink()
+              : 40.verticalSpace,
+          widget.isCoupon
+              ? const SizedBox.shrink()
+              : Center(
+                  child: CustomSwitch(
+                    value: _enable,
+                    onChanged: (bool val) {
+                      setState(() {
+                        _enable = val;
+                      });
+                    },
+                  ),
+                )
         ],
       ),
     );

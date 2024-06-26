@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hummus_admin_panel/widgets/table_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
+import 'package:hummus_admin_panel/feature/tables/show_tables/widget/show_tables_or_workarea_table.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
-class ShowCouponScreen extends StatelessWidget {
-  const ShowCouponScreen({super.key});
+class ShowWorkAreaScreen extends StatelessWidget {
+  const ShowWorkAreaScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ShowCouponScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Coupon'.tr} / ${'Show coupons'.tr}',
+                '${'Home'.tr} / ${'Work Area'.tr} / ${'Show Work Area'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -39,7 +39,7 @@ class ShowCouponScreen extends StatelessWidget {
                         width: 150,
                         height: 45,
                         onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(6);
+                          Get.find<SliderPagesController>().goToTab(10);
                         },
                       );
                     },
@@ -67,7 +67,7 @@ class ShowCouponScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const TableWidget(isCoupon: true),
+                      child: const ShowTablesOrWorkAreaTable(isWorkArea: true),
                     ),
                   ),
                 ],

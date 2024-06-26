@@ -9,9 +9,9 @@ import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 import 'package:hummus_admin_panel/widgets/text_utils.dart';
 
-class ShowTablesTableWidget extends StatelessWidget {
-  const ShowTablesTableWidget({super.key});
-
+class ShowTablesOrWorkAreaTable extends StatelessWidget {
+  final bool isWorkArea;
+  const ShowTablesOrWorkAreaTable({super.key,this.isWorkArea = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ShowTablesTableWidget extends StatelessWidget {
                 const TextUtils(title: '#', color: Colors.white)
                     .paddingOnly(right: languageController.langLocal == eng ? 0 : 20,
                 left: languageController.langLocal == eng ? 20 : 0),
-                const TextUtils(title: 'Table number', color: Colors.white).paddingOnly(
+                TextUtils(title: isWorkArea ? 'Address'.tr : 'Table number'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 40 : 0,
                     right: languageController.langLocal == eng ? 0 : 40),
                 const Center(child: TextUtils(title: 'Activation status', color: Colors.white)),
@@ -59,7 +59,7 @@ class ShowTablesTableWidget extends StatelessWidget {
                       const TextUtils(title:'#').paddingOnly(
                           right: languageController.langLocal == eng ? 0 : 20,
                           left: languageController.langLocal == eng ? 20 : 0,top: 10,bottom: 10),
-                      const TextUtils(title: 'Table number').paddingOnly(
+                       TextUtils(title: isWorkArea ? 'Address'.tr : 'Table number'.tr).paddingOnly(
                           left: languageController.langLocal == eng ? 40 : 0,
                           right: languageController.langLocal == eng ? 0 : 40 ,
                           top: 10,bottom: 10),

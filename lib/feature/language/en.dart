@@ -194,7 +194,7 @@ const Map<String, String> en = {
   'privacyPolicy': 'Privacy Policy',
   "login_as_guest": "Login As Guest",
   "Add_to_cart": "Add to cart",
-  "Quantity": "Quantity :",
+  "Quantity": "Quantity",
   "Special_instruction": "Special instruction",
   "Proceed_to_Checkout": "Proceed to Checkout",
   "Checkout": "Checkout",
