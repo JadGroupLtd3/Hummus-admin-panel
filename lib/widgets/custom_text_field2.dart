@@ -99,10 +99,8 @@ class _CustomTextField2State extends State<CustomTextField2> {
           child: Text(
             widget.title ?? '',
             style: widget.style ??
-                const TextStyle(
+                TajawalRegular.copyWith(
                   fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  //color: Theme.of(context).primaryColor,
                 ),
           ),
         ),

@@ -86,7 +86,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                   backGroundColor: MyThemeData.light.primaryColor,
                   onPressed: () {},
                 ),
-              )
+              ),
             ],
           ),
         ),

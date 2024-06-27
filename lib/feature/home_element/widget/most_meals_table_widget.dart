@@ -34,17 +34,17 @@ class MostMealsTableWidget extends StatelessWidget {
                 const TextUtils(title: '#', color: Colors.white)
                     .paddingOnly(right: languageController.langLocal == eng ? 0 : 20,
                 left: languageController.langLocal == eng ? 20 : 0),
-                const TextUtils(title: 'Image', color: Colors.white)
+                TextUtils(title: 'Image'.tr, color: Colors.white)
                     .paddingOnly(left: languageController.langLocal == eng ? 0 : 30,
                 right: languageController.langLocal == eng ? 30 : 0),
-                const TextUtils(title: 'Meal name', color: Colors.white).paddingOnly(
+                TextUtils(title: 'Meal name'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 40 : 0,
                     right: languageController.langLocal == eng ? 0 : 40),
-                const Center(child: TextUtils(title: 'Actual price', color: Colors.white)),
-                const Center(child: TextUtils(title: 'Fake price', color: Colors.white)),
-                const Center(child: TextUtils(title: 'Section', color: Colors.white)),
-                const TextUtils(title: 'Activation status', color: Colors.white),
-                const TextUtils(title: 'Operations', color: Colors.white).paddingOnly(
+                Center(child: TextUtils(title: 'Actual price'.tr, color: Colors.white)),
+                Center(child: TextUtils(title: 'Fake price'.tr, color: Colors.white)),
+                Center(child: TextUtils(title: 'Section'.tr, color: Colors.white)),
+                TextUtils(title: 'Activation status'.tr, color: Colors.white),
+                TextUtils(title: 'Operations'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 20 : 0,
                     right: languageController.langLocal == eng ? 0 : 20),
               ],

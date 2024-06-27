@@ -42,7 +42,7 @@ class OrderHistoryScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const OrderHistoryTableWidget(),
+                      child: OrderHistoryTableWidget(),
                     ),
                   ),
                 ],

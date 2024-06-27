@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
+import 'package:hummus_admin_panel/feature/coupon/add_new_coupon/widget/drop_down_btn.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/attributes_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/component_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/element_and_hashtag_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_nav_bar.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_photos_widget.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/widget/questions_nav_bar.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/widget/questions_photos_widget.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 
-class AddNewMealScreen extends StatelessWidget {
-  const AddNewMealScreen({super.key});
+class AddNewQuestionsScreen extends StatelessWidget {
+  const AddNewQuestionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +24,12 @@ class AddNewMealScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Meals'.tr} / ${'Add New'.tr}',
+                '${'Home'.tr} / ${'Questions'.tr} / ${'Add New'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(height: 12),
+              12.verticalSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,7 +37,8 @@ class AddNewMealScreen extends StatelessWidget {
                     builder: (sliderPagesController) {
                       return Expanded(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          height: MediaQuery.of(context).size.height * 1 / 1.35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
@@ -52,33 +52,46 @@ class AddNewMealScreen extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              MealsNavBar(
+                              QuestionsNavBar(
                                 sliderPagesController: sliderPagesController,
                               ),
-                              const SizedBox(height: 20),
+                              20.verticalSpace,
                               SizedBox(
                                 height: MediaQuery.of(context).size.height * 1 / 1.77,
                                 child: PageView(
-                                  onPageChanged: sliderPagesController.animateToMealsNameTab,
-                                  controller: sliderPagesController.mealPageController,
+                                  onPageChanged: sliderPagesController
+                                      .animateToQuestionNameTab,
+                                  controller: sliderPagesController
+                                      .questionsPageController,
                                   physics: const NeverScrollableScrollPhysics(),
                                   clipBehavior: Clip.none,
-                                  children: [...sliderPagesController.mealNamesPages],
+                                  children: [
+                                    ...sliderPagesController.questionsNamesPages
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                              const ElementAndHashtagSelect(),
+                              10.verticalSpace,
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30)
+                                ),
+                                child: DropDownBTN(
+                                  title: 'Main Question'.tr,
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       );
                     },
                   ),
-                  const SizedBox(width: 15),
+                  7.horizontalSpace,
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       margin: const EdgeInsets.symmetric(vertical: 20),
+                      height: MediaQuery.of(context).size.height * 1 / 2.3,
                       decoration: BoxDecoration(
                         color: const Color(0xff2D2D2D),
                         borderRadius: BorderRadius.circular(15),
@@ -91,16 +104,12 @@ class AddNewMealScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsPhotosWidget(),
+                      child: const QuestionsPhotosWidget(),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              const ComponentSelect(),
-              const SizedBox(height: 20),
-              const AttributesSelect(),
-              const SizedBox(height: 30),
+              20.verticalSpace,
               Center(
                 child: CustomButton(
                   buttonText: 'save'.tr,
@@ -115,7 +124,6 @@ class AddNewMealScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
-              const SizedBox(height: 50),
             ],
           ),
         ),

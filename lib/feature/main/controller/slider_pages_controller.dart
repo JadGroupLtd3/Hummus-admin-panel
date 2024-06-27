@@ -19,12 +19,18 @@ import 'package:hummus_admin_panel/feature/home/show_notifications/show_notifica
 import 'package:hummus_admin_panel/feature/home/statistics/view/statistics_screen.dart';
 import 'package:hummus_admin_panel/feature/home_element/most_popular/view/most_product_screen.dart';
 import 'package:hummus_admin_panel/feature/home_element/popular_meals/view/popular_meals_screen.dart';
+import 'package:hummus_admin_panel/feature/meals/add_new_meal/meal_name_pages/meal_ar_screen.dart';
+import 'package:hummus_admin_panel/feature/meals/add_new_meal/meal_name_pages/meal_en_screen.dart';
+import 'package:hummus_admin_panel/feature/meals/add_new_meal/meal_name_pages/meal_he_screen.dart';
 import 'package:hummus_admin_panel/feature/meals/add_new_meal/view/add_new_meal_screen.dart';
 import 'package:hummus_admin_panel/feature/meals/show_meals/view/show_meals_screen.dart';
 import 'package:hummus_admin_panel/feature/orders/order_history/view/order_history_screen.dart';
 import 'package:hummus_admin_panel/feature/orders/show_orders/view/show_orders_screen.dart';
-import 'package:hummus_admin_panel/feature/questions/add_new_questions/add_new_questions_screen.dart';
-import 'package:hummus_admin_panel/feature/questions/questions_and_answers/questions_and_answers_screen.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/question_name_pages/question_ar_screen.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/question_name_pages/question_en_screen.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/question_name_pages/question_he_screen.dart';
+import 'package:hummus_admin_panel/feature/questions/add_new_questions/view/add_new_questions_screen.dart';
+import 'package:hummus_admin_panel/feature/questions/questions_and_answers/view/questions_and_answers_screen.dart';
 import 'package:hummus_admin_panel/feature/tables/add_new_table/view/add_new_table.dart';
 import 'package:hummus_admin_panel/feature/tables/show_tables/view/show_tables.dart';
 import 'package:hummus_admin_panel/feature/users/customers/view/customers_screen.dart';
@@ -42,10 +48,14 @@ enum ControllerState {
 
 class SliderPagesController extends GetxController {
   late PageController pageController;
+  late PageController questionsPageController;
+  late PageController mealPageController;
 
   /// variable for changing index of Bottom AppBar
   RxInt currentPage = 0.obs;
   RxInt currentSection = 0.obs;
+  RxInt currentQuestionName = 0.obs;
+  RxInt currentMealName = 0.obs;
 
   List<Widget> pages = [
     const StatisticsScreen(),
@@ -82,9 +92,23 @@ class SliderPagesController extends GetxController {
     const OrderHistoryScreen(),
   ];
 
+  List<Widget> questionsNamesPages = [
+    QuestionArScreen(),
+    QuestionEnScreen(),
+    QuestionHeScreen(),
+  ];
+
+  List<Widget> mealNamesPages = [
+    MealsArScreen(),
+    MealsEnScreen(),
+    MealsHeScreen(),
+  ];
+
   @override
   void onInit() {
     pageController = PageController(initialPage: 0);
+    questionsPageController = PageController(initialPage: 0);
+    mealPageController = PageController(initialPage: 0);
     super.onInit();
   }
 
@@ -102,9 +126,35 @@ class SliderPagesController extends GetxController {
         duration: const Duration(milliseconds: 0), curve: Curves.ease);
   }
 
+  void goToQuestionsNameTab(int page) {
+    currentQuestionName.value = page;
+    questionsPageController.jumpToPage(page);
+    update();
+  }
+
+  void animateToQuestionNameTab(int page) {
+    currentQuestionName.value = page;
+    questionsPageController.animateToPage(page,
+        duration: const Duration(milliseconds: 0), curve: Curves.ease);
+  }
+
+  void goToMealsNameTab(int page) {
+    currentMealName.value = page;
+    mealPageController.jumpToPage(page);
+    update();
+  }
+
+  void animateToMealsNameTab(int page) {
+    currentMealName.value = page;
+    mealPageController.animateToPage(page,
+        duration: const Duration(milliseconds: 0), curve: Curves.ease);
+  }
+
   @override
   void dispose() {
     pageController.dispose();
+    questionsPageController.dispose();
+    mealPageController.dispose();
     super.dispose();
   }
 }

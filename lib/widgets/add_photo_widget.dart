@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +15,8 @@ class AddPhotoWidget extends StatelessWidget {
     return OnHover(
       matrix: 0,
       builder: (isHovered) {
-        return const Icon(
-          Icons.add_a_photo_outlined,
-          size: 35,
+        return SvgPicture.asset(
+          Images.add_photo,
         );
       },
     );

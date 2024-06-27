@@ -53,6 +53,8 @@ class Images {
 
   static String get delete => 'delete'.svg;
 
+  static String get add_photo => 'add_photo'.svg;
+
   static String get logo2 => 'Rectangle'.png;
 }
 

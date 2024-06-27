@@ -19,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final Function(String)? onSubmit;
   final bool? isEnabled;
   final int? maxLines;
+  final int? minLines;
   final bool? isShowSuffixIcon;
   final TextCapitalization? capitalization;
   final Function(String text)? onChanged;
@@ -50,6 +51,7 @@ class CustomTextField extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.inputAction = TextInputAction.next,
     this.maxLines = 1,
+    this.minLines = 1,
     this.isShowSuffixIcon = false,
     this.onSubmit,
     this.capitalization = TextCapitalization.none,
@@ -78,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         onTap: widget.onTap,
         maxLines: widget.maxLines,
+        minLines: widget.minLines,
         controller: widget.controller,
         focusNode: widget.focusNode,
         style: TajawalRegular.copyWith(

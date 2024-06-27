@@ -81,14 +81,14 @@ class _ExpandedOrderDetailsState extends State<ExpandedOrderDetails> {
                   }
                 },
                 builder: (isHovered) {
-                  final colro = isHovered
+                  final color = isHovered
                       ? MyThemeData.light.focusColor
                       : MyThemeData.light.primaryColor;
                   return SvgPicture.asset(
                     Images.order_details,
                     width: 30,
                     height: 30,
-                    color: colro,
+                    color: color,
                   );
                 },
               ).paddingOnly(
