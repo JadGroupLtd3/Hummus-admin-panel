@@ -39,7 +39,7 @@ class RouteHelper {
     ),
     GetPage(
       name: signInScreen,
-      page: () => const SignInScreen(),
+      page: () => SignInScreen(),
     ),
   ];
 }

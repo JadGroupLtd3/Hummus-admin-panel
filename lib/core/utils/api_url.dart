@@ -32,20 +32,5 @@ class ApiUrl {
   static const String get_favorite = '/favorite/index/';
   static const String ratingOrder = '/order/rate';
   static const String checkCoupon = '/order/check-coupon';
-  static const String bASE_URL = 'https://getwash.online';
-  static const String SEARCH_LOCATION_URI =
-      '/api/v1/customer/config/place-api-autocomplete';
-  static const String PLACE_DETAILS_URI =
-      '/api/v1/customer/config/place-api-details';
-  static const String GEOCODE_URI = '/api/v1/customer/config/geocode-api';
 
-  static const String BASE_URL_Menu = 'https://jadtags.online/menu/api/v1';
-  static const String featuredItems = '/meals/home-meals/featured/';
-  static const String autoMessageUrl = '/question_answer';
-
-  static const String deals_url = '/meals/deals';
-  static const String Popular_URL = '/meals/home-meals/popular/';
-  static const String OFFER_SLIDER_URL = '/slider';
-  static const String useDealUrl = '/order/deal';
-  static const String checkUsedDealBeforUrl = '/meals/check-use-deal-count';
 }
