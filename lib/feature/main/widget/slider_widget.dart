@@ -147,6 +147,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                             ? 11
                             : sliderPagesController.currentPage.value == 12
                             ? 12
+                            : sliderPagesController.currentPage.value == 32
+                            ? 32
+                            : sliderPagesController.currentPage.value == 33
+                            ? 33
                             : 13,
                         widget: Column(
                           children: [

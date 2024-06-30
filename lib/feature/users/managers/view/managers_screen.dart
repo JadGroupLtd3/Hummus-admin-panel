@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
+import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
 import 'package:hummus_admin_panel/feature/users/widget/users_table_widget.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
@@ -37,7 +38,9 @@ class ManagersScreen extends StatelessWidget {
                         radius: 7,
                         width: 150,
                         height: 45,
-                        onPressed: (){},
+                        onPressed: (){
+                          Get.find<SliderPagesController>().goToTab(33);
+                        },
                       );
                     },
                   ),

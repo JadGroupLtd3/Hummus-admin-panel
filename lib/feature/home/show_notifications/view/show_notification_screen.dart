@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
+import 'package:hummus_admin_panel/feature/home/show_notifications/widget/notification_table_widget.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/users/widget/users_table_widget.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
-class WaitersScreen extends StatelessWidget {
-  const WaitersScreen({super.key});
+class ShowNotificationScreen extends StatelessWidget {
+  const ShowNotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class WaitersScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Users'.tr} / ${'Waiters'.tr}',
+                '${'Home'.tr} / ${'Notification'.tr} / ${'Show notification'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -33,13 +33,13 @@ class WaitersScreen extends StatelessWidget {
                   OnHover(
                     builder: (isHovered) {
                       return CustomButton(
-                        buttonText: 'Add New'.tr,
+                        buttonText: 'Add Push Notification'.tr,
                         backGroundColor: MyThemeData.light.focusColor,
                         radius: 7,
-                        width: 150,
+                        width: 170,
                         height: 45,
                         onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(32);
+                          Get.find<SliderPagesController>().goToTab(4);
                         },
                       );
                     },
@@ -67,12 +67,7 @@ class WaitersScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const UsersTableWidget(
-                        name: 'Waiter name',
-                        email: 'name@gmail.com',
-                        phone: '0509876543',
-                        kind: 'Waiter',
-                      ),
+                      child: NotificationTableWidget()
                     ),
                   ),
                 ],

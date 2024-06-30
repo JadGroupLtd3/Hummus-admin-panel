@@ -56,6 +56,14 @@ class Images {
   static String get add_photo => 'add_photo'.svg;
 
   static String get logo2 => 'Rectangle'.png;
+
+  static String get close => 'close'.svg;
+
+  static String get order_receive => 'order_receive'.svg;
+
+  static String get delivery_price => 'delivery_price'.svg;
+
+  static String get money => 'money'.svg;
 }
 
 extension on String {
