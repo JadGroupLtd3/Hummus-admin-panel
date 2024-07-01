@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hummus_admin_panel/widgets/table_widget.dart';
+import 'package:hummus_admin_panel/feature/hashtags/show_hashtags/widget/hashtag_table_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
@@ -67,7 +67,7 @@ class ShowHashtagsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const TableWidget(),
+                      child: const HashtagTableWidget(),
                     ),
                   ),
                 ],

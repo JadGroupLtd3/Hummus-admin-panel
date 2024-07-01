@@ -64,6 +64,8 @@ class Images {
   static String get delivery_price => 'delivery_price'.svg;
 
   static String get money => 'money'.svg;
+
+  static String get logOutDialog => 'logoutcurve'.svg;
 }
 
 extension on String {

@@ -31,7 +31,7 @@ class QuestionsPhotosWidget extends StatelessWidget {
                 )
               ],
             ),
-            child: const Center(child: AddPhotoWidget()),
+            child: Center(child: AddPhotoWidget()),
           ),
           10.verticalSpace,
           Row(
@@ -63,7 +63,7 @@ class QuestionsPhotosWidget extends StatelessWidget {
                             )
                           ],
                         ),
-                        child: const Center(child: AddPhotoWidget()),
+                        child: Center(child: AddPhotoWidget()),
                       );
                     },
                   ),

@@ -10,8 +10,8 @@ import 'package:hummus_admin_panel/widgets/add_new_product_fields.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 
 class AddNewCouponScreen extends StatelessWidget {
-  const AddNewCouponScreen({super.key});
-
+  AddNewCouponScreen({super.key});
+  final GlobalKey<FormState> couponKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,7 @@ class AddNewCouponScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const AddNewProductFields(isCoupon: true),
+                      child: AddNewProductFields(isCoupon: true,fieldsKey: couponKey,),
                     ),
                   ),
                   7.horizontalSpace,

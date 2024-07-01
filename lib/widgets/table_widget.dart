@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/app_constants.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
+import 'package:hummus_admin_panel/feature/category/model/category_model.dart';
 import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/on_hover.dart';
@@ -11,13 +12,23 @@ import 'package:hummus_admin_panel/widgets/text_utils.dart';
 
 class TableWidget extends StatelessWidget {
   final bool isCoupon;
-
-  const TableWidget({super.key, this.isCoupon = false});
+  final Category? category;
+  final void Function()? onTapDelete;
+  final void Function()? onTapEdit;
+  final int? length;
+  const TableWidget({
+    super.key,
+    this.isCoupon = false,
+    this.category,
+    this.length,
+    this.onTapDelete,
+    this.onTapEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
     final LanguageController languageController =
-        Get.find<LanguageController>();
+    Get.find<LanguageController>();
     return Column(
       children: [
         Table(
@@ -38,17 +49,17 @@ class TableWidget extends StatelessWidget {
                     right: languageController.langLocal == eng ? 0 : 20,
                     left: languageController.langLocal == eng ? 20 : 0),
                 TextUtils(
-                        title: isCoupon ? 'Coupon Name'.tr : 'Image'.tr,
-                        color: Colors.white)
+                    title: isCoupon ? 'Coupon Name'.tr : 'Image'.tr,
+                    color: Colors.white)
                     .paddingOnly(
-                        left: languageController.langLocal == eng ? 0 : 30,
-                        right: languageController.langLocal == eng ? 30 : 0),
+                    left: languageController.langLocal == eng ? 0 : 30,
+                    right: languageController.langLocal == eng ? 30 : 0),
                 TextUtils(
-                        title: isCoupon ? 'Code'.tr : 'Arabic Name'.tr,
-                        color: Colors.white)
+                    title: isCoupon ? 'Code'.tr : 'Arabic Name'.tr,
+                    color: Colors.white)
                     .paddingOnly(
-                        left: languageController.langLocal == eng ? 40 : 0,
-                        right: languageController.langLocal == eng ? 0 : 40),
+                    left: languageController.langLocal == eng ? 40 : 0,
+                    right: languageController.langLocal == eng ? 0 : 40),
                 Center(
                     child: TextUtils(
                         title: isCoupon ? 'Discount'.tr : 'English Name'.tr,
@@ -59,15 +70,15 @@ class TableWidget extends StatelessWidget {
                 TextUtils(title: 'Activation status'.tr, color: Colors.white),
                 TextUtils(title: 'Operations'.tr, color: Colors.white)
                     .paddingOnly(
-                        left: languageController.langLocal == eng ? 35 : 0,
-                        right: languageController.langLocal == eng ? 0 : 35),
+                    left: languageController.langLocal == eng ? 35 : 0,
+                    right: languageController.langLocal == eng ? 0 : 35),
               ],
             ),
           ],
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: length,
             itemBuilder: (context, index) {
               return Table(
                 columnWidths: const {
@@ -79,7 +90,7 @@ class TableWidget extends StatelessWidget {
                       border: Border(
                         top: BorderSide(color: Colors.black.withOpacity(0.1)),
                         bottom:
-                            BorderSide(color: Colors.black.withOpacity(0.1)),
+                        BorderSide(color: Colors.black.withOpacity(0.1)),
                       ),
                     ),
                     children: [
@@ -89,39 +100,39 @@ class TableWidget extends StatelessWidget {
                           top: 10,
                           bottom: 10),
                       isCoupon
-                          ? const TextUtils(title: 'Coupon Name').paddingOnly(
-                              left: languageController.langLocal == eng ? 0 : 20,
-                              right: languageController.langLocal == eng ? 20 : 0,
-                              top: 10,
-                              bottom: 10)
+                          ?  TextUtils(title: 'coupon Name').paddingOnly(
+                          left: languageController.langLocal == eng ? 0 : 20,
+                          right: languageController.langLocal == eng ? 20 : 0,
+                          top: 10,
+                          bottom: 10)
                           : ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: SizedBox(
-                                width: 36,
-                                height: 36,
-                                child: Image.asset(
-                                  Images.background,
-                                  height: 36,
-                                  width: 36,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ).paddingOnly(
-                              left:
-                                  languageController.langLocal == eng ? 0 : 30,
-                              right:
-                                  languageController.langLocal == eng ? 30 : 0,
-                              top: 10,
-                              bottom: 10),
-                      const TextUtils(title: 'Arabic Name').paddingOnly(
+                        borderRadius: BorderRadius.circular(100),
+                        child: SizedBox(
+                          width: 36,
+                          height: 36,
+                          child: Image.network(
+                            category?.image ?? '',
+                            height: 36,
+                            width: 36,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ).paddingOnly(
+                          left:
+                          languageController.langLocal == eng ? 0 : 30,
+                          right:
+                          languageController.langLocal == eng ? 30 : 0,
+                          top: 10,
+                          bottom: 10),
+                      TextUtils(title: category?.nameAr ?? '').paddingOnly(
                           left: languageController.langLocal == eng ? 40 : 0,
                           right: languageController.langLocal == eng ? 0 : 40,
                           top: 10,
                           bottom: 10),
                       Center(
-                          child: const TextUtils(title: 'English Name')
+                          child: TextUtils(title: category?.nameEn ?? '')
                               .paddingOnly(top: 10, bottom: 10)),
-                      const TextUtils(title: 'Hebrew Name')
+                      TextUtils(title: category?.nameHe ?? '' )
                           .paddingOnly(top: 10, bottom: 10),
                       Center(
                         child: SvgPicture.asset(
@@ -139,6 +150,7 @@ class TableWidget extends StatelessWidget {
                         children: [
                           OnHover(
                             matrix: 0,
+                            onTap: onTapEdit,
                             builder: (isHovered) {
                               return SvgPicture.asset(
                                 Images.edit,
@@ -150,6 +162,7 @@ class TableWidget extends StatelessWidget {
                           5.horizontalSpace,
                           OnHover(
                             matrix: 0,
+                            onTap: onTapDelete,
                             builder: (isHovered) {
                               return SvgPicture.asset(
                                 Images.delete,

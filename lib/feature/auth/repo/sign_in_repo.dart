@@ -11,7 +11,7 @@ class SignInRepo {
 
   Future<Response?> login(
       {required String phone, required String password, required String lang}) async {
-    return await ApiClient.postData(
+    return await ApiClient.postDataLogIn(
       ApiUrl.LOGIN_URI,
       {
         "phone": phone,

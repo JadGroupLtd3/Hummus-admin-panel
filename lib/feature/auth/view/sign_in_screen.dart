@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/helper/form_validation.dart';
 import 'package:hummus_admin_panel/core/utils/app_constants.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/auth/controller/auth_controller.dart';
+import 'package:hummus_admin_panel/feature/auth/controller/sign_in_controller.dart';
 import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';

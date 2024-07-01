@@ -31,17 +31,27 @@ class SignInController extends GetxController {
     print(response?.statusCode);
     print(response?.body);
     if (response!.statusCode == 200) {
-      controllerState.value = ControllerState.success;
-      PrefsHelper.setData(key: 'token', value: response.body['data']['token']);
-      print(PrefsHelper.getToken());
-      PrefsHelper.setData(key: 'userId', value: response.body['data']['user']['id']);
-      print(PrefsHelper.getUserId());
-      PrefsHelper.setData(key: 'phoneNumber', value: response.body['data']['user']['phone']);
-      Get.offAllNamed(RouteHelper.mainScreen);
-      Get.find<SliderPagesController>().goToTab(0);
+      if (response.body['status'] == true) {
+        controllerState.value = ControllerState.success;
+        PrefsHelper.setData(key: 'token', value: response.body['data']['token']);
+        print(PrefsHelper.getToken());
+        PrefsHelper.setData(key: 'userId', value: response.body['data']['user']['id']);
+        print(PrefsHelper.getUserId());
+        PrefsHelper.setData(key: 'phoneNumber', value: response.body['data']['user']['phone']);
+        Get.offAllNamed(RouteHelper.mainScreen);
+      } else {
+        controllerState.value = ControllerState.error;
+        ShowSnackBar.show(context: context, message: response.body['message'], color: Colors.red);
+      }
     } else {
+      controllerState.value = ControllerState.error;
       ShowSnackBar.show(context: context, message: response.body['message'], color: Colors.red);
     }
     update();
   }
+
+  void clearSharedData() {
+    PrefsHelper.clearTokenProperties();
+  }
+
 }

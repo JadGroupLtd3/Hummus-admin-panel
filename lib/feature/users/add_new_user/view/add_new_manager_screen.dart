@@ -236,7 +236,7 @@ class AddNewManagerScreen extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    child: const Center(child: AddPhotoWidget()),
+                                    child: Center(child: AddPhotoWidget()),
                                   ),
                                 ],
                               ),

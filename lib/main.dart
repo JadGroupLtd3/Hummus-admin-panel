@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hummus_admin_panel/core/helper/preferences_helper.dart';
 import 'package:hummus_admin_panel/core/helper/route_helper.dart';
 import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/feature/auth/controller/auth_controller.dart';
+import 'package:hummus_admin_panel/feature/auth/controller/sign_in_controller.dart';
 import 'package:hummus_admin_panel/feature/auth/repo/sign_in_repo.dart';
 import 'package:hummus_admin_panel/feature/language/localization.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
@@ -14,6 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await PrefsHelper.initSharedPreferences();
+  Get.put(SignInController(SignInRepo()));
   runApp(MyApp());
 }
 

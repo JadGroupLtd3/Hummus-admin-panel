@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/src/media_type.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -8,6 +10,7 @@ import 'package:hummus_admin_panel/core/network/model/errors_model.dart';
 import 'package:hummus_admin_panel/core/utils/api_url.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'dart:typed_data';
 
 class ApiClient extends GetxService {
   static const String noInternetMessage = 'connection_to_api_server_failed';
@@ -57,7 +60,8 @@ class ApiClient extends GetxService {
     return response0;
   }
 
-  static Future<Response> putData(String? uri, dynamic body, {Map<String, String>? headers}) async {
+  static Future<Response> putData(String? uri, dynamic body,
+      {Map<String, String>? headers}) async {
     try {
       Http.Response response = await Http.put(
         Uri.parse('${ApiUrl.BASE_URL}$uri'),
@@ -65,6 +69,20 @@ class ApiClient extends GetxService {
         headers: headers,
       ).timeout(const Duration(seconds: timeoutInSeconds));
       return handleResponse(response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  static Future<Response> postDataLogIn(String? uri, dynamic body,
+      {Map<String, String>? headers}) async {
+    Http.Response _response = await Http.post(
+      Uri.parse('${ApiUrl.LOGIN_BASE_URL}$uri'),
+      body: jsonEncode(body),
+      headers: headers ?? mainHeaders,
+    ).timeout(const Duration(seconds: timeoutInSeconds));
+    try {
+      return handleResponse(_response, uri);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
@@ -101,36 +119,35 @@ class ApiClient extends GetxService {
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
       {Map<String, String>? headers}) async {
     try {
-      var requestHeaders = {
-        'content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer ${PrefsHelper.getToken()}',
-        ...?headers,
-      };
-
-      var request =
-          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!))
-            ..headers.addAll(requestHeaders)
-            ..fields.addAll(body);
-
-      if (multipartBody != null) {
-        for (var multipart in multipartBody) {
-          var fileStream = multipart.file.readAsBytes().asStream();
-          var part = Http.MultipartFile(
+      Http.MultipartRequest _request =
+          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!));
+      _request.headers.addAll(headers ?? mainHeaders);
+      for (MultipartBody multipart in multipartBody!) {
+        if (multipart.webImage != null) {
+          _request.files.add(Http.MultipartFile.fromBytes(
             multipart.key!,
-            fileStream,
-            await multipart.file.length(),
-            filename: basename(multipart.file.path),
-            contentType: MediaType('image', 'jpg'),
-          );
-          request.files.add(part);
+            multipart.webImage!,
+            filename: 'image.jpg',
+            contentType: MediaType('image', 'jpeg'),
+          ));
+        } else {
+          print('file');
+          File _file = File(multipart.file!.path);
+          _request.files.add(Http.MultipartFile(
+            multipart.key!,
+            _file.readAsBytes().asStream(),
+            _file.lengthSync(),
+            filename: _file.path.split('/').last,
+          ));
         }
       }
-
-      var response = await Http.Response.fromStream(await request.send());
-      return handleResponse(response, uri);
+      _request.fields.addAll(body);
+      Http.Response _response =
+          await Http.Response.fromStream(await _request.send());
+      print('_response.body ${_response.body}');
+      return handleResponse(_response, uri);
     } catch (e) {
-      print('Error in postMultipartData: $e');
-      return const Response(statusCode: 1, statusText: 'Something went wrong');
+      return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -140,17 +157,18 @@ class ApiClient extends GetxService {
       Http.Response _response = await Http.delete(
         Uri.parse('${ApiUrl.BASE_URL}$uri'),
         headers: headers ?? mainHeaders,
-      ).timeout(Duration(seconds: timeoutInSeconds));
+      ).timeout(const Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);
     } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 }
 
 class MultipartBody {
   String? key;
-  XFile file;
+  XFile? file;
+  Uint8List? webImage = Uint8List(8);
 
-  MultipartBody(this.key, this.file);
+  MultipartBody(this.key,{this.file, this.webImage});
 }

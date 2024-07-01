@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hummus_admin_panel/widgets/table_widget.dart';
+import 'package:hummus_admin_panel/feature/attributes/show_attributes/widget/attribute_table_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
@@ -68,7 +68,7 @@ class ShowAttributesScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const TableWidget(),
+                      child: AttributeTableWidget(),
                     ),
                   ),
                 ],
