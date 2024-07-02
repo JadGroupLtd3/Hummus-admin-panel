@@ -24,10 +24,9 @@ class HashtagController extends GetxController {
   TextEditingController hashtagNameEn = TextEditingController();
   TextEditingController hashtagNameHe = TextEditingController();
 
-  HashtagModel? hashtagModel;
   RxList<Hashtag> hashtagList = <Hashtag>[].obs;
 
-  Future<void> createComponent(BuildContext context) async {
+  Future<void> createHashtag(BuildContext context) async {
     controllerState.value = ControllerState.loading;
     Hashtag hashtag = Hashtag(
       nameAr: hashtagNameAr.text,
@@ -35,45 +34,35 @@ class HashtagController extends GetxController {
       nameHe: hashtagNameHe.text,
       status: status.value == true ? 1 : 0,
     );
-    update();
-    Response? response = await hashtagRepo.createHashtag(
+    final result = await hashtagRepo.createHashtag(
       hashtagModel: hashtag,
       webImage: webImage,
     );
-    print(response?.statusCode);
-    print(response?.body);
-    if (response?.statusCode == 200) {
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
       controllerState.value = ControllerState.success;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.green);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getHashtag(context);
       hashtagNameAr.clear();
       hashtagNameEn.clear();
       hashtagNameHe.clear();
       pickedProfileImageFile = null;
-    } else {
-      controllerState.value = ControllerState.error;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.red);
-    }
-    update();
+      update();
+    });
   }
 
   Future<void> getHashtag(BuildContext context) async {
     controllerState.value = ControllerState.loading;
-    Response response = await hashtagRepo.getHashtag();
-    if (response.statusCode == 200) {
-      controllerState.value = ControllerState.success;
-      hashtagModel = HashtagModel.fromJson(response.body);
-      hashtagList.value = hashtagModel!.data;
-    } else {
+    final result = await hashtagRepo.getHashtag();
+    result.fold((left) {
       controllerState.value = ControllerState.error;
-      ShowSnackBar.show(context: context, message: response.body['message'], color: Colors.red);
-    }
-    update();
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) {
+      controllerState.value = ControllerState.success;
+      hashtagList.value = right.data;
+    });
   }
+
 }

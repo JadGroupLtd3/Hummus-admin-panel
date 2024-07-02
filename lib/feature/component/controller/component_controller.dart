@@ -24,7 +24,6 @@ class ComponentController extends GetxController {
   TextEditingController componentNameEn = TextEditingController();
   TextEditingController componentNameHe = TextEditingController();
 
-  ComponentModel? componentModel;
   RxList<Component> componentList = <Component>[].obs;
 
   Future<void> createComponent(BuildContext context) async {
@@ -35,45 +34,34 @@ class ComponentController extends GetxController {
       nameHe: componentNameHe.text,
       status: status.value == true ? 1 : 0,
     );
-    update();
-    Response? response = await componentRepo.createComponent(
+    final result = await componentRepo.createComponent(
       componentModel: component,
       webImage: webImage,
     );
-    print(response?.statusCode);
-    print(response?.body);
-    if (response?.statusCode == 200) {
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
       controllerState.value = ControllerState.success;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.green);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getComponent(context);
       componentNameAr.clear();
       componentNameEn.clear();
       componentNameHe.clear();
       pickedProfileImageFile = null;
-    } else {
-      controllerState.value = ControllerState.error;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.red);
-    }
-    update();
+      update();
+    });
   }
 
   Future<void> getComponent(BuildContext context) async {
     controllerState.value = ControllerState.loading;
-    Response response = await componentRepo.getComponent();
-    if (response.statusCode == 200) {
-      controllerState.value = ControllerState.success;
-      componentModel = ComponentModel.fromJson(response.body);
-      componentList.value = componentModel!.data;
-    } else {
+    final result = await componentRepo.getComponent();
+    result.fold((left) {
       controllerState.value = ControllerState.error;
-      ShowSnackBar.show(context: context, message: response.body['message'], color: Colors.red);
-    }
-    update();
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) {
+      controllerState.value = ControllerState.success;
+      componentList.value = right.data;
+    });
   }
 }

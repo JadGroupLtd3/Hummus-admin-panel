@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 
-
 class DropDownBTN extends StatefulWidget {
+  final List<DropdownMenuItem<String>>? items;
   final String title;
-  const DropDownBTN({super.key,required this.title});
+  final void Function(String?)? onChanged;
+  const DropDownBTN({super.key,required this.title,this.items,this.onChanged});
 
   @override
   State<DropDownBTN> createState() => _DropDownBTNState();
@@ -41,7 +41,7 @@ class _DropDownBTNState extends State<DropDownBTN> {
             fontSize: 14,
             color: Colors.black,
           ),
-          items: ['One', 'Two', 'Three'].map(
+          items: widget.items ?? ['One', 'Two', 'Three'].map(
                 (val) {
               return DropdownMenuItem<String>(
                 value: val,
@@ -55,9 +55,8 @@ class _DropDownBTNState extends State<DropDownBTN> {
               );
             },
           ).toList(),
-          onChanged: (val) {
-            setState(
-                  () {
+          onChanged: widget.onChanged ?? (val) {
+            setState(() {
                 _dropDownValue = val;
               },
             );

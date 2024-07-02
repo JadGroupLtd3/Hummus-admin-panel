@@ -26,4 +26,15 @@ class ApiUrl {
   static const String UPDATE_HASHTAG = '/hashtags/update';
   static const String DELETE_HASHTAG = '/hashtags/delete/';
 
+  static const String CREATE_QUESTIONS = '/question-answer/create';
+  static const String GET_QUESTIONS = '/question-answer';
+  static const String UPDATE_QUESTIONS = '/question-answer/update';
+  static const String DELETE_QUESTIONS = '/question-answer/delete/';
+  static const String DELETE_QUESTIONS_IMAGE = '/question-answer/delete-image/';
+
+  static const String CREATE_COUPON = '/coupons/create';
+  static const String GET_COUPON = '/coupons';
+  static const String UPDATE_COUPON = '/coupons/update';
+  static const String DELETE_COUPON = '/coupons/delete/';
+
 }

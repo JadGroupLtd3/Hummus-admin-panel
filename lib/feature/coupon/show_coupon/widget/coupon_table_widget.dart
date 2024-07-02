@@ -1,36 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/component/controller/component_controller.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class ComponentTableWidget extends StatefulWidget {
-  const ComponentTableWidget({super.key});
+class CouponTableWidget extends StatefulWidget {
+  const CouponTableWidget({super.key});
 
   @override
-  State<ComponentTableWidget> createState() => _ComponentTableWidgetState();
+  State<CouponTableWidget> createState() => _CouponTableWidgetState();
 }
 
-class _ComponentTableWidgetState extends State<ComponentTableWidget> {
+class _CouponTableWidgetState extends State<CouponTableWidget> {
   final LanguageController languageController = Get.find<LanguageController>();
 
   @override
   void initState() {
-    Get.find<ComponentController>().getComponent(context);
+    Get.find<CouponController>().getCoupon(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ComponentController>(
-      builder: (componentController) {
+    return GetBuilder<CouponController>(
+      builder: (couponController) {
         return Column(
           children: [
             Table(
@@ -51,20 +41,22 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                         .paddingOnly(
                             right: languageController.langLocal == eng ? 0 : 20,
                             left: languageController.langLocal == eng ? 20 : 0),
-                    TextUtils(title: 'Image'.tr, color: Colors.white)
+                    TextUtils(title: 'Coupon Name'.tr, color: Colors.white)
                         .paddingOnly(
-                            left: languageController.langLocal == eng ? 0 : 30,
-                            right:
-                                languageController.langLocal == eng ? 30 : 0),
-                    TextUtils(title: 'Arabic Name'.tr, color: Colors.white)
+                            left: languageController.langLocal == eng ? 0 : 20,
+                            right: languageController.langLocal == eng ? 30 : 0),
+                    TextUtils(title: 'Code'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 40 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 40),
                     Center(
                         child: TextUtils(
-                            title: 'English Name'.tr, color: Colors.white)),
-                    TextUtils(title: 'Hebrew Name'.tr, color: Colors.white),
+                            title: 'Discount'.tr, color: Colors.white)).paddingOnly(
+                        left: languageController.langLocal == eng ? 0 : 40,
+                        right: languageController.langLocal == eng ? 40 : 0
+                    ),
+                    TextUtils(title: 'End Date'.tr, color: Colors.white),
                     TextUtils(
                         title: 'Activation status'.tr, color: Colors.white),
                     TextUtils(title: 'Operations'.tr, color: Colors.white)
@@ -78,7 +70,7 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
             ),
             Obx(
               () {
-                if (componentController.controllerState.value ==
+                if (couponController.controllerState.value ==
                     ControllerState.loading) {
                   return Column(
                     children: [
@@ -93,10 +85,9 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                 } else {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: componentController.componentList.length,
+                      itemCount: couponController.couponList.length,
                       itemBuilder: (context, index) {
-                        final component =
-                            componentController.componentList[index];
+                        final coupon = couponController.couponList[index];
                         return Table(
                           columnWidths: const {
                             1: IntrinsicColumnWidth(),
@@ -112,7 +103,7 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                 ),
                               ),
                               children: [
-                                const TextUtils(title: '#').paddingOnly(
+                                TextUtils(title: '${coupon.id}').paddingOnly(
                                     right: languageController.langLocal == eng
                                         ? 0
                                         : 20,
@@ -121,51 +112,51 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                         : 0,
                                     top: 10,
                                     bottom: 10),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: SizedBox(
-                                    width: 36,
-                                    height: 36,
-                                    child: Image.network(
-                                      component.image ?? '',
-                                      height: 36,
-                                      width: 36,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ).paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 0
-                                        : 30,
-                                    right: languageController.langLocal == eng
-                                        ? 30
-                                        : 0,
-                                    top: 10,
-                                    bottom: 10),
-                                TextUtils(title: component.nameAr ?? '')
+                                TextUtils(
+                                        title: languageController.langLocal ==
+                                                ara
+                                            ? coupon.nameAr ?? ''
+                                            : languageController.langLocal ==
+                                                    eng
+                                                ? coupon.nameEn ?? ''
+                                                : coupon.nameHe ?? '')
                                     .paddingOnly(
                                         left:
                                             languageController.langLocal == eng
-                                                ? 40
+                                                ? 0
+                                                : 20,
+                                        right:
+                                            languageController.langLocal == eng
+                                                ? 20
+                                                : 0,
+                                        top: 10,
+                                        bottom: 10),
+                                TextUtils(title: coupon.code ?? '')
+                                    .paddingOnly(
+                                        left:
+                                            languageController.langLocal == eng
+                                                ? 70
                                                 : 0,
                                         right:
                                             languageController.langLocal == eng
                                                 ? 0
-                                                : 40,
+                                                : 60,
                                         top: 10,
                                         bottom: 10),
                                 Center(
-                                    child:
-                                        TextUtils(title: component.nameEn ?? '')
-                                            .paddingOnly(top: 10, bottom: 10)),
-                                TextUtils(title: component.nameHe ?? '')
-                                    .paddingOnly(top: 10, bottom: 10),
+                                    child: TextUtils(title: coupon.discount ?? '')
+                                        .paddingOnly(top: 10, bottom: 10)),
+                                TextUtils(title: coupon.endDate?.substring(0,10) ?? '')
+                                    .paddingOnly(
+                                    left: languageController.langLocal == eng ? 10 : 0,
+                                    right: languageController.langLocal == eng ? 0 : 10,
+                                    top: 10, bottom: 10),
                                 Center(
                                   child: SvgPicture.asset(
                                     Images.dot,
                                     width: 25,
                                     height: 25,
-                                    color: component.status == 1
+                                    color: coupon.status == 1
                                         ? MyThemeData.light.primaryColor
                                         : Colors.red,
                                   ).paddingOnly(

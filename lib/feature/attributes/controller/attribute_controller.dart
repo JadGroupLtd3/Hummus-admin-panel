@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:hummus_admin_panel/core/helper/snack_bar.dart';
 import 'package:hummus_admin_panel/feature/attributes/model/attribute_model.dart';
 import 'package:hummus_admin_panel/feature/attributes/repo/attribute_repo.dart';
@@ -19,8 +18,8 @@ class AttributeController extends GetxController {
   TextEditingController attributeNameHe = TextEditingController();
   TextEditingController attributeSort = TextEditingController();
 
-  AttributeModel? attributeModel;
   RxList<Attribute> attributeList = <Attribute>[].obs;
+
 
   Future<void> createCategory(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -30,44 +29,33 @@ class AttributeController extends GetxController {
       nameHe: attributeNameHe.text,
       status: status.value == true ? 1 : 0,
     );
-    update();
-    Response? response = await attributeRepo.createAttribute(
-        attribute: attribute,
-        status: status.value == true ? 1 : 0,
+    final result = await attributeRepo.createAttribute(
+      attribute: attribute,
+      status: status.value == true ? 1 : 0,
     );
-    print(response?.statusCode);
-    print(response?.body);
-    if (response?.statusCode == 200) {
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
       controllerState.value = ControllerState.success;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.green);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getAttribute(context);
       attributeNameAr.clear();
       attributeNameEn.clear();
       attributeNameHe.clear();
-    } else {
-      controllerState.value = ControllerState.error;
-      ShowSnackBar.show(
-          context: context,
-          message: response?.body['message'],
-          color: Colors.red);
-    }
-    update();
+      update();
+    });
   }
 
   Future<void> getAttribute(BuildContext context) async {
     controllerState.value = ControllerState.loading;
-    Response response = await attributeRepo.getAttribute();
-    if (response.statusCode == 200) {
-      controllerState.value = ControllerState.success;
-      attributeModel = AttributeModel.fromJson(response.body);
-      attributeList.value = attributeModel!.data;
-    } else {
+    final result = await attributeRepo.getAttribute();
+    result.fold((left) {
       controllerState.value = ControllerState.error;
-      ShowSnackBar.show(context: context, message: response.body['message'], color: Colors.red);
-    }
-    update();
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) {
+      controllerState.value = ControllerState.success;
+      attributeList.value = right.data;
+    });
   }
 }

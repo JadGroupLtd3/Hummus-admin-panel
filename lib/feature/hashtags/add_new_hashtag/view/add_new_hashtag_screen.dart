@@ -103,7 +103,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (hashtagKey.currentState!.validate()) {
-                                hashtagController.createComponent(context);
+                                hashtagController.createHashtag(context);
                               }
                             },
                           ),
@@ -123,7 +123,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (hashtagKey.currentState!.validate()) {
-                                hashtagController.createComponent(context);
+                                hashtagController.createHashtag(context);
                               }
                             },
                           ),

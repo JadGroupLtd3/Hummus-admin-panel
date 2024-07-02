@@ -119,9 +119,10 @@ class ApiClient extends GetxService {
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
       {Map<String, String>? headers}) async {
     try {
-      Http.MultipartRequest _request =
-          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!));
+      Http.MultipartRequest _request = Http.MultipartRequest(
+          'POST', Uri.parse(ApiUrl.BASE_URL + uri!));
       _request.headers.addAll(headers ?? mainHeaders);
+
       for (MultipartBody multipart in multipartBody!) {
         if (multipart.webImage != null) {
           _request.files.add(Http.MultipartFile.fromBytes(
@@ -130,8 +131,7 @@ class ApiClient extends GetxService {
             filename: 'image.jpg',
             contentType: MediaType('image', 'jpeg'),
           ));
-        } else {
-          print('file');
+        } else if (multipart.file != null) {
           File _file = File(multipart.file!.path);
           _request.files.add(Http.MultipartFile(
             multipart.key!,
@@ -141,9 +141,10 @@ class ApiClient extends GetxService {
           ));
         }
       }
+
       _request.fields.addAll(body);
       Http.Response _response =
-          await Http.Response.fromStream(await _request.send());
+      await Http.Response.fromStream(await _request.send());
       print('_response.body ${_response.body}');
       return handleResponse(_response, uri);
     } catch (e) {

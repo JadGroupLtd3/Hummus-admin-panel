@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:hummus_admin_panel/widgets/table_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class ShowCouponScreen extends StatelessWidget {
   const ShowCouponScreen({super.key});
@@ -67,7 +60,7 @@ class ShowCouponScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const TableWidget(isCoupon: true),
+                      child: const CouponTableWidget(),
                     ),
                   ),
                 ],

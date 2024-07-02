@@ -1,19 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/category/controller/category_controller.dart';
-import 'package:hummus_admin_panel/feature/component/controller/component_controller.dart';
-import 'package:hummus_admin_panel/feature/hashtags/controller/hashtag_controller.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class AddPhotoWidget extends StatefulWidget {
   final double? vertical;
   final bool isEdit;
   final double? width;
+  final double? height;
   final String? imagePath;
   XFile? pickedProfileImageFile;
   dynamic webImage;
@@ -21,13 +14,16 @@ class AddPhotoWidget extends StatefulWidget {
   final bool? isCategory;
   final bool? isComponent;
   final bool? isHashtag;
+  final bool? isQuestion;
 
   AddPhotoWidget({
     super.key,
     this.isEdit = false,
     this.vertical,
+    this.height,
     this.width,
     this.isCategory,
+    this.isQuestion,
     this.isHashtag,
     this.isComponent,
     this.imagePath,
@@ -58,6 +54,9 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
           if(widget.isHashtag == true) {
             Get.find<HashtagController>().webImage = widget.webImage;
           }
+          if(widget.isQuestion == true) {
+            Get.find<QuestionsController>().webImage = widget.webImage;
+          }
         } else {
           widget.pickedImage = File(widget.pickedProfileImageFile!.path);
         }
@@ -74,7 +73,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      height: MediaQuery.of(context).size.height * 1 / 2.5,
+      height: widget.height ?? MediaQuery.of(context).size.height * 1 / 2.5,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),

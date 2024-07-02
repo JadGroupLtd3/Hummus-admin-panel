@@ -1,17 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/feature/attributes/controller/attribute_controller.dart';
-import 'package:hummus_admin_panel/feature/attributes/repo/attribute_repo.dart';
-import 'package:hummus_admin_panel/feature/category/controller/category_controller.dart';
-import 'package:hummus_admin_panel/feature/category/repo/category_repo.dart';
-import 'package:hummus_admin_panel/feature/component/controller/component_controller.dart';
-import 'package:hummus_admin_panel/feature/component/repo/component_repo.dart';
-import 'package:hummus_admin_panel/feature/hashtags/controller/hashtag_controller.dart';
-import 'package:hummus_admin_panel/feature/hashtags/repo/hashtag_repo.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/main/widget/slider_widget.dart';
-import 'package:hummus_admin_panel/feature/main/widget/app_bar_widget.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,6 +15,9 @@ class _MainScreenState extends State<MainScreen> {
   final AttributeController attributeController = Get.put(AttributeController(AttributeRepo()));
   final ComponentController componentController = Get.put(ComponentController(ComponentRepo()));
   final HashtagController hashtagController = Get.put(HashtagController(HashtagRepo()));
+  final QuestionsController questionsController = Get.put(QuestionsController(QuestionsRepo()));
+  final CouponController couponController = Get.put(CouponController(CouponRepo()));
+
 
   @override
   void initState() {
@@ -41,6 +32,8 @@ class _MainScreenState extends State<MainScreen> {
     await attributeController.getAttribute(context);
     await componentController.getComponent(context);
     await hashtagController.getHashtag(context);
+    await questionsController.getQuestion(context);
+    await couponController.getCoupon(context);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 
 class CustomTextField2 extends StatefulWidget {
@@ -95,15 +96,15 @@ class _CustomTextField2State extends State<CustomTextField2> {
         widget.isTitle == false
             ? const SizedBox.shrink()
             : Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            widget.title ?? '',
-            style: widget.style ??
-                TajawalRegular.copyWith(
-                  fontSize: 16,
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  widget.title ?? '',
+                  style: widget.style ??
+                      TajawalRegular.copyWith(
+                        fontSize: 16,
+                      ),
                 ),
-          ),
-        ),
+              ),
         SizedBox(
           height: widget.height,
           width: widget.width,
@@ -147,27 +148,30 @@ class _CustomTextField2State extends State<CustomTextField2> {
               border: widget.isBorder == false
                   ? null
                   : OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: const Color(0xff000000).withOpacity(0.11),
-                    width: 1,
-                  ),
-                  borderRadius:  BorderRadius.all(Radius.circular(widget.radius ?? 10))),
+                      borderSide: BorderSide(
+                        color: const Color(0xff000000).withOpacity(0.11),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(widget.radius ?? 10))),
               enabledBorder: widget.isBorder == false
                   ? null
                   : OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: const Color(0xff000000).withOpacity(0.11),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(widget.radius ?? 10))),
-              focusedBorder:widget.isBorder == false
+                      borderSide: BorderSide(
+                        color: const Color(0xff000000).withOpacity(0.11),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(widget.radius ?? 10))),
+              focusedBorder: widget.isBorder == false
                   ? null
                   : OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: const Color(0xff000000).withOpacity(0.11),
-                    width: 1,
-                  ),
-                  borderRadius:  BorderRadius.all(Radius.circular(widget.radius ?? 10))),
+                      borderSide: BorderSide(
+                        color: const Color(0xff000000).withOpacity(0.11),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(widget.radius ?? 10))),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               alignLabelWithHint: true,
               hintText: widget.hintText,
@@ -203,7 +207,14 @@ class _CustomTextField2State extends State<CustomTextField2> {
                     ? widget.onSubmit!(text)
                     : null,
             onChanged: widget.onChanged,
-            validator: widget.onValidate != null ? widget.onValidate! : null,
+            validator: widget.onValidate != null
+                ? widget.onValidate!
+                : (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Field is required'.tr;
+                    }
+                    return null;
+                  },
             onTap: widget.onTap,
           ),
         ),

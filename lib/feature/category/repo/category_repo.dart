@@ -1,15 +1,11 @@
 import 'dart:typed_data';
-
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:hummus_admin_panel/core/network/client_api.dart';
-import 'package:hummus_admin_panel/core/utils/api_url.dart';
-import 'package:hummus_admin_panel/feature/category/model/category_model.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 class CategoryRepo {
 
-
-  Future<Response?> createCategory(
+  Future<Either<String, CategoryModel>> createCategory(
       {required Category categoryModel, XFile? data, Uint8List? webImage}) async {
     Map<String, String> _body = Map();
     _body.addAll(<String, String>{
@@ -19,14 +15,25 @@ class CategoryRepo {
       'status': categoryModel.status.toString(),
       'sort': categoryModel.sort.toString(),
     });
-    return await ApiClient.postMultipartData(
+    Response? response = await ApiClient.postMultipartData(
       ApiUrl.CREATE_CATEGORY,
       _body,
       [MultipartBody('image', webImage: webImage)],
     );
+    if (response.statusCode == 200) {
+      return Right(CategoryModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
   }
 
-  Future<Response> getCategory() async {
-    return await ApiClient.getData(ApiUrl.GET_CATEGORY);
+  Future<Either<String, CategoryModel>> getCategory() async {
+    Response? response = await ApiClient.getData(ApiUrl.GET_CATEGORY);
+    if (response.statusCode == 200) {
+      return Right(CategoryModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
   }
+
 }

@@ -1,30 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/coupon/add_new_coupon/widget/drop_down_btn.dart';
-import 'package:hummus_admin_panel/widgets/custom_switch.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field2.dart';
-import 'package:hummus_admin_panel/widgets/custome_date_time_picker.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:intl/intl.dart';
 
+
 class CouponDetailsFields extends StatefulWidget {
-  const CouponDetailsFields({super.key});
+  final GlobalKey<FormState> couponKey;
+  const CouponDetailsFields({super.key,required this.couponKey});
 
   @override
   State<CouponDetailsFields> createState() => _CouponDetailsFieldsState();
 }
 
 class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
-  late TextEditingController _timeController;
-  final GlobalKey<FormState> couponKey = GlobalKey<FormState>();
-  bool _enable = false;
-  String? _dropDownValue;
-  @override
-  void initState() {
-    super.initState();
-    _timeController = TextEditingController();
-  }
+  final CouponController couponController = Get.find<CouponController>();
 
   Future<void> selectDateTime(BuildContext context) async {
     DateTime initialDateTime = DateTime.now();
@@ -35,21 +23,24 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
       },
     );
     if (pickedDateTime != null) {
-      _timeController.text = DateFormat('yyyy-MM-dd hh:mm a').format(pickedDateTime);
+      couponController.couponEndDate.text =
+          DateFormat('yyyy-MM-dd hh:mm:ss a').format(pickedDateTime);
     }
   }
-
+  String title = 'Type of discount'.tr;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
+      child: GetBuilder<CouponController>(
+        builder: (couponController) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Form(
-                key: couponKey,
+                key: widget.couponKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -68,7 +59,13 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'Code'.tr,
                             inputType: TextInputType.text,
                             filled: false,
-                            //controller: controller.workController,
+                            onValidate: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Field is required'.tr;
+                              }
+                              return null;
+                            },
+                            controller: couponController.couponCode,
                           ),
                         ),
                         const SizedBox(width: 30),
@@ -84,7 +81,7 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'Number of uses per laser'.tr,
                             inputType: TextInputType.text,
                             filled: false,
-                            //controller: controller.workController,
+                            controller: couponController.couponUseUserCount,
                           ),
                         ),
                       ],
@@ -104,7 +101,7 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'Number of times the coupon was used'.tr,
                             inputType: TextInputType.text,
                             filled: false,
-                            //controller: controller.workController,
+                            controller: couponController.couponUseCount,
                           ),
                         ),
                         const SizedBox(width: 30),
@@ -120,7 +117,7 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'Discount'.tr,
                             inputType: TextInputType.text,
                             filled: false,
-                            //controller: controller.workController,
+                            controller: couponController.couponDiscount,
                           ),
                         ),
                       ],
@@ -143,7 +140,31 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                                 ),
                               ),
                               DropDownBTN(
-                                title: 'Type of discount'.tr,
+                                title: title,
+                                onChanged: (String? val) {
+                                  setState(() {
+                                    if(val != null){
+                                      title = val;
+                                    }
+                                  });
+                                  if(val == 'static price'){
+                                    couponController.discountType.value = 1;
+                                    print(couponController.discountType.value);
+                                  }
+                                },
+                                items: ['static price'.tr].map((val) {
+                                    return DropdownMenuItem<String>(
+                                      value: val,
+                                      child: Text(
+                                        val,
+                                        style: TajawalRegular.copyWith(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
                               ),
                               const SizedBox(height:22),
                             ],
@@ -162,6 +183,7 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'The lowest invoice price'.tr,
                             inputType: TextInputType.text,
                             filled: false,
+                            controller: couponController.couponMinPrice,
                           ),
                         ),
                       ],
@@ -181,11 +203,10 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                             hintText: 'dd/mm/yy, --:-- --'.tr,
                             inputType: TextInputType.text,
                             filled: false,
-                            controller: _timeController,
+                            controller: couponController.couponEndDate,
                             onTap: () async {
-                             await selectDateTime(context);
+                              await selectDateTime(context);
                             },
-                            //controller: controller.workController,
                           ),
                         ),
                         const SizedBox(width: 30),
@@ -215,18 +236,21 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                     30.verticalSpace,
                     Center(
                       child: CustomSwitch(
-                        value: _enable,
-                        onChanged: (bool val) {
-                          _enable = val;
+                        value: couponController.status.value,
+                        onChanged: (val) {
+                          val == true
+                              ? couponController.status.value = true
+                              : couponController.status.value = false;
                         },
                       ),
                     ),
                   ],
                 ),
               ),
-          ),
-        ],
-      ),
+            ),
+          ],
+        );
+      },),
     );
   }
 }
