@@ -24,6 +24,7 @@ dependencies:
   http: ^1.0.0
   image_picker: ^1.0.4
   either_dart: ^1.0.0
+  logger: ^2.3.0
 
 
 dev_dependencies:
