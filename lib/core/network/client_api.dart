@@ -9,7 +9,6 @@ import 'package:hummus_admin_panel/core/helper/preferences_helper.dart';
 import 'package:hummus_admin_panel/core/network/model/errors_model.dart';
 import 'package:hummus_admin_panel/core/utils/api_url.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'dart:typed_data';
 
 class ApiClient extends GetxService {
@@ -119,8 +118,8 @@ class ApiClient extends GetxService {
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
       {Map<String, String>? headers}) async {
     try {
-      Http.MultipartRequest _request = Http.MultipartRequest(
-          'POST', Uri.parse(ApiUrl.BASE_URL + uri!));
+      Http.MultipartRequest _request =
+          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!));
       _request.headers.addAll(headers ?? mainHeaders);
 
       for (MultipartBody multipart in multipartBody!) {
@@ -144,7 +143,7 @@ class ApiClient extends GetxService {
 
       _request.fields.addAll(body);
       Http.Response _response =
-      await Http.Response.fromStream(await _request.send());
+          await Http.Response.fromStream(await _request.send());
       print('_response.body ${_response.body}');
       return handleResponse(_response, uri);
     } catch (e) {
@@ -171,5 +170,5 @@ class MultipartBody {
   XFile? file;
   Uint8List? webImage = Uint8List(8);
 
-  MultipartBody(this.key,{this.file, this.webImage});
+  MultipartBody(this.key, {this.file, this.webImage});
 }
