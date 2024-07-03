@@ -111,7 +111,7 @@ class AddNewAttributeScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (attributeKey.currentState!.validate()) {
-                                attributeController.createCategory(context);
+                                attributeController.createAttribute(context);
                               }
                             },
                           ),
@@ -131,7 +131,7 @@ class AddNewAttributeScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (attributeKey.currentState!.validate()) {
-                                attributeController.createCategory(context);
+                                attributeController.createAttribute(context);
                               }
                             },
                           ),

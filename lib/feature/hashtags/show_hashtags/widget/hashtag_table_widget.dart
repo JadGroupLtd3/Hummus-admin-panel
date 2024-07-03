@@ -101,7 +101,7 @@ class _HashtagTableWidgetState extends State<HashtagTableWidget> {
                                 ),
                               ),
                               children: [
-                                const TextUtils(title: '#').paddingOnly(
+                                TextUtils(title: '${hashtag.id}').paddingOnly(
                                     right: languageController.langLocal == eng
                                         ? 0
                                         : 20,
@@ -184,7 +184,28 @@ class _HashtagTableWidgetState extends State<HashtagTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this hashtag?'.tr,
+                                              title: 'Delete Hashtag'.tr,
+                                              onYesPressed: () {
+                                                hashtagController.deleteHashtag(
+                                                    context,
+                                                    hashtagID: hashtag.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,

@@ -186,7 +186,28 @@ class _CouponTableWidgetState extends State<CouponTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this coupon?'.tr,
+                                              title: 'Delete Coupon'.tr,
+                                              onYesPressed: () {
+                                                couponController.deleteCoupon(
+                                                    context,
+                                                    couponID: coupon.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,

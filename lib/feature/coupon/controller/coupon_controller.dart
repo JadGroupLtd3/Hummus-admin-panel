@@ -70,4 +70,20 @@ class CouponController extends GetxController {
     });
   }
 
+  Future<void> deleteCoupon(BuildContext context,{required int couponID}) async {
+    controllerState.value = ControllerState.loading;
+    final result = await couponRepo.deleteCoupon(couponID);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+      update();
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      await getCoupon(context);
+      update();
+      Navigator.pop(context);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+    });
+  }
+
 }

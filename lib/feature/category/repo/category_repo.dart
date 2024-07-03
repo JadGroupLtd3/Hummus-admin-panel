@@ -36,4 +36,14 @@ class CategoryRepo {
     }
   }
 
+  Future<Either<String, CategoryModel>> deleteCategory(int categoryID) async {
+    Response? response = await ApiClient.deleteData('${ApiUrl.DELETE_CATEGORY}$categoryID');
+    if (response.statusCode == 200) {
+      return Right(CategoryModel.fromJson(response.body));
+    } else {
+      print('Api Error ${response.statusCode} . ${response.body}//////////');
+      return Left(response.body['message'] ?? "unknown Error Occurred");
+    }
+  }
+
 }

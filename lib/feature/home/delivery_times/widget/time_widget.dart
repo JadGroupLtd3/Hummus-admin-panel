@@ -1,50 +1,40 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/helper/responsive_helper.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_switch.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
-import 'package:hummus_admin_panel/widgets/time_text_format.dart';
 import 'package:intl/intl.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class TimeWidget extends StatefulWidget {
   final String day;
+  final TextEditingController startDateController;
+  final TextEditingController endDateController;
+  void Function(bool)? onChanged;
+  bool? enable;
 
-  const TimeWidget({super.key, required this.day});
+  TimeWidget({
+    super.key,
+    this.enable,
+    this.onChanged,
+    required this.day,
+    required this.startDateController,
+    required this.endDateController,
+  });
 
   @override
   TimeWidgetState createState() => TimeWidgetState();
 }
 
 class TimeWidgetState extends State<TimeWidget> {
-  bool _enable = false;
-  late TextEditingController _startTimeController;
-  late TextEditingController _endTimeController;
 
-  @override
-  void initState() {
-    super.initState();
-    _startTimeController = TextEditingController();
-    _endTimeController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _startTimeController.dispose();
-    _endTimeController.dispose();
-    super.dispose();
-  }
-
-  Future<TimeOfDay?> selectTime(BuildContext context ,TextEditingController controller) async {
+  Future<TimeOfDay?> selectTime(
+      BuildContext context, TextEditingController controller) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
     if (pickedTime != null) {
       final now = DateTime.now();
-      final selectedTime = DateTime(now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
-      controller.text = DateFormat('hh:mm a').format(selectedTime);
+      final selectedTime = DateTime(
+          now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
+      controller.text = DateFormat('hh:mm:ss a').format(selectedTime);
     }
     return pickedTime;
   }
@@ -115,10 +105,10 @@ class TimeWidgetState extends State<TimeWidget> {
                   fontSize: 13,
                 ),
                 onTap: () async {
-                  await selectTime(context,_startTimeController);
+                  await selectTime(context, widget.startDateController);
                 },
                 inputType: TextInputType.datetime,
-                controller: _startTimeController,
+                controller: widget.startDateController,
               ),
             ),
             const SizedBox(width: 15),
@@ -154,19 +144,19 @@ class TimeWidgetState extends State<TimeWidget> {
                   fontSize: 13,
                 ),
                 inputType: TextInputType.datetime,
-                controller: _endTimeController,
+                controller: widget.endDateController,
                 onTap: () async {
-                  await selectTime(context,_endTimeController);
+                  await selectTime(context, widget.endDateController);
                 },
               ),
             ),
           ],
         ),
         CustomSwitch(
-          value: _enable,
-          onChanged: (val) {
+          value: widget.enable ?? false,
+          onChanged: widget.onChanged ?? (val) {
             setState(() {
-              _enable = val;
+              widget.enable = val;
             });
           },
         ),
@@ -174,7 +164,3 @@ class TimeWidgetState extends State<TimeWidget> {
     ).paddingSymmetric(vertical: 8);
   }
 }
-
-
-
-

@@ -1,11 +1,6 @@
 import 'dart:typed_data';
-
-import 'package:either_dart/either.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:hummus_admin_panel/core/network/client_api.dart';
-import 'package:hummus_admin_panel/core/utils/api_url.dart';
-import 'package:hummus_admin_panel/feature/hashtags/model/hashtag_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 class HashtagRepo {
 
@@ -39,5 +34,14 @@ class HashtagRepo {
     }
   }
 
+  Future<Either<String, HashtagModel>> deleteHashtag(int hashtagID) async {
+    Response? response = await ApiClient.deleteData('${ApiUrl.DELETE_HASHTAG}$hashtagID');
+    if (response.statusCode == 200) {
+      return Right(HashtagModel.fromJson(response.body));
+    } else {
+      print('Api Error ${response.statusCode} . ${response.body}//////////');
+      return Left(response.body['message'] ?? "unknown Error Occurred");
+    }
+  }
 
 }

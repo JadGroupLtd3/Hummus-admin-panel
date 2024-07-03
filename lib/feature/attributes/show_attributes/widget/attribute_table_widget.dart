@@ -1,15 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/attributes/controller/attribute_controller.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class AttributeTableWidget extends StatefulWidget {
   const AttributeTableWidget({super.key});
@@ -192,7 +182,28 @@ class _AttributeTableWidgetState extends State<AttributeTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this attribute?'.tr,
+                                              title: 'Delete Attribute'.tr,
+                                              onYesPressed: () {
+                                                attributeController.deleteAttribute(
+                                                  context,
+                                                  attributeID: attribute.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,

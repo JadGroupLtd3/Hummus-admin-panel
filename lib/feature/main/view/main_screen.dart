@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/home/delivery_times/controller/delivery_time_controller.dart';
+import 'package:hummus_admin_panel/feature/home/delivery_times/repo/delivery_time_repo.dart';
+import 'package:hummus_admin_panel/feature/home/settings/controller/settings_controller.dart';
+import 'package:hummus_admin_panel/feature/home/settings/repo/settings_repo.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,8 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   final HashtagController hashtagController = Get.put(HashtagController(HashtagRepo()));
   final QuestionsController questionsController = Get.put(QuestionsController(QuestionsRepo()));
   final CouponController couponController = Get.put(CouponController(CouponRepo()));
-
-
+  final DeliveryTimeController deliveryTimeController = Get.put(DeliveryTimeController(DeliveryTimeRepo()));
+  final SettingsController settingsController = Get.put(SettingsController(SettingsRepo()));
   @override
   void initState() {
     super.initState();
@@ -34,6 +38,8 @@ class _MainScreenState extends State<MainScreen> {
     await hashtagController.getHashtag(context);
     await questionsController.getQuestion(context);
     await couponController.getCoupon(context);
+    await deliveryTimeController.getDeliveryTime(context);
+    await settingsController.getSettings(context);
   }
 
   @override

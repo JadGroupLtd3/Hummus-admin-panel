@@ -8,8 +8,8 @@ class NotificationHeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NamesTextField(
-      title: 'Hebrew Question'.tr,
-      hintTitle: 'Hebrew Answer'.tr,
+      title: 'Hebrew Notification'.tr,
+      hintTitle: 'Hebrew Notification'.tr,
     );
   }
 }

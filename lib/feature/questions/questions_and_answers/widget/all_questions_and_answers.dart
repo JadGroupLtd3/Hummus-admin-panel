@@ -94,6 +94,28 @@ class _AllQuestionsAndAnswersState extends State<AllQuestionsAndAnswers> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this question?'.tr,
+                                              title: 'Delete Question'.tr,
+                                              onYesPressed: () {
+                                                questionsController.deleteQuestion(
+                                                    context,
+                                                    questionID: question.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,

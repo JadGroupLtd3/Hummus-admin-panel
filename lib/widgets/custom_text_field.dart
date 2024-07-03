@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -34,7 +35,8 @@ class CustomTextField extends StatefulWidget {
 
   final String? Function(String?)? onValidate;
 
-  const CustomTextField({super.key, 
+  const CustomTextField({
+    super.key,
     this.hintText = '',
     this.hintStyle,
     this.controller,
@@ -112,34 +114,39 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ]
             : widget.inputFormatters,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           constraints: const BoxConstraints(maxHeight: 60, minHeight: 35),
           border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: const Color(0xff000000).withOpacity(0.11),
                 width: 1,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(widget.radius ?? 500))),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(widget.radius ?? 500))),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: const Color(0xff000000).withOpacity(0.11),
                 width: 1,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(widget.radius ?? 500))),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(widget.radius ?? 500))),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: const Color(0xff000000).withOpacity(0.11),
                 width: 1,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(widget.radius ?? 500))),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(widget.radius ?? 500))),
           floatingLabelBehavior: FloatingLabelBehavior.never,
           alignLabelWithHint: true,
           hintText: widget.hintText,
-          hintStyle: widget.hintStyle ?? TajawalLight.copyWith(
-              fontSize: widget.fontSize ?? 11,
-              color: Theme.of(context).hintColor.withOpacity(1)),
+          hintStyle: widget.hintStyle ??
+              TajawalLight.copyWith(
+                  fontSize: widget.fontSize ?? 11,
+                  color: Theme.of(context).hintColor.withOpacity(1)),
           prefixIcon: widget.icon != null
-              ? Icon(widget.icon,color: Colors.black)
+              ? Icon(widget.icon, color: Colors.black)
               : null,
           suffixIcon: widget.isPassword!
               ? IconButton(
@@ -149,7 +156,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   onPressed: _toggle,
                 )
               : widget.suffixIconUrl != null
-              ? widget.suffixIconUrl : null,
+                  ? widget.suffixIconUrl
+                  : null,
           fillColor: widget.fillColor ?? Colors.white,
           filled: widget.filled ?? false,
         ),
@@ -159,7 +167,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ? widget.onSubmit!(text)
                 : null,
         onChanged: widget.onChanged,
-        validator: widget.onValidate != null ? widget.onValidate! : null,
+        validator: widget.onValidate != null
+            ? widget.onValidate!
+            : (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Field is required'.tr;
+                }
+                return null;
+              },
       ),
     );
   }

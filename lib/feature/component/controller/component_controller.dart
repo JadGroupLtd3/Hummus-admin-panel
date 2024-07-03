@@ -1,13 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/helper/snack_bar.dart';
-import 'package:hummus_admin_panel/feature/component/model/component_model.dart';
-import 'package:hummus_admin_panel/feature/component/repo/component_repo.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ComponentController extends GetxController {
   late ComponentRepo componentRepo;
@@ -64,4 +57,21 @@ class ComponentController extends GetxController {
       componentList.value = right.data;
     });
   }
+
+  Future<void> deleteComponent(BuildContext context,{required int componentID}) async {
+    controllerState.value = ControllerState.loading;
+    final result = await componentRepo.deleteComponent(componentID);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+      update();
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      await getComponent(context);
+      update();
+      Navigator.pop(context);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+    });
+  }
+
 }

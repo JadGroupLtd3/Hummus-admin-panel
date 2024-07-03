@@ -34,4 +34,15 @@ class CouponRepo {
       return Left(response.body['message'] ?? "Unknown Error Occurred");
     }
   }
+
+  Future<Either<String, CouponModel>> deleteCoupon(int couponID) async {
+    Response? response = await ApiClient.deleteData('${ApiUrl.DELETE_COUPON}$couponID');
+    if (response.statusCode == 200) {
+      return Right(CouponModel.fromJson(response.body));
+    } else {
+      print('Api Error ${response.statusCode} . ${response.body}//////////');
+      return Left(response.body['message'] ?? "unknown Error Occurred");
+    }
+  }
+
 }

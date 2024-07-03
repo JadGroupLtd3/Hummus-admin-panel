@@ -8,8 +8,8 @@ class NotificationArScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NamesTextField(
-      title: 'Arabic Question'.tr,
-      hintTitle: 'Arabic Answer'.tr,
+      title: 'Arabic Notification'.tr,
+      hintTitle: 'Arabic Notification'.tr,
     );
   }
 }

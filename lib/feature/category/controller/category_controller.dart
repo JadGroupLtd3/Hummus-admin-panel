@@ -61,4 +61,20 @@ class CategoryController extends GetxController {
     });
   }
 
+  Future<void> deleteCategory(BuildContext context,{required int categoryID}) async {
+    controllerState.value = ControllerState.loading;
+    final result = await categoryRepo.deleteCategory(categoryID);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+      update();
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      await getCategory(context);
+      update();
+      Navigator.pop(context);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+    });
+  }
+
 }

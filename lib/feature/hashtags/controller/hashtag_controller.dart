@@ -1,13 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/helper/snack_bar.dart';
-import 'package:hummus_admin_panel/feature/hashtags/model/hashtag_model.dart';
-import 'package:hummus_admin_panel/feature/hashtags/repo/hashtag_repo.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:image_picker/image_picker.dart';
 
 class HashtagController extends GetxController {
   late HashtagRepo hashtagRepo;
@@ -62,6 +55,22 @@ class HashtagController extends GetxController {
     }, (right) {
       controllerState.value = ControllerState.success;
       hashtagList.value = right.data;
+    });
+  }
+
+  Future<void> deleteHashtag(BuildContext context,{required int hashtagID}) async {
+    controllerState.value = ControllerState.loading;
+    final result = await hashtagRepo.deleteHashtag(hashtagID);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+      update();
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      await getHashtag(context);
+      update();
+      Navigator.pop(context);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
     });
   }
 

@@ -37,4 +37,10 @@ class ApiUrl {
   static const String UPDATE_COUPON = '/coupons/update';
   static const String DELETE_COUPON = '/coupons/delete/';
 
+  static const String CREATE_DELIVERY_TIME = '/settings/work-time';
+  static const String GET_DELIVERY_TIME = '/settings/work-time';
+
+  static const String CREATE_SETTINGS = '/settings';
+  static const String GET_SETTINGS = '/settings';
+
 }

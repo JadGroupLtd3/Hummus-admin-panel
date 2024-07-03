@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   final String? icon;
@@ -17,6 +14,7 @@ class ConfirmationDialog extends StatelessWidget {
   final double? width;
   final Color? color;
   final Color? backgroundColor;
+
   const ConfirmationDialog(
       {super.key,
       this.icon,
@@ -40,14 +38,21 @@ class ConfirmationDialog extends StatelessWidget {
       insetPadding: const EdgeInsets.all(30),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: SizedBox(
-          width: width ?? 500,
-          child: Padding(
-            padding: EdgeInsets.all(padding ?? 20),
-            child: widget ??
-                Column(mainAxisSize: MainAxisSize.min, children: [
+        width: width ?? 500,
+        child: Padding(
+          padding: EdgeInsets.all(padding ?? 20),
+          child: widget ??
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: SvgPicture.asset(icon ?? '', width: 50, height: 50,color: color,),
+                    child: SvgPicture.asset(
+                      icon ?? '',
+                      width: 50,
+                      height: 50,
+                      color: color,
+                    ),
                   ),
                   title != null
                       ? Padding(
@@ -56,48 +61,65 @@ class ConfirmationDialog extends StatelessWidget {
                             title!,
                             textAlign: TextAlign.center,
                             style: TajawalRegular.copyWith(
-                                fontSize: 17, color: Colors.red),
+                              fontSize: 17,
+                              color: Colors.red,
+                            ),
                           ),
                         )
                       : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(description ?? '',
-                        style: TajawalRegular.copyWith(fontSize: 15),
-                        textAlign: TextAlign.center),
+                    child: Text(
+                      description ?? '',
+                      style: TajawalRegular.copyWith(fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Row(children: [
-                    Expanded(
-                      child: CustomButton(
-                        buttonText: isLogOut! ? 'yes'.tr : 'no'.tr,
-                        style: TajawalBold.copyWith(
-                            fontSize: 18, color: Colors.white),
-                        backGroundColor: const Color(0xff8DC63F),
-                        onPressed: () => isLogOut!
-                            ? onYesPressed!()
-                            : onNoPressed != null
-                                ? onNoPressed!()
-                                : Get.back(),
-                        radius: 500,
-                        height: 40,
-                        width: 89,
-                      ),
-                    ),
-                    Expanded(
+                  Row(
+                    children: [
+                      Expanded(
                         child: CustomButton(
-                      buttonText: isLogOut! ? 'no'.tr : 'yes'.tr,
-                      style: TajawalBold.copyWith(
-                          fontSize: 18, color: Colors.white),
-                      backGroundColor: const Color(0xffC1C1C1),
-                      onPressed: () => isLogOut! ? Get.back() : onYesPressed!(),
-                      radius: 500,
-                      height: 40,
-                      width: 89,
-                    )),
-                  ])
-                ]),
-          )),
+                          buttonText: isLogOut! ? 'yes'.tr : 'no'.tr,
+                          style: TajawalBold.copyWith(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                          backGroundColor: isLogOut!
+                              ? MyThemeData.light.primaryColor
+                              : const Color(0xffC1C1C1),
+                          onPressed: () => isLogOut!
+                              ? onYesPressed!()
+                              : onNoPressed != null
+                                  ? onNoPressed!()
+                                  : Get.back(),
+                          radius: 500,
+                          height: 40,
+                          width: 89,
+                        ),
+                      ),
+                      Expanded(
+                        child: CustomButton(
+                          buttonText: isLogOut! ? 'no'.tr : 'yes'.tr,
+                          style: TajawalBold.copyWith(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                          backGroundColor: isLogOut!
+                              ? const Color(0xffC1C1C1)
+                              : MyThemeData.light.primaryColor,
+                          onPressed: () => isLogOut! ? Get.back() : onYesPressed!(),
+                          radius: 500,
+                          height: 40,
+                          width: 89,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+        ),
+      ),
     );
   }
 }

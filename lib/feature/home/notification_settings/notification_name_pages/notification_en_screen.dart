@@ -8,8 +8,8 @@ class NotificationEnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NamesTextField(
-      title: 'English Question'.tr,
-      hintTitle: 'English Answer'.tr,
+      title: 'English Notification'.tr,
+      hintTitle: 'English Notification'.tr,
     );
   }
 }

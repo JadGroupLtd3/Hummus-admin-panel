@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/home/notification_settings/widget/notification_nav_bar.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
 import 'package:hummus_admin_panel/widgets/custom_switch.dart';
 
 class NotificationStatusWidget extends StatelessWidget {
@@ -31,16 +24,15 @@ class NotificationStatusWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 18),
       child: Column(
         children: [
-          ListView.builder(
-            itemCount: notificationStatusList.length,
+          ListView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Row(
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    notificationStatusList[index],
+                    notificationStatusList[0],
                     style: TajawalRegular.copyWith(
                       fontSize: 14,
                     ),
@@ -52,8 +44,127 @@ class NotificationStatusWidget extends StatelessWidget {
                     },
                   ),
                 ],
-              ).paddingSymmetric(vertical: 11);
-            },
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[1],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[2],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[3],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[4],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[5],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[6],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    notificationStatusList[7],
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                    ),
+                  ),
+                  CustomSwitch(
+                    value: _enable,
+                    onChanged: (val) {
+                      _enable = val;
+                    },
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 11),
+            ],
           ),
         ],
       ),

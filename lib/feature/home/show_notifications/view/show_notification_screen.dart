@@ -39,7 +39,7 @@ class ShowNotificationScreen extends StatelessWidget {
                         width: 170,
                         height: 45,
                         onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(4);
+                          Get.find<SliderPagesController>().goToTab(3);
                         },
                       );
                     },

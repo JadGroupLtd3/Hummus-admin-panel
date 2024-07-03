@@ -15,6 +15,7 @@ class AddPhotoWidget extends StatefulWidget {
   final bool? isComponent;
   final bool? isHashtag;
   final bool? isQuestion;
+  final bool? isSettings;
 
   AddPhotoWidget({
     super.key,
@@ -26,6 +27,7 @@ class AddPhotoWidget extends StatefulWidget {
     this.isQuestion,
     this.isHashtag,
     this.isComponent,
+    this.isSettings,
     this.imagePath,
     this.pickedProfileImageFile,
     this.webImage,
@@ -37,25 +39,28 @@ class AddPhotoWidget extends StatefulWidget {
 }
 
 class _AddPhotoWidgetState extends State<AddPhotoWidget> {
-
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     try {
-      widget.pickedProfileImageFile = await picker.pickImage(source: ImageSource.gallery);
+      widget.pickedProfileImageFile =
+          await picker.pickImage(source: ImageSource.gallery);
       if (widget.pickedProfileImageFile != null) {
         if (kIsWeb) {
           widget.webImage = await widget.pickedProfileImageFile!.readAsBytes();
-          if(widget.isCategory == true) {
+          if (widget.isCategory == true) {
             Get.find<CategoryController>().webImage = widget.webImage;
           }
-          if(widget.isComponent == true) {
+          if (widget.isComponent == true) {
             Get.find<ComponentController>().webImage = widget.webImage;
           }
-          if(widget.isHashtag == true) {
+          if (widget.isHashtag == true) {
             Get.find<HashtagController>().webImage = widget.webImage;
           }
-          if(widget.isQuestion == true) {
+          if (widget.isQuestion == true) {
             Get.find<QuestionsController>().webImage = widget.webImage;
+          }
+          if (widget.isSettings == true) {
+            Get.find<SettingsController>().webImage = widget.webImage;
           }
         } else {
           widget.pickedImage = File(widget.pickedProfileImageFile!.path);
@@ -106,7 +111,10 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
                     child: widget.isEdit &&
                             widget.imagePath != null &&
                             widget.pickedProfileImageFile?.path == null
-                        ? Image.network(widget.imagePath!)
+                        ? Image.network(
+                            widget.imagePath!,
+                            fit: BoxFit.none,
+                          )
                         : kIsWeb && widget.webImage != null
                             ? Image.memory(
                                 widget.webImage!,
@@ -114,7 +122,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
                               )
                             : Image.file(
                                 File(widget.pickedProfileImageFile!.path),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.none,
                               ),
                   ),
                 );

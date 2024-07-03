@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/feature/home/settings/widget/acount_information_fields.dart';
 import 'package:hummus_admin_panel/feature/home/settings/widget/information_widget.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -46,7 +43,8 @@ class SettingsScreen extends StatelessWidget {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
                         child: Column(
                           children: [
                             InformationWidget(
@@ -56,11 +54,11 @@ class SettingsScreen extends StatelessWidget {
                               isBorder: true,
                             ),
                             20.verticalSpace,
-                            InformationWidget(
-                              imagePath: Images.group,
-                              title: 'Social Media'.tr,
-                              subTitle: 'Social media information'.tr,
-                            ),
+                            // InformationWidget(
+                            //   imagePath: Images.group,
+                            //   title: 'Social Media'.tr,
+                            //   subTitle: 'Social media information'.tr,
+                            // ),
                           ],
                         ),
                       ),
@@ -84,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: AccountInformationFields(),
+                      child: const AccountInformationFields(),
                     ),
                   ),
                 ],

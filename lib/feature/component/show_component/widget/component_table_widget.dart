@@ -1,15 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/component/controller/component_controller.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class ComponentTableWidget extends StatefulWidget {
   const ComponentTableWidget({super.key});
@@ -112,7 +102,7 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                 ),
                               ),
                               children: [
-                                const TextUtils(title: '#').paddingOnly(
+                                TextUtils(title: '${component.id}').paddingOnly(
                                     right: languageController.langLocal == eng
                                         ? 0
                                         : 20,
@@ -195,7 +185,28 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this attribute?'.tr,
+                                              title: 'Delete Attribute'.tr,
+                                              onYesPressed: () {
+                                                componentController.deleteComponent(
+                                                    context,
+                                                    componentID: component.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,
