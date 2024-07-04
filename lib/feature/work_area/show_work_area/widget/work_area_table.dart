@@ -1,42 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
 
-class MealsTableWidget extends StatefulWidget {
-  const MealsTableWidget({super.key});
+class WorkAreaTable extends StatefulWidget {
+  const WorkAreaTable({super.key});
 
   @override
-  State<MealsTableWidget> createState() => _MealsTableWidgetState();
+  State<WorkAreaTable> createState() => _WorkAreaTableState();
 }
 
-class _MealsTableWidgetState extends State<MealsTableWidget> {
+class _WorkAreaTableState extends State<WorkAreaTable> {
   final LanguageController languageController = Get.find<LanguageController>();
 
   @override
   void initState() {
-    Get.find<MealsController>().getMeals(context);
+    Get.find<RegionsController>().getRegions(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MealsController>(
-      builder: (mealsController) {
+    return GetBuilder<RegionsController>(
+      builder: (regionsController) {
         return Column(
           children: [
             Table(
-              columnWidths: const {
-                1: IntrinsicColumnWidth(),
-              },
               children: [
                 TableRow(
                   decoration: BoxDecoration(
@@ -51,35 +38,25 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                         .paddingOnly(
                             right: languageController.langLocal == eng ? 0 : 20,
                             left: languageController.langLocal == eng ? 20 : 0),
-                    TextUtils(title: 'Image'.tr, color: Colors.white)
-                        .paddingOnly(
-                            left: languageController.langLocal == eng ? 0 : 30,
-                            right:
-                                languageController.langLocal == eng ? 30 : 0),
-                    TextUtils(title: 'Meal name'.tr, color: Colors.white)
+                    TextUtils(title: 'Address'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 40 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 40),
-                    Center(
+                    const Center(
                         child: TextUtils(
-                            title: 'Fake price'.tr, color: Colors.white)),
-                    TextUtils(title: 'Actual price'.tr, color: Colors.white),
-                    TextUtils(title: 'Category'.tr, color: Colors.white),
-                    const TextUtils(
-                        title: 'Activation status', color: Colors.white),
-                    const TextUtils(title: 'Operations', color: Colors.white)
-                        .paddingOnly(
-                            left: languageController.langLocal == eng ? 20 : 0,
-                            right:
-                                languageController.langLocal == eng ? 0 : 20),
+                            title: 'Activation status', color: Colors.white)),
+                    const Center(
+                      child:
+                          TextUtils(title: 'Operations', color: Colors.white),
+                    ),
                   ],
                 ),
               ],
             ),
             Obx(
               () {
-                if (mealsController.controllerState.value ==
+                if (regionsController.controllerState.value ==
                     ControllerState.loading) {
                   return Column(
                     children: [
@@ -94,13 +71,10 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                 } else {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: mealsController.mealsList.length,
+                      itemCount: regionsController.regionsList.length,
                       itemBuilder: (context, index) {
-                        final meal = mealsController.mealsList[index];
+                        final regions = regionsController.regionsList[index];
                         return Table(
-                          columnWidths: const {
-                            1: IntrinsicColumnWidth(),
-                          },
                           children: [
                             TableRow(
                               decoration: BoxDecoration(
@@ -112,7 +86,7 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                 ),
                               ),
                               children: [
-                                TextUtils(title: '${meal.id}').paddingOnly(
+                                TextUtils(title: '${regions.id}').paddingOnly(
                                     right: languageController.langLocal == eng
                                         ? 0
                                         : 20,
@@ -121,65 +95,15 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                         : 0,
                                     top: 10,
                                     bottom: 10),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: SizedBox(
-                                    width: 36,
-                                    height: 36,
-                                    child: Image.network(
-                                      meal.primaryImage,
-                                      height: 36,
-                                      width: 36,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ).paddingOnly(
+                                TextUtils(title: regions.name).paddingOnly(
                                     left: languageController.langLocal == eng
-                                        ? 0
-                                        : 30,
+                                        ? 40
+                                        : 0,
                                     right: languageController.langLocal == eng
-                                        ? 30
-                                        : 0,
+                                        ? 0
+                                        : 40,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(
-                                        title: languageController.langLocal ==
-                                                eng
-                                            ? meal.name.en
-                                            : languageController.langLocal ==
-                                                    ara
-                                                ? meal.name.ar
-                                                : meal.name.he)
-                                    .paddingOnly(
-                                        left:
-                                            languageController.langLocal == eng
-                                                ? 40
-                                                : 0,
-                                        right:
-                                            languageController.langLocal == eng
-                                                ? 0
-                                                : 40,
-                                        top: 10,
-                                        bottom: 10),
-                                Center(
-                                    child:  TextUtils(title: meal.fakePrice)
-                                        .paddingOnly(top: 10, bottom: 10)),
-                                TextUtils(title: meal.totalPrice).paddingOnly(
-                                    right: 25,
-                                    left: languageController.langLocal == eng
-                                        ? 25
-                                        : 0,
-                                    top: 10,
-                                    bottom: 10),
-                                TextUtils(title:
-                                languageController.langLocal ==
-                                    eng
-                                    ? meal.category.name.en
-                                    : languageController.langLocal ==
-                                    ara
-                                    ? meal.category.name.ar
-                                    : meal.category.name.he,
-                                ).paddingOnly(top: 10, bottom: 10),
                                 Center(
                                   child: SvgPicture.asset(
                                     Images.dot,
@@ -200,7 +124,6 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,
@@ -222,13 +145,13 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                               icon: Images.delete,
                                               color: Colors.black,
                                               description:
-                                              'Do you want to delete this meal?'
-                                                  .tr,
-                                              title: 'Delete Coupon'.tr,
+                                                  'Do you want to delete this region?'
+                                                      .tr,
+                                              title: 'Delete Regions'.tr,
                                               onYesPressed: () {
-                                                mealsController.deleteMeals(
+                                                regionsController.deleteRegions(
                                                   context,
-                                                  mealID: meal.id,
+                                                  regionsID: regions.id,
                                                 );
                                               },
                                             );

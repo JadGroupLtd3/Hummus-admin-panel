@@ -1,36 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
 
-class MealsTableWidget extends StatefulWidget {
-  const MealsTableWidget({super.key});
+class DealsTableWidget extends StatefulWidget {
+  const DealsTableWidget({super.key});
 
   @override
-  State<MealsTableWidget> createState() => _MealsTableWidgetState();
+  State<DealsTableWidget> createState() => _DealsTableWidgetState();
 }
 
-class _MealsTableWidgetState extends State<MealsTableWidget> {
+class _DealsTableWidgetState extends State<DealsTableWidget> {
   final LanguageController languageController = Get.find<LanguageController>();
 
   @override
   void initState() {
-    Get.find<MealsController>().getMeals(context);
+    Get.find<DealsController>().getDeals(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MealsController>(
-      builder: (mealsController) {
+    return GetBuilder<DealsController>(
+      builder: (dealsController) {
         return Column(
           children: [
             Table(
@@ -56,16 +47,16 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                             left: languageController.langLocal == eng ? 0 : 30,
                             right:
                                 languageController.langLocal == eng ? 30 : 0),
-                    TextUtils(title: 'Meal name'.tr, color: Colors.white)
+                    TextUtils(title: 'Deal name'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 40 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 40),
                     Center(
-                        child: TextUtils(
-                            title: 'Fake price'.tr, color: Colors.white)),
-                    TextUtils(title: 'Actual price'.tr, color: Colors.white),
-                    TextUtils(title: 'Category'.tr, color: Colors.white),
+                        child:
+                            TextUtils(title: 'price'.tr, color: Colors.white)),
+                    TextUtils(title: 'starting date'.tr, color: Colors.white),
+                    TextUtils(title: 'Expiry date'.tr, color: Colors.white),
                     const TextUtils(
                         title: 'Activation status', color: Colors.white),
                     const TextUtils(title: 'Operations', color: Colors.white)
@@ -79,7 +70,7 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
             ),
             Obx(
               () {
-                if (mealsController.controllerState.value ==
+                if (dealsController.controllerState.value ==
                     ControllerState.loading) {
                   return Column(
                     children: [
@@ -94,9 +85,9 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                 } else {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: mealsController.mealsList.length,
+                      itemCount: dealsController.dealsList.length,
                       itemBuilder: (context, index) {
-                        final meal = mealsController.mealsList[index];
+                        final deal = dealsController.dealsList[index];
                         return Table(
                           columnWidths: const {
                             1: IntrinsicColumnWidth(),
@@ -112,7 +103,7 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                 ),
                               ),
                               children: [
-                                TextUtils(title: '${meal.id}').paddingOnly(
+                                TextUtils(title: '${deal.id}').paddingOnly(
                                     right: languageController.langLocal == eng
                                         ? 0
                                         : 20,
@@ -126,8 +117,8 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                   child: SizedBox(
                                     width: 36,
                                     height: 36,
-                                    child: Image.network(
-                                      meal.primaryImage,
+                                    child: Image.asset(
+                                      Images.background,
                                       height: 36,
                                       width: 36,
                                       fit: BoxFit.fill,
@@ -142,49 +133,38 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                         : 0,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(
-                                        title: languageController.langLocal ==
-                                                eng
-                                            ? meal.name.en
-                                            : languageController.langLocal ==
-                                                    ara
-                                                ? meal.name.ar
-                                                : meal.name.he)
-                                    .paddingOnly(
-                                        left:
-                                            languageController.langLocal == eng
-                                                ? 40
-                                                : 0,
-                                        right:
-                                            languageController.langLocal == eng
-                                                ? 0
-                                                : 40,
-                                        top: 10,
-                                        bottom: 10),
-                                Center(
-                                    child:  TextUtils(title: meal.fakePrice)
-                                        .paddingOnly(top: 10, bottom: 10)),
-                                TextUtils(title: meal.totalPrice).paddingOnly(
-                                    right: 25,
+                                TextUtils(title: 'deal').paddingOnly(
                                     left: languageController.langLocal == eng
-                                        ? 25
+                                        ? 40
                                         : 0,
+                                    right: languageController.langLocal == eng
+                                        ? 0
+                                        : 40,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(title:
-                                languageController.langLocal ==
-                                    eng
-                                    ? meal.category.name.en
-                                    : languageController.langLocal ==
-                                    ara
-                                    ? meal.category.name.ar
-                                    : meal.category.name.he,
-                                ).paddingOnly(top: 10, bottom: 10),
+                                Center(
+                                    child: TextUtils(title: deal.totalPrice)
+                                        .paddingOnly(top: 10, bottom: 10)),
+                                TextUtils(
+                                        title: deal.startDate)
+                                    .paddingOnly(
+                                        right: 0,
+                                        left:
+                                            languageController.langLocal == eng
+                                                ? 25
+                                                : 0,
+                                        top: 10,
+                                        bottom: 10),
+                                TextUtils(title: deal.endDate)
+                                    .paddingOnly(top: 10, bottom: 10),
                                 Center(
                                   child: SvgPicture.asset(
                                     Images.dot,
                                     width: 25,
                                     height: 25,
+                                    color: deal.status == 1
+                                        ? MyThemeData.light.primaryColor
+                                        : Colors.red,
                                   ).paddingOnly(
                                       left: languageController.langLocal == eng
                                           ? 0
@@ -221,14 +201,12 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                               padding: 5,
                                               icon: Images.delete,
                                               color: Colors.black,
-                                              description:
-                                              'Do you want to delete this meal?'
-                                                  .tr,
-                                              title: 'Delete Coupon'.tr,
+                                              description: 'Do you want to delete this deal?'.tr,
+                                              title: 'Delete Deal'.tr,
                                               onYesPressed: () {
-                                                mealsController.deleteMeals(
+                                                dealsController.deleteDeals(
                                                   context,
-                                                  mealID: meal.id,
+                                                  dealID: deal.id,
                                                 );
                                               },
                                             );

@@ -114,6 +114,19 @@ class ApiClient extends GetxService {
     }
   }
 
+  static Future<Response> getDataLogin(String uri) async {
+    try {
+      Http.Response response = await Http.get(
+        Uri.parse('${ApiUrl.LOGIN_BASE_URL}$uri'),
+        headers: mainHeaders,
+      ).timeout(const Duration(seconds: timeoutInSeconds));
+      return handleResponse(response, uri);
+    } catch (e) {
+      print(e);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   static Future<Response> postMultipartData(
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
       {Map<String, String>? headers}) async {

@@ -1,19 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class UsersTableWidget extends StatelessWidget {
   final String name;
   final String email;
   final String phone;
   final String kind;
+  final String imagePath;
   final void Function()? onTapDelete;
   final void Function()? onTapEdit;
   const UsersTableWidget({
@@ -22,6 +15,7 @@ class UsersTableWidget extends StatelessWidget {
     required this.email,
     required this.phone,
     required this.kind,
+    required this.imagePath,
     this.onTapDelete,
     this.onTapEdit,
   });
@@ -108,8 +102,8 @@ class UsersTableWidget extends StatelessWidget {
                             child: SizedBox(
                               width: 36,
                               height: 36,
-                              child: Image.asset(
-                                Images.background,
+                              child: Image.network(
+                                imagePath,
                                 height: 20,
                                 width: 20,
                                 fit: BoxFit.fill,

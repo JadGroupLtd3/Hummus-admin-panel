@@ -1,16 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/coupon/add_new_coupon/widget/drop_down_btn.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class MealsPhotosWidget extends StatelessWidget {
+class MealsPhotosWidget extends StatefulWidget {
   const MealsPhotosWidget({super.key});
 
+  @override
+  State<MealsPhotosWidget> createState() => _MealsPhotosWidgetState();
+}
+
+class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
+  final CategoryController categoryController = Get.find<CategoryController>();
+  final LanguageController languageController = Get.find<LanguageController>();
+  String title = 'Category'.tr;
+  @override
+  void initState() {
+    categoryController.getCategory(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final LanguageController languageController = Get.find<LanguageController>();
@@ -89,7 +95,40 @@ class MealsPhotosWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30)
             ),
             child: DropDownBTN(
-              title: 'Category'.tr,
+              title: title,
+              onChanged: (String? val) {
+                setState(() {
+                  if(val != null){
+                    title =  languageController.langLocal == eng
+                        ? categoryController.categoryList.firstWhere((element) =>
+                    element.id.toString() == val).nameEn ?? '' ?? ''
+                        : languageController.langLocal == ara
+                        ? categoryController.categoryList.firstWhere((element) =>
+                    element.id.toString() == val).nameAr ?? '' ?? ''
+                        : categoryController.categoryList.firstWhere((element) =>
+                    element.id.toString() == val).nameHe ?? '' ?? '' ;
+                  }
+                });
+                categoryController.categorySelectedId.value = int.parse(val ?? '');
+                print(categoryController.categorySelectedId.value);
+              },
+              items: categoryController.categoryList.map((val) {
+                return DropdownMenuItem<String>(
+                  value: val.id.toString(),
+                  child: Text(
+                    languageController.langLocal == eng
+                        ? val.nameEn ?? ''
+                        : languageController.langLocal == ara
+                        ? val.nameAr ?? ''
+                        : val.nameHe ?? '',
+                    style: TajawalRegular.copyWith(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                );
+              },
+              ).toList(),
             ),
           ),
           15.verticalSpace,

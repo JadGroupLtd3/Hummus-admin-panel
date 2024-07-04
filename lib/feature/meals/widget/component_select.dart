@@ -1,24 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class ComponentSelect extends StatefulWidget {
   const ComponentSelect({super.key});
 
   @override
-  _ComponentSelectState createState() => _ComponentSelectState();
+  ComponentSelectState createState() => ComponentSelectState();
 }
 
-class _ComponentSelectState extends State<ComponentSelect> {
+class ComponentSelectState extends State<ComponentSelect> {
+
+  final ComponentController componentController = Get.find<ComponentController>();
+  final LanguageController languageController = Get.find<LanguageController>();
+
   int? selectedIndex;
-  List<bool> isYesSelectedList = List<bool>.generate(5, (index) => true);
+  List<bool> isYesSelectedList = List<bool>.generate(
+      Get.find<ComponentController>().componentList.length, (index) => true);
+  List<bool> isComponentSelectedList = List<bool>.generate(
+      Get.find<ComponentController>().componentList.length, (index) => false);
 
   double getItemHeight(int index) {
-    if (index == selectedIndex) {
+    if (isComponentSelectedList[index]) {
       return isYesSelectedList[index] ? 200 : 180;
     } else {
       return 100;
@@ -27,80 +29,91 @@ class _ComponentSelectState extends State<ComponentSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 0),
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 14,
-            spreadRadius: 9,
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            Column(
+    return GetBuilder<ComponentController>(
+      builder: (componentController) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 0),
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 14,
+                spreadRadius: 9,
+              )
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
               children: [
-                Row(
+                Column(
                   children: [
-                    SvgPicture.asset(
-                      Images.category,
-                      height: 20,
-                      width: 20,
-                      color: MyThemeData.light.focusColor,
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          Images.category,
+                          height: 20,
+                          width: 20,
+                          color: MyThemeData.light.focusColor,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Component'.tr,
+                          style: TajawalBold.copyWith(
+                            fontSize: 14,
+                            color: MyThemeData.light.focusColor,
+                          ),
+                        ).paddingOnly(top: 5),
+                      ],
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Component'.tr,
-                      style: TajawalBold.copyWith(
-                        fontSize: 14,
-                        color: MyThemeData.light.focusColor,
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: GridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          mainAxisSpacing: 5,
+                          crossAxisSpacing: 5,
+                          childAspectRatio: 0.9,
+                        ),
+                        itemCount: isYesSelectedList.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isComponentSelectedList[index]) {
+                                  selectedIndex = null;
+                                  isComponentSelectedList[index] = false;
+                                } else {
+                                  selectedIndex = index;
+                                  isComponentSelectedList[index] = true;
+                                }
+                              });
+                            },
+                            child: SizedBox(
+                              height: getItemHeight(index),
+                              child: isComponentSelectedList[index]
+                                  ? selectedComponent(index)
+                                  : notSelectedComponent(index),
+                            ),
+                          );
+                        },
                       ),
-                    ).paddingOnly(top: 5),
+                    )
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: GridView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5,
-                      childAspectRatio: 0.9,
-                    ),
-                    itemCount: isYesSelectedList.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        child: SizedBox(
-                          height: getItemHeight(index),
-                          child: index == selectedIndex
-                              ? selectedComponent(index)
-                              : notSelectedComponent(),
-                        ),
-                      );
-                    },
-                  ),
-                )
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -126,26 +139,35 @@ class _ComponentSelectState extends State<ComponentSelect> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: SizedBox(
-                    width: 36,
-                    height: 36,
-                    child: Image.asset(
-                      Images.background,
-                      height: 36,
-                      width: 36,
-                      fit: BoxFit.fill,
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: SizedBox(
+                        width: 36,
+                        height: 36,
+                        child: Image.network(
+                          componentController.componentList[index].image ?? '',
+                          height: 36,
+                          width: 36,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'component name',
-                  style: TajawalRegular.copyWith(
-                    fontSize: 14,
-                  ),
+                    const SizedBox(width: 10),
+                    Text(
+                      languageController.langLocal == eng
+                          ? componentController.componentList[index].nameEn ?? ''
+                          : languageController.langLocal == ara
+                          ? componentController.componentList[index].nameAr ?? ''
+                          : componentController.componentList[index].nameHe ?? '',
+                      style: TajawalRegular.copyWith(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -180,12 +202,12 @@ class _ComponentSelectState extends State<ComponentSelect> {
                                   : MyThemeData.light.hoverColor,
                               child: isYesSelectedList[index]
                                   ? const Center(
-                                child: Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                  size: 13,
-                                ),
-                              )
+                                      child: Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                        size: 13,
+                                      ),
+                                    )
                                   : null,
                             ),
                             const SizedBox(width: 4),
@@ -213,12 +235,12 @@ class _ComponentSelectState extends State<ComponentSelect> {
                                   : MyThemeData.light.hoverColor,
                               child: !isYesSelectedList[index]
                                   ? const Center(
-                                child: Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                  size: 13,
-                                ),
-                              )
+                                      child: Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                        size: 13,
+                                      ),
+                                    )
                                   : null,
                             ),
                             const SizedBox(width: 4),
@@ -267,35 +289,39 @@ class _ComponentSelectState extends State<ComponentSelect> {
     ).paddingOnly(top: 28);
   }
 
-  Widget notSelectedComponent() {
+  Widget notSelectedComponent(int index) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: SizedBox(
-            width: 36,
-            height: 36,
-            child: Image.asset(
-              Images.background,
-              height: 36,
-              width: 36,
-              fit: BoxFit.fill,
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: SizedBox(
+                width: 36,
+                height: 36,
+                child: Image.network(
+                  componentController.componentList[index].image ?? '',
+                  height: 36,
+                  width: 36,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(width: 10),
+            Text(
+              languageController.langLocal == eng
+                  ? componentController.componentList[index].nameEn ?? ''
+                  : languageController.langLocal == ara
+                  ? componentController.componentList[index].nameAr ?? ''
+                  : componentController.componentList[index].nameHe ?? '',
+              style: TajawalRegular.copyWith(
+                fontSize: 14,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 10),
-        Text(
-          'Component name'.tr,
-          style: TajawalRegular.copyWith(
-            fontSize: 14,
-          ),
-        ).paddingOnly(top: 5),
       ],
     );
   }
 }
-
-
-
-
-

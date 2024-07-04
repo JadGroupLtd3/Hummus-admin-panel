@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class CategoryController extends GetxController {
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
-
+  RxInt categorySelectedId = 0.obs;
   TextEditingController categoryNameAr = TextEditingController();
   TextEditingController categoryNameEn = TextEditingController();
   TextEditingController categoryNameHe = TextEditingController();

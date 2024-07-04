@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/users/widget/users_table_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class ManagersScreen extends StatelessWidget {
   const ManagersScreen({super.key});
@@ -72,6 +65,7 @@ class ManagersScreen extends StatelessWidget {
                         email: 'name@gmail.com',
                         phone: '0509876543',
                         kind: 'Admin',
+                        imagePath: 'https://plus.unsplash.com/premium_photo-1720022609993-472f180738ed?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                       ),
                     ),
                   ),

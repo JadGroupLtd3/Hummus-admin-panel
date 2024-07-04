@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/home/delivery_times/controller/delivery_time_controller.dart';
-import 'package:hummus_admin_panel/feature/home/delivery_times/repo/delivery_time_repo.dart';
-import 'package:hummus_admin_panel/feature/home/settings/controller/settings_controller.dart';
-import 'package:hummus_admin_panel/feature/home/settings/repo/settings_repo.dart';
+import 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
+import 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
+import 'package:hummus_admin_panel/feature/meals/repo/meals_repo.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -23,6 +23,11 @@ class _MainScreenState extends State<MainScreen> {
   final CouponController couponController = Get.put(CouponController(CouponRepo()));
   final DeliveryTimeController deliveryTimeController = Get.put(DeliveryTimeController(DeliveryTimeRepo()));
   final SettingsController settingsController = Get.put(SettingsController(SettingsRepo()));
+  final RegionsController regionsController = Get.put(RegionsController(RegionsRepo()));
+  final UsersController usersController = Get.put(UsersController(UsersRepo()));
+  final DealsController dealsController = Get.put(DealsController(DealsRepo()));
+  final MealsController mealsController = Get.put(MealsController(MealsRepo()));
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +45,10 @@ class _MainScreenState extends State<MainScreen> {
     await couponController.getCoupon(context);
     await deliveryTimeController.getDeliveryTime(context);
     await settingsController.getSettings(context);
+    await regionsController.getRegions(context);
+    await usersController.getWaiters(context);
+    await dealsController.getDeals(context);
+    await mealsController.getMeals(context);
   }
 
   @override

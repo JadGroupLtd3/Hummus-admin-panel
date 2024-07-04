@@ -43,4 +43,25 @@ class ApiUrl {
   static const String CREATE_SETTINGS = '/settings';
   static const String GET_SETTINGS = '/settings';
 
+  static const String CREATE_REGIONS = '/regions/create';
+  static const String GET_REGIONS = '/regions';
+  static const String UPDATE_REGIONS = '/regions/update';
+  static const String DELETE_REGIONS = '/regions/delete/';
+
+  static const String CREATE_DEALS = '/deals/create';
+  static const String GET_DEALS = '/deals';
+  static const String UPDATE_DEALS = '/deals/update';
+  static const String DELETE_DEALS = '/deals/delete/';
+
+  static const String GET_NOTIFICATION = '/notification-settings';
+  static const String UPDATE_NOTIFICATION = '/notification-settings/update';
+  static const String UPDATE_STATUS_NOTIFICATION = '/notification-settings/update-status';
+
+  static const String GET_WAITERS = '/waiters';
+
+  static const String CREATE_MEALS = '/meals/create';
+  static const String GET_MEALS = '/meals';
+  static const String UPDATE_MEALS = '/meals/update';
+  static const String DELETE_MEALS = '/meals/delete/';
+
 }

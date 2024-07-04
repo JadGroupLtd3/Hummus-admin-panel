@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
-
 class CategoryRepo {
 
   Future<Either<String, CategoryModel>> createCategory(

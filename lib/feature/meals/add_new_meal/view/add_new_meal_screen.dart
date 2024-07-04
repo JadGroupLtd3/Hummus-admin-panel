@@ -1,16 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/attributes_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/component_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/element_and_hashtag_select.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_nav_bar.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_photos_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
+
 
 class AddNewMealScreen extends StatelessWidget {
   const AddNewMealScreen({super.key});

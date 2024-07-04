@@ -1,13 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/widget/meals_table_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
+
 
 class ShowMealsScreen extends StatelessWidget {
   const ShowMealsScreen({super.key});
@@ -40,7 +33,7 @@ class ShowMealsScreen extends StatelessWidget {
                         width: 150,
                         height: 45,
                         onPressed: (){
-                          Get.find<SliderPagesController>().goToTab(8);
+                          Get.find<SliderPagesController>().goToTab(29);
                         },
                       );
                     },
@@ -89,7 +82,7 @@ class ShowMealsScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MealsTableWidget(isDeal: false),
+                      child: const MealsTableWidget(),
                     ),
                   ),
                 ],
