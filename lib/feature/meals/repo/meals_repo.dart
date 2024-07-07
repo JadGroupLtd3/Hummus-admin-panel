@@ -1,8 +1,41 @@
+import 'dart:typed_data';
+
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/meals/model/create_meal_model.dart';
 import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
 
 class MealsRepo {
+
+  Future<Either<String, MealsModel>> createMeals(
+      CreateMealModel mealModel, Uint8List? webImageBytes) async {
+    Map<String, String> _body = Map();
+    _body.addAll(<String, String>{
+      "category_id": mealModel.categoryId.toString(),
+      "fake_price": mealModel.fakePrice.toString(),
+      "price": mealModel.price.toString(),
+      "coin_points": mealModel.coinPoints.toString(),
+    });
+    _body.addAll(mealModel.decodeLang());
+    _body.addAll(mealModel.decodeComponent());
+    _body.addAll(mealModel.decodeHashtag());
+    _body.addAll(mealModel.decodeAttribute());
+    _body.addAll(mealModel.decodeImage());
+    _body.addAll(mealModel.decodeRelated());
+    _body.addAll(mealModel.decodeHomeProduct());
+    Response? response = await ApiClient.postMultipartData(
+      ApiUrl.CREATE_DEALS,
+      _body,
+      [MultipartBody('image', webImage: webImageBytes)],
+    );
+    if (response.statusCode == 200) {
+      return Right(MealsModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
+
   Future<Either<String, MealsModel>> getMeals() async {
     Response? response = await ApiClient.getData(ApiUrl.GET_MEALS);
     if (response.statusCode == 200) {

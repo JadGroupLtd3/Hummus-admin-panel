@@ -127,3 +127,10 @@ export 'package:hummus_admin_panel/feature/meals/widget/component_select.dart';
 export 'package:hummus_admin_panel/feature/meals/widget/element_and_hashtag_select.dart';
 export 'package:hummus_admin_panel/feature/meals/widget/meals_nav_bar.dart';
 export 'package:hummus_admin_panel/feature/meals/widget/meals_photos_widget.dart';
+export 'package:hummus_admin_panel/core/helper/preferences_helper.dart';
+export 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
+export 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
+
+
+
+

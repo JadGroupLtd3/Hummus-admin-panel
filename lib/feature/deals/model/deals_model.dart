@@ -75,3 +75,109 @@ class Deals {
     return _data;
   }
 }
+
+class CreateDealModel {
+  CreateDealModel({
+    required this.startDate,
+    required this.endDate,
+    required this.userUseCount,
+    required this.totalPrice,
+    required this.ar,
+    required this.en,
+    required this.he,
+    required this.meals,
+    required this.status,
+  });
+  late final String startDate;
+  late final String endDate;
+  late final userUseCount;
+  late final totalPrice;
+  late final TextType ar;
+  late final TextType en;
+  late final TextType he;
+  late final List<DealMealsModel> meals;
+  late final status;
+
+  CreateDealModel.fromJson(Map<String, dynamic> json){
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+    userUseCount = json['user_use_count'];
+    totalPrice = json['total_price'];
+    ar = TextType.fromJson(json['ar']);
+    en = TextType.fromJson(json['en']);
+    he = TextType.fromJson(json['he']);
+    meals = List.from(json['meals']).map((e)=>DealMealsModel.fromJson(e)).toList();
+    status = json['status'];
+  }
+
+  Map<String, String> decodeMeals() {
+    final Map<String, String> mealList = {};
+    for (int i = 0; i < meals.length; i++) {
+      mealList.addAll({
+        'meals[$i][meal_id]': meals[i].mealId.toString(),
+        'meals[$i][price]': meals[i].price.toString(),
+      });
+    }
+    return mealList;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['start_date'] = startDate;
+    _data['end_date'] = endDate;
+    _data['user_use_count'] = userUseCount;
+    _data['total_price'] = totalPrice;
+    _data['ar'] = ar.toJson();
+    _data['en'] = en.toJson();
+    _data['he'] = he.toJson();
+    _data['meals'] = meals.map((e)=>e.toJson()).toList();
+    _data['status'] = status;
+    return _data;
+  }
+}
+
+class TextType {
+  TextType({
+    required this.name,
+    required this.description,
+    required this.image,
+  });
+  late final String name;
+  late final String description;
+  late final String image;
+
+  TextType.fromJson(Map<String, dynamic> json){
+    name = json['name'];
+    description = json['description'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['name'] = name;
+    _data['description'] = description;
+    _data['image'] = image;
+    return _data;
+  }
+}
+
+class DealMealsModel {
+  DealMealsModel({
+    required this.mealId,
+    required this.price,
+  });
+  late final int mealId;
+  int? price;
+
+  DealMealsModel.fromJson(Map<String, dynamic> json){
+    mealId = json['meal_id'];
+    price = json['price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['meal_id'] = mealId;
+    _data['price'] = price;
+    return _data;
+  }
+}

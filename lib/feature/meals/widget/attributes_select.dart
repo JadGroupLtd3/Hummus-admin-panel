@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/meals/model/create_meal_model.dart';
 
 class AttributesSelect extends StatefulWidget {
   const AttributesSelect({super.key});
@@ -12,28 +13,13 @@ class AttributesSelectState extends State<AttributesSelect> {
   final AttributeController attributeController =
       Get.find<AttributeController>();
   final LanguageController languageController = Get.find<LanguageController>();
-
-  final List<bool> _selectedAttributes =
-      List.filled(Get.find<AttributeController>().attributeList.length, false);
-  final List<bool> _defaultOptions =
-      List.filled(Get.find<AttributeController>().attributeList.length, false);
-
-  void _toggleSelection(int index) {
-    setState(() {
-      _selectedAttributes[index] = !_selectedAttributes[index];
-    });
-  }
-
-  void _toggleDefaultOption(int index, bool isYes) {
-    setState(() {
-      _defaultOptions[index] = isYes;
-    });
-  }
+  final MealsController mealsController = Get.find<MealsController>();
+  CreateAttributes? selectedAttributes;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AttributeController>(
-      builder: (attributeController) {
+    return GetBuilder<MealsController>(
+      builder: (mealsController) {
         return Column(
           children: [
             Column(
@@ -70,164 +56,232 @@ class AttributesSelectState extends State<AttributesSelect> {
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
                     ),
-                    itemCount: _selectedAttributes.length,
+                    itemCount: attributeController.attributeList.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => _toggleSelection(index),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 8,
-                                  backgroundColor: _selectedAttributes[index]
-                                      ? MyThemeData.light.primaryColor
-                                      : Colors.grey,
-                                  child: Center(
-                                    child: _selectedAttributes[index]
-                                        ? const Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                            size: 13,
-                                          )
-                                        : null,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  languageController.langLocal == eng
-                                      ? attributeController.attributeList[index].nameEn ?? ''
-                                      : languageController.langLocal == ara
-                                      ? attributeController.attributeList[index].nameAr ?? ''
-                                      : attributeController.attributeList[index].nameHe ?? '',
-                                  style: TajawalRegular.copyWith(
-                                    fontSize: 14,
-                                  ),
-                                ).paddingOnly(top: 5),
-                              ],
-                            ),
-                            if (_selectedAttributes[index])
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      final attribute =
+                          attributeController.attributeList[index];
+                      final isSelected = mealsController.selectedAttributesList
+                          .any(
+                              (element) => element.attributeId == attribute.id);
+                      final selectedAttribute =
+                          mealsController.selectedAttributesList.firstWhere(
+                        (element) => element.attributeId == attribute.id,
+                        orElse: () => CreateAttributes(
+                          attributeId: attribute.id!,
+                          image: '',
+                          nameAr: attribute.nameAr!,
+                          nameEn: attribute.nameEn!,
+                          nameHe: attribute.nameHe!,
+                          isCheck: 0,
+                          price: 0,
+                        ),
+                      );
+                      return OnHover(
+                        matrix: 0,
+                        onTap: () {
+                          selectedAttributes = CreateAttributes(
+                            attributeId: attribute.id!,
+                            image: '',
+                            nameAr: attribute.nameAr ?? "",
+                            nameEn: attribute.nameEn ?? "",
+                            nameHe: attribute.nameHe ?? "",
+                            isCheck: 0,
+                            price: 0,
+                          );
+                          if (isSelected) {
+                            mealsController.selectedAttributesList.removeWhere(
+                                    (element) => element.attributeId == attribute.id);
+                          } else {
+                            mealsController.selectedAttributesList.add(selectedAttributes!);
+                          }
+                          setState(() {
+                            print(selectedAttributes?.toJson());
+                            print(mealsController.selectedAttributesList.toJson());
+                          });
+                        },
+                        builder: (isHovered) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Text(
-                                    'Default'.tr,
-                                    style: TajawalBold.copyWith(
-                                      fontSize: 12,
+                                  CircleAvatar(
+                                    radius: 8,
+                                    backgroundColor: isSelected
+                                        ? MyThemeData.light.primaryColor
+                                        : Colors.grey,
+                                    child: Center(
+                                      child: isSelected
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Colors.white,
+                                              size: 13,
+                                            )
+                                          : null,
                                     ),
                                   ),
-                                  const SizedBox(height: 3),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () =>
-                                            _toggleDefaultOption(index, true),
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 8,
-                                              backgroundColor:
-                                                  _defaultOptions[index]
-                                                      ? MyThemeData
-                                                          .light.primaryColor
-                                                      : MyThemeData
-                                                          .light.hoverColor,
-                                              child: _defaultOptions[index]
-                                                  ? const Center(
-                                                      child: Icon(
-                                                        Icons.check,
-                                                        color: Colors.white,
-                                                        size: 13,
-                                                      ),
-                                                    )
-                                                  : null,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              'yes'.tr,
-                                              style: TajawalRegular.copyWith(
-                                                fontSize: 14,
-                                              ),
-                                            ).paddingOnly(top: 5),
-                                          ],
-                                        ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    languageController.langLocal == eng
+                                        ? attributeController
+                                                .attributeList[index].nameEn ??
+                                            ''
+                                        : languageController.langLocal == ara
+                                            ? attributeController
+                                                    .attributeList[index]
+                                                    .nameAr ??
+                                                ''
+                                            : attributeController
+                                                    .attributeList[index]
+                                                    .nameHe ??
+                                                '',
+                                    style: TajawalRegular.copyWith(
+                                      fontSize: 14,
+                                    ),
+                                  ).paddingOnly(top: 5),
+                                ],
+                              ),
+                              if (isSelected)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Default'.tr,
+                                      style: TajawalBold.copyWith(
+                                        fontSize: 12,
                                       ),
-                                      15.horizontalSpace,
-                                      GestureDetector(
-                                        onTap: () =>
-                                            _toggleDefaultOption(index, false),
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 8,
-                                              backgroundColor:
-                                                  !_defaultOptions[index]
-                                                      ? MyThemeData
-                                                          .light.primaryColor
-                                                      : MyThemeData
-                                                          .light.hoverColor,
-                                              child: !_defaultOptions[index]
-                                                  ? const Center(
-                                                      child: Icon(
-                                                        Icons.check,
-                                                        color: Colors.white,
-                                                        size: 13,
-                                                      ),
-                                                    )
-                                                  : null,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              'no'.tr,
-                                              style: TajawalRegular.copyWith(
-                                                fontSize: 14,
-                                              ),
-                                            ).paddingOnly(top: 5),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (!_defaultOptions[index])
-                                    Column(
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Price'.tr,
-                                          style: TajawalRegular.copyWith(
-                                            fontSize: 12,
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedAttribute.isCheck = 1;
+                                              print(
+                                                  selectedAttributes?.toJson());
+                                            });
+                                          },
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 8,
+                                                backgroundColor:
+                                                    selectedAttribute.isCheck ==
+                                                            1
+                                                        ? MyThemeData
+                                                            .light.primaryColor
+                                                        : MyThemeData
+                                                            .light.hoverColor,
+                                                child: selectedAttribute
+                                                            .isCheck ==
+                                                        1
+                                                    ? const Center(
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Colors.white,
+                                                          size: 13,
+                                                        ),
+                                                      )
+                                                    : null,
+                                              ),
+                                              const SizedBox(width: 4),
+                                              Text(
+                                                'yes'.tr,
+                                                style: TajawalRegular.copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                              ).paddingOnly(top: 5),
+                                            ],
                                           ),
-                                        ).paddingSymmetric(vertical: 3),
-                                        const SizedBox(
-                                          width: 60,
-                                          child: CustomTextField(
-                                            height: 30,
-                                            radius: 5,
-                                            inputType: TextInputType.phone,
+                                        ),
+                                        15.horizontalSpace,
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedAttribute.isCheck = 0;
+                                              print(
+                                                  selectedAttributes?.toJson());
+                                            });
+                                          },
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 8,
+                                                backgroundColor:
+                                                    selectedAttribute.isCheck ==
+                                                            0
+                                                        ? MyThemeData
+                                                            .light.primaryColor
+                                                        : MyThemeData
+                                                            .light.hoverColor,
+                                                child: selectedAttribute
+                                                            .isCheck ==
+                                                        0
+                                                    ? const Center(
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Colors.white,
+                                                          size: 13,
+                                                        ),
+                                                      )
+                                                    : null,
+                                              ),
+                                              const SizedBox(width: 4),
+                                              Text(
+                                                'no'.tr,
+                                                style: TajawalRegular.copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                              ).paddingOnly(top: 5),
+                                            ],
                                           ),
                                         ),
                                       ],
-                                    ).paddingOnly(
-                                      right: Get.find<LanguageController>()
-                                                  .langLocal ==
-                                              eng
-                                          ? 0
-                                          : 90,
-                                      left: Get.find<LanguageController>()
-                                                  .langLocal ==
-                                              eng
-                                          ? 90
-                                          : 0,
                                     ),
-                                ],
-                              ),
-                          ],
-                        ),
+                                    if (selectedAttribute.isCheck == 0)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Price'.tr,
+                                            style: TajawalRegular.copyWith(
+                                              fontSize: 12,
+                                            ),
+                                          ).paddingSymmetric(vertical: 3),
+                                          SizedBox(
+                                            width: 60,
+                                            child: CustomTextField(
+                                              height: 30,
+                                              radius: 5,
+                                              inputType: TextInputType.phone,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedAttribute.price = int.tryParse(value) ?? 0;
+                                                  print(selectedAttributes?.toJson());
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(
+                                        right: languageController.langLocal == eng
+                                            ? 0
+                                            : 90,
+                                        left: languageController.langLocal == eng
+                                            ? 90
+                                            : 0,
+                                      ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        },
                       );
                     },
                   ),

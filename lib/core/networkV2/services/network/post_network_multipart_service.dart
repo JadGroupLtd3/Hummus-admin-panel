@@ -1,7 +1,8 @@
 import 'package:either_dart/either.dart';
+import 'package:hummus_admin_panel/core/networkV2/models/network_exception.dart';
 import 'package:hummus_admin_panel/core/networkV2/models/typedefs.dart';
 
-import '../../models/network_exception.dart';
+
 import 'network_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';

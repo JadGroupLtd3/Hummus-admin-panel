@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/meals/model/create_meal_model.dart';
 
 class ComponentSelect extends StatefulWidget {
   const ComponentSelect({super.key});
@@ -9,28 +12,15 @@ class ComponentSelect extends StatefulWidget {
 }
 
 class ComponentSelectState extends State<ComponentSelect> {
-
   final ComponentController componentController = Get.find<ComponentController>();
   final LanguageController languageController = Get.find<LanguageController>();
+  final MealsController mealsController = Get.find<MealsController>();
 
-  int? selectedIndex;
-  List<bool> isYesSelectedList = List<bool>.generate(
-      Get.find<ComponentController>().componentList.length, (index) => true);
-  List<bool> isComponentSelectedList = List<bool>.generate(
-      Get.find<ComponentController>().componentList.length, (index) => false);
-
-  double getItemHeight(int index) {
-    if (isComponentSelectedList[index]) {
-      return isYesSelectedList[index] ? 200 : 180;
-    } else {
-      return 100;
-    }
-  }
-
+  CreateComponents?  selectedComponents;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ComponentController>(
-      builder: (componentController) {
+    return GetBuilder<MealsController>(
+      builder: (mealsController) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
           margin: const EdgeInsets.symmetric(vertical: 20),
@@ -76,37 +66,236 @@ class ComponentSelectState extends State<ComponentSelect> {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 200,
                           mainAxisSpacing: 5,
                           crossAxisSpacing: 5,
                           childAspectRatio: 0.9,
                         ),
-                        itemCount: isYesSelectedList.length,
+                        itemCount: componentController.componentList.length,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
+                          final component = componentController.componentList[index];
+                          final isSelected = mealsController.selectedComponentsList
+                              .any((element) => element.componentId == component.id);
+                          final selectedComponent = mealsController.selectedComponentsList
+                              .firstWhere(
+                                (element) => element.componentId == component.id,
+                            orElse: () => CreateComponents(
+                              componentId: component.id!,
+                              status: 1,
+                              isDefault: 0,
+                              price: 0,
+                            ),
+                          );
+
+                          return OnHover(
+                            matrix: 0,
                             onTap: () {
+                              selectedComponents = CreateComponents(
+                                componentId: component.id!,
+                                isDefault: 1,
+                                status: 1,
+                                price: 0,
+                              );
+                              if (isSelected) {
+                                mealsController.selectedComponentsList.removeWhere(
+                                        (element) => element.componentId == component.id);
+                              } else {
+                                mealsController.selectedComponentsList
+                                    .add(selectedComponents!);
+                              }
                               setState(() {
-                                if (isComponentSelectedList[index]) {
-                                  selectedIndex = null;
-                                  isComponentSelectedList[index] = false;
-                                } else {
-                                  selectedIndex = index;
-                                  isComponentSelectedList[index] = true;
-                                }
+                                print(selectedComponents?.toJson());
+                                print(mealsController.selectedComponentsList.toJson());
                               });
                             },
-                            child: SizedBox(
-                              height: getItemHeight(index),
-                              child: isComponentSelectedList[index]
-                                  ? selectedComponent(index)
-                                  : notSelectedComponent(index),
-                            ),
+                            builder: (isHovered) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? MyThemeData.light.primaryColor
+                                        : Colors.transparent,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0, -1),
+                                      color: Colors.black.withOpacity(.07),
+                                      blurRadius: 8,
+                                      spreadRadius: 0,
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(100),
+                                                child: SizedBox(
+                                                  width: 36,
+                                                  height: 36,
+                                                  child: Image.network(
+                                                    componentController.componentList[index].image ?? '',
+                                                    height: 36,
+                                                    width: 36,
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                languageController.langLocal == eng
+                                                    ? componentController.componentList[index].nameEn ?? ''
+                                                    : languageController.langLocal == ara
+                                                    ? componentController.componentList[index].nameAr ?? ''
+                                                    : componentController.componentList[index].nameHe ?? '',
+                                                style: TajawalRegular.copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      if (isSelected)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Default'.tr,
+                                                style: TajawalBold.copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectedComponent.isDefault = 1;
+                                                        print(selectedComponents?.toJson());
+                                                      });
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        CircleAvatar(
+                                                          radius: 8,
+                                                          backgroundColor: selectedComponent.isDefault == 1
+                                                              ? MyThemeData.light.primaryColor
+                                                              : MyThemeData.light.hoverColor,
+                                                          child: selectedComponent.isDefault == 1
+                                                              ? const Center(
+                                                            child: Icon(
+                                                              Icons.check,
+                                                              color: Colors.white,
+                                                              size: 13,
+                                                            ),
+                                                          )
+                                                              : null,
+                                                        ),
+                                                        const SizedBox(width: 4),
+                                                        Text(
+                                                          'yes'.tr,
+                                                          style: TajawalRegular.copyWith(
+                                                            fontSize: 14,
+                                                          ),
+                                                        ).paddingOnly(top: 5),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        selectedComponent.isDefault = 0;
+                                                        print(selectedComponents?.toJson());
+                                                      });
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        CircleAvatar(
+                                                          radius: 8,
+                                                          backgroundColor: selectedComponent.isDefault == 0
+                                                              ? MyThemeData.light.primaryColor
+                                                              : MyThemeData.light.hoverColor,
+                                                          child: selectedComponent.isDefault == 0
+                                                              ? const Center(
+                                                            child: Icon(
+                                                              Icons.check,
+                                                              color: Colors.white,
+                                                              size: 13,
+                                                            ),
+                                                          )
+                                                              : null,
+                                                        ),
+                                                        const SizedBox(width: 4),
+                                                        Text(
+                                                          'no'.tr,
+                                                          style: TajawalRegular.copyWith(
+                                                            fontSize: 14,
+                                                          ),
+                                                        ).paddingOnly(top: 5),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 8),
+                                              if(selectedComponent.isDefault == 0)
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'Price'.tr,
+                                                        style: TajawalRegular.copyWith(
+                                                          fontSize: 12,
+                                                        ),
+                                                      ).paddingSymmetric(vertical: 3),
+                                                      SizedBox(
+                                                        width: 60,
+                                                        child: CustomTextField(
+                                                          height: 30,
+                                                          radius: 5,
+                                                          inputType: TextInputType.phone,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              selectedComponent.price = int.tryParse(value) ?? 0;
+                                                              print(selectedComponents?.toJson());
+                                                            });
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ).paddingOnly(top: 28);
+                            },
                           );
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -114,214 +303,6 @@ class ComponentSelectState extends State<ComponentSelect> {
           ),
         );
       },
-    );
-  }
-
-  Widget selectedComponent(int index) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: MyThemeData.light.primaryColor,
-        ),
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, -1),
-            color: Colors.black.withOpacity(.07),
-            blurRadius: 8,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: SizedBox(
-                        width: 36,
-                        height: 36,
-                        child: Image.network(
-                          componentController.componentList[index].image ?? '',
-                          height: 36,
-                          width: 36,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      languageController.langLocal == eng
-                          ? componentController.componentList[index].nameEn ?? ''
-                          : languageController.langLocal == ara
-                          ? componentController.componentList[index].nameAr ?? ''
-                          : componentController.componentList[index].nameHe ?? '',
-                      style: TajawalRegular.copyWith(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Default'.tr,
-                    style: TajawalBold.copyWith(
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isYesSelectedList[index] = true;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 8,
-                              backgroundColor: isYesSelectedList[index]
-                                  ? MyThemeData.light.primaryColor
-                                  : MyThemeData.light.hoverColor,
-                              child: isYesSelectedList[index]
-                                  ? const Center(
-                                      child: Icon(
-                                        Icons.check,
-                                        color: Colors.white,
-                                        size: 13,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'yes'.tr,
-                              style: TajawalRegular.copyWith(
-                                fontSize: 14,
-                              ),
-                            ).paddingOnly(top: 5),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isYesSelectedList[index] = false;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 8,
-                              backgroundColor: !isYesSelectedList[index]
-                                  ? MyThemeData.light.primaryColor
-                                  : MyThemeData.light.hoverColor,
-                              child: !isYesSelectedList[index]
-                                  ? const Center(
-                                      child: Icon(
-                                        Icons.check,
-                                        color: Colors.white,
-                                        size: 13,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'no'.tr,
-                              style: TajawalRegular.copyWith(
-                                fontSize: 14,
-                              ),
-                            ).paddingOnly(top: 5),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (isYesSelectedList[index] == false)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Price'.tr,
-                              style: TajawalRegular.copyWith(
-                                fontSize: 12,
-                              ),
-                            ).paddingSymmetric(vertical: 3),
-                            const SizedBox(
-                              width: 60,
-                              child: CustomTextField(
-                                height: 30,
-                                radius: 5,
-                                inputType: TextInputType.phone,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ).paddingOnly(top: 28);
-  }
-
-  Widget notSelectedComponent(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: SizedBox(
-                width: 36,
-                height: 36,
-                child: Image.network(
-                  componentController.componentList[index].image ?? '',
-                  height: 36,
-                  width: 36,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              languageController.langLocal == eng
-                  ? componentController.componentList[index].nameEn ?? ''
-                  : languageController.langLocal == ara
-                  ? componentController.componentList[index].nameAr ?? ''
-                  : componentController.componentList[index].nameHe ?? '',
-              style: TajawalRegular.copyWith(
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

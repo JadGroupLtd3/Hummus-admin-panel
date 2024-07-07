@@ -16,6 +16,8 @@ class AddPhotoWidget extends StatefulWidget {
   final bool? isHashtag;
   final bool? isQuestion;
   final bool? isSettings;
+  final bool? isDeal;
+  final bool? isMeal;
 
   AddPhotoWidget({
     super.key,
@@ -25,7 +27,9 @@ class AddPhotoWidget extends StatefulWidget {
     this.width,
     this.isCategory,
     this.isQuestion,
+    this.isMeal,
     this.isHashtag,
+    this.isDeal,
     this.isComponent,
     this.isSettings,
     this.imagePath,
@@ -49,22 +53,36 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
           widget.webImage = await widget.pickedProfileImageFile!.readAsBytes();
           if (widget.isCategory == true) {
             Get.find<CategoryController>().webImage = widget.webImage;
+            Get.find<CategoryController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isComponent == true) {
             Get.find<ComponentController>().webImage = widget.webImage;
+            Get.find<ComponentController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isHashtag == true) {
             Get.find<HashtagController>().webImage = widget.webImage;
+            Get.find<HashtagController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isQuestion == true) {
             Get.find<QuestionsController>().webImage = widget.webImage;
+            Get.find<QuestionsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isSettings == true) {
             Get.find<SettingsController>().webImage = widget.webImage;
+            Get.find<SettingsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
+          }
+          if (widget.isDeal == true) {
+            Get.find<DealsController>().webImage = widget.webImage;
+            Get.find<DealsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
+          }
+          if (widget.isMeal == true) {
+            Get.find<MealsController>().webImage = widget.webImage;
+            Get.find<MealsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
         } else {
           widget.pickedImage = File(widget.pickedProfileImageFile!.path);
         }
+        print(widget.pickedProfileImageFile?.path);
       } else {
         print('No Image has been picked');
       }
