@@ -3,13 +3,16 @@ import 'package:hummus_admin_panel/core/core_export.dart';
 
 class RegionsRepo{
 
-  Future<Either<String, RegionsModel>> createRegions() async {
-    Map<String, String> _body = Map();
+  Future<Either<String, CreateRegionsModel>> createRegions({
+    required CreateRegionsModel regionsData}) async {
     Response? response = await ApiClient.postData(
-      ApiUrl.CREATE_REGIONS, _body,
+      ApiUrl.CREATE_REGIONS,
+      regionsData,
     );
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
-      return Right(RegionsModel.fromJson(response.body));
+      return Right(CreateRegionsModel.fromJson(response.body));
     } else {
       return Left(response.body['message'] ?? "Unknown Error Occurred");
     }

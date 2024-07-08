@@ -14,8 +14,7 @@ class MealsController extends GetxController {
   RxList<CreateComponents> selectedComponentsList = <CreateComponents>[].obs;
   RxList<CreateHashtags> selectedHashtagsList = <CreateHashtags>[].obs;
   RxList<CreateAttributes> selectedAttributesList = <CreateAttributes>[].obs;
-  RxList<CreateHomeCategories> selectedHomeCategoriesList =
-      <CreateHomeCategories>[].obs;
+  RxList<CreateHomeCategories> selectedHomeCategoriesList = <CreateHomeCategories>[].obs;
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
@@ -30,6 +29,22 @@ class MealsController extends GetxController {
   TextEditingController mealEnglishDescription = TextEditingController();
   TextEditingController mealHebrewName = TextEditingController();
   TextEditingController mealHebrewDescription = TextEditingController();
+
+  initState(){
+    selectedHashtagsList.clear();
+    selectedComponentsList.clear();
+    selectedAttributesList.clear();
+    selectedHomeCategoriesList.clear();
+    fakePrice.clear();
+    mealPrice.clear();
+    coinPoints.clear();
+    mealArabicName.clear();
+    mealArabicDescription.clear();
+    mealEnglishName.clear();
+    mealEnglishDescription.clear();
+    mealHebrewName.clear();
+    mealHebrewDescription.clear();
+  }
 
   Future<void> createMeals(BuildContext context) async {
     if (pickedProfileImageFile == null) {
@@ -68,8 +83,9 @@ class MealsController extends GetxController {
       attributes: selectedAttributesList,
       homeCategories: selectedHomeCategoriesList,
       relatedProducts: [],
-      coinPoints: coinPoints.text,
+      coinPoints: 0, // coinPoints.text,
     );
+    print(mealModel.toJson());
     final result = await mealsRepo.createMeals(mealModel, webImage);
     result.fold((left) {
       controllerState.value = ControllerState.error;
@@ -77,6 +93,9 @@ class MealsController extends GetxController {
     }, (right) async {
       controllerState.value = ControllerState.success;
       getMeals(context);
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      initState();
+      update();
     });
   }
 

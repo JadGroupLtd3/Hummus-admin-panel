@@ -40,7 +40,6 @@ class DealsRepo {
       _body,
       [MultipartBody('image', webImage: webImageBytes)],
     );
-    print(_body);
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {

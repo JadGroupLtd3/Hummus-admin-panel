@@ -77,18 +77,9 @@ class DealsController extends GetxController {
       ShowSnackBar.show(context: context, message: left, color: Colors.red);
     }, (right) async {
       controllerState.value = ControllerState.success;
-      startDateDeal.clear();
-      endDateDeal.clear();
-      userUseCountDeal.clear();
-      totalPriceDeal.clear();
-      dealArabicName.clear();
-      dealArabicDescription.clear();
-      dealEnglishName.clear();
-      dealEnglishDescription.clear();
-      dealHebrewName.clear();
-      dealHebrewDescription.clear();
-      selectedMealsList.clear();
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.red);
       getDeals(context);
+      initState();
       update();
     });
   }

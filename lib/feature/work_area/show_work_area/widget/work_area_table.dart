@@ -144,14 +144,12 @@ class _WorkAreaTableState extends State<WorkAreaTable> {
                                               padding: 5,
                                               icon: Images.delete,
                                               color: Colors.black,
-                                              description:
-                                                  'Do you want to delete this region?'
-                                                      .tr,
+                                              description: 'Do you want to delete this region?'.tr,
                                               title: 'Delete Regions'.tr,
                                               onYesPressed: () {
                                                 regionsController.deleteRegions(
                                                   context,
-                                                  regionsID: regions.id,
+                                                  regionsID: regions.id!,
                                                 );
                                               },
                                             );

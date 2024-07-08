@@ -11,6 +11,10 @@ class AddNewMealScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: GetBuilder<MealsController>(
+            initState: (state) {
+              Get.find<MealsController>().initState();
+              state.controller?.initState();
+            },
             builder: (mealsController) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

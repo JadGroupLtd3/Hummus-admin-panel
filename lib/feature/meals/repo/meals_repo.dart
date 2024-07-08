@@ -24,10 +24,12 @@ class MealsRepo {
     _body.addAll(mealModel.decodeRelated());
     _body.addAll(mealModel.decodeHomeProduct());
     Response? response = await ApiClient.postMultipartData(
-      ApiUrl.CREATE_DEALS,
+      ApiUrl.CREATE_MEALS,
       _body,
       [MultipartBody('image', webImage: webImageBytes)],
     );
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       return Right(MealsModel.fromJson(response.body));
     } else {

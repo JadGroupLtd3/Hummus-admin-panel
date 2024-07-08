@@ -130,7 +130,8 @@ export 'package:hummus_admin_panel/feature/meals/widget/meals_photos_widget.dart
 export 'package:hummus_admin_panel/core/helper/preferences_helper.dart';
 export 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
 export 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
-
+export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:geocoding/geocoding.dart';
 
 
 

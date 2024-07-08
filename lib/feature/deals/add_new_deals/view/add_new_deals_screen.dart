@@ -22,6 +22,10 @@ class AddNewDealsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: GetBuilder<DealsController>(
+            initState: (state) {
+              Get.find<DealsController>().initState();
+              state.controller?.initState();
+            },
             builder: (dealsController) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
