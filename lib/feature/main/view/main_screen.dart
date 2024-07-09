@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/repo/meals_repo.dart';
+import 'package:hummus_admin_panel/feature/tables/controller/tables_controller.dart';
+import 'package:hummus_admin_panel/feature/tables/repo/tables_repo.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -27,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   final UsersController usersController = Get.put(UsersController(UsersRepo()));
   final DealsController dealsController = Get.put(DealsController(DealsRepo()));
   final MealsController mealsController = Get.put(MealsController(MealsRepo()));
+  final TablesController tablesController = Get.put(TablesController(TablesRepo()));
 
   @override
   void initState() {
@@ -49,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     await usersController.getWaiters(context);
     await dealsController.getDeals(context);
     await mealsController.getMeals(context);
+    await tablesController.getTables(context);
   }
 
   @override

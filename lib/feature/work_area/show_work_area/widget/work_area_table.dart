@@ -124,6 +124,12 @@ class _WorkAreaTableState extends State<WorkAreaTable> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
+                                      onTap: () {
+                                        Get.to(()=>AddNewWorkAreaScreen(
+                                          isEdit: true,
+                                          regionsData: regions,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

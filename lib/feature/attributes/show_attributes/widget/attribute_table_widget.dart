@@ -170,7 +170,12 @@ class _AttributeTableWidgetState extends State<AttributeTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(()=> AddNewAttributeScreen(
+                                          isEdit: true,
+                                          attribute: attribute,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

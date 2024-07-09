@@ -1,32 +1,30 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
-class DealsTableWidget extends StatefulWidget {
-  const DealsTableWidget({super.key});
+class ShowTablesTable extends StatefulWidget {
+  const ShowTablesTable({super.key});
 
   @override
-  State<DealsTableWidget> createState() => _DealsTableWidgetState();
+  State<ShowTablesTable> createState() => _ShowTablesTableState();
 }
 
-class _DealsTableWidgetState extends State<DealsTableWidget> {
+class _ShowTablesTableState extends State<ShowTablesTable> {
   final LanguageController languageController = Get.find<LanguageController>();
+  final TablesController tablesController = Get.find<TablesController>();
 
   @override
   void initState() {
-    Get.find<DealsController>().getDeals(context);
+    tablesController.getTables(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DealsController>(
-      builder: (dealsController) {
+    return GetBuilder<TablesController>(
+      builder: (tablesController) {
         return Column(
           children: [
             Table(
-              columnWidths: const {
-                1: IntrinsicColumnWidth(),
-              },
               children: [
                 TableRow(
                   decoration: BoxDecoration(
@@ -41,35 +39,25 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                         .paddingOnly(
                             right: languageController.langLocal == eng ? 0 : 20,
                             left: languageController.langLocal == eng ? 20 : 0),
-                    TextUtils(title: 'Image'.tr, color: Colors.white)
+                    TextUtils(title: 'Table number'.tr, color: Colors.white)
                         .paddingOnly(
-                            left: languageController.langLocal == eng ? 0 : 30,
+                            left: languageController.langLocal == eng ? 10 : 0,
                             right:
-                                languageController.langLocal == eng ? 30 : 0),
-                    TextUtils(title: 'Deal name'.tr, color: Colors.white)
-                        .paddingOnly(
-                            left: languageController.langLocal == eng ? 40 : 0,
-                            right:
-                                languageController.langLocal == eng ? 0 : 40),
-                    Center(
-                        child:
-                            TextUtils(title: 'price'.tr, color: Colors.white)),
-                    TextUtils(title: 'starting date'.tr, color: Colors.white),
-                    TextUtils(title: 'Expiry date'.tr, color: Colors.white),
-                    const TextUtils(
-                        title: 'Activation status', color: Colors.white),
-                    const TextUtils(title: 'Operations', color: Colors.white)
-                        .paddingOnly(
-                            left: languageController.langLocal == eng ? 20 : 0,
-                            right:
-                                languageController.langLocal == eng ? 0 : 20),
+                                languageController.langLocal == eng ? 0 : 10),
+                    const Center(
+                        child: TextUtils(
+                            title: 'Activation status', color: Colors.white)),
+                    const Center(
+                      child:
+                          TextUtils(title: 'Operations', color: Colors.white),
+                    ),
                   ],
                 ),
               ],
             ),
             Obx(
-              () {
-                if (dealsController.controllerState.value ==
+                  () {
+                if (tablesController.controllerState.value ==
                     ControllerState.loading) {
                   return Column(
                     children: [
@@ -84,13 +72,10 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                 } else {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: dealsController.dealsList.length,
+                      itemCount: tablesController.tablesList.length,
                       itemBuilder: (context, index) {
-                        final deal = dealsController.dealsList[index];
+                        final table = tablesController.tablesList[index];
                         return Table(
-                          columnWidths: const {
-                            1: IntrinsicColumnWidth(),
-                          },
                           children: [
                             TableRow(
                               decoration: BoxDecoration(
@@ -102,66 +87,26 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                 ),
                               ),
                               children: [
-                                TextUtils(title: '${deal.id}').paddingOnly(
-                                    right: languageController.langLocal == eng
-                                        ? 0
-                                        : 20,
-                                    left: languageController.langLocal == eng
-                                        ? 20
-                                        : 0,
+                                TextUtils(title: '${table.id}').paddingOnly(
+                                    right:
+                                    languageController.langLocal == eng ? 0 : 20,
+                                    left:
+                                    languageController.langLocal == eng ? 20 : 0,
                                     top: 10,
                                     bottom: 10),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: SizedBox(
-                                    width: 36,
-                                    height: 36,
-                                    child: Image.asset(
-                                      Images.background,
-                                      height: 36,
-                                      width: 36,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ).paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 0
-                                        : 30,
-                                    right: languageController.langLocal == eng
-                                        ? 30
-                                        : 0,
+                                TextUtils(title: table.number).paddingOnly(
+                                    left:
+                                    languageController.langLocal == eng ? 40 : 0,
+                                    right:
+                                    languageController.langLocal == eng ? 0 : 40,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(title: 'deal').paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 40
-                                        : 0,
-                                    right: languageController.langLocal == eng
-                                        ? 0
-                                        : 40,
-                                    top: 10,
-                                    bottom: 10),
-                                Center(
-                                    child: TextUtils(title: deal.totalPrice)
-                                        .paddingOnly(top: 10, bottom: 10)),
-                                TextUtils(
-                                        title: deal.startDate)
-                                    .paddingOnly(
-                                        right: 0,
-                                        left:
-                                            languageController.langLocal == eng
-                                                ? 25
-                                                : 0,
-                                        top: 10,
-                                        bottom: 10),
-                                TextUtils(title: deal.endDate)
-                                    .paddingOnly(top: 10, bottom: 10),
                                 Center(
                                   child: SvgPicture.asset(
                                     Images.dot,
                                     width: 25,
                                     height: 25,
-                                    color: deal.status == 1
+                                    color: table.status == 1
                                         ? MyThemeData.light.primaryColor
                                         : Colors.red,
                                   ).paddingOnly(
@@ -180,10 +125,12 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                     OnHover(
                                       matrix: 0,
                                       onTap: () {
-                                        Get.to(()=>AddNewDealsScreen(
-                                          isEdit: true,
-                                          deals: deal,
-                                        ));
+                                        Get.to(() =>
+                                            AddNewTable(
+                                              isEdit: true,
+                                              table: table,
+                                            ),
+                                        );
                                       },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
@@ -205,12 +152,12 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                               padding: 5,
                                               icon: Images.delete,
                                               color: Colors.black,
-                                              description: 'Do you want to delete this deal?'.tr,
-                                              title: 'Delete Deal'.tr,
+                                              description: 'Do you want to delete this table?'.tr,
+                                              title: 'Delete Tables'.tr,
                                               onYesPressed: () {
-                                                dealsController.deleteDeals(
+                                                tablesController.deleteTables(
                                                   context,
-                                                  dealID: deal.id,
+                                                  tablesID: table.id,
                                                 );
                                               },
                                             );
@@ -227,12 +174,10 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                     ),
                                   ],
                                 ).paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 0
-                                        : 15,
-                                    right: languageController.langLocal == eng
-                                        ? 15
-                                        : 0,
+                                    left:
+                                    languageController.langLocal == eng ? 0 : 15,
+                                    right:
+                                    languageController.langLocal == eng ? 15 : 0,
                                     top: 10,
                                     bottom: 10),
                               ],

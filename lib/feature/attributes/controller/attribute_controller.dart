@@ -17,6 +17,20 @@ class AttributeController extends GetxController {
 
   RxList<Attribute> attributeList = <Attribute>[].obs;
 
+  initState(){
+    attributeNameAr.clear();
+    attributeNameEn.clear();
+    attributeNameHe.clear();
+    status.value = false;
+  }
+
+  void isEdit(Attribute attribute){
+    attributeNameAr.text = attribute.nameAr ?? '';
+    attributeNameEn.text = attribute.nameEn ?? '';
+    attributeNameHe.text = attribute.nameHe ?? '';
+    status.value = attribute.status == 1 ? true : false;
+  }
+
 
   Future<void> createAttribute(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -27,8 +41,7 @@ class AttributeController extends GetxController {
       status: status.value == true ? 1 : 0,
     );
     final result = await attributeRepo.createAttribute(
-      attribute: attribute,
-      status: status.value == true ? 1 : 0,
+      attribute: attribute
     );
     result.fold((left) {
       controllerState.value = ControllerState.error;
@@ -37,9 +50,32 @@ class AttributeController extends GetxController {
       controllerState.value = ControllerState.success;
       ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getAttribute(context);
-      attributeNameAr.clear();
-      attributeNameEn.clear();
-      attributeNameHe.clear();
+      initState();
+      update();
+    });
+  }
+
+  Future<void> updateAttribute(BuildContext context,int attributeId) async {
+    controllerState.value = ControllerState.loading;
+    Attribute attribute = Attribute(
+      id: attributeId,
+      nameAr: attributeNameAr.text,
+      nameEn: attributeNameEn.text,
+      nameHe: attributeNameHe.text,
+      status: status.value == true ? 1 : 0,
+    );
+    final result = await attributeRepo.updateAttribute(
+      attribute: attribute
+    );
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      getAttribute(context);
+      initState();
+      Get.back();
       update();
     });
   }

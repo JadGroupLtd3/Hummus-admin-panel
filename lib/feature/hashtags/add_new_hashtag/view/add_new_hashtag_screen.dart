@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/feature/hashtags/controller/hashtag_controller.dart';
@@ -11,10 +12,26 @@ import 'package:hummus_admin_panel/theme/light_theme.dart';
 import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
 import 'package:hummus_admin_panel/widgets/custom_button.dart';
 
-class AddNewHashtagScreen extends StatelessWidget {
-  AddNewHashtagScreen({super.key});
+class AddNewHashtagScreen extends StatefulWidget {
+  final bool isEdit;
+  final Hashtag? hashtag;
+  const AddNewHashtagScreen({super.key,this.isEdit = false,this.hashtag});
 
+  @override
+  State<AddNewHashtagScreen> createState() => _AddNewHashtagScreenState();
+}
+
+class _AddNewHashtagScreenState extends State<AddNewHashtagScreen> {
   final GlobalKey<FormState> hashtagKey = GlobalKey<FormState>();
+  final HashtagController hashtagController = Get.find<HashtagController>();
+  @override
+  void initState() {
+    hashtagController.initState();
+    if(widget.isEdit == true){
+      hashtagController.isEdit(widget.hashtag!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +45,9 @@ class AddNewHashtagScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Hashtags'.tr} / ${'Add New'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Hashtags'.tr} / ${'Edit hashtag'.tr}'
+                        : '${'Home'.tr} / ${'Hashtags'.tr} / ${'Add New'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -71,7 +90,9 @@ class AddNewHashtagScreen extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: AddPhotoWidget(
-                            isCategory: true,
+                            isHashtag: true,
+                            isEdit: widget.hashtag != null,
+                            imagePath: hashtagController.imagePath,
                             webImage: hashtagController.webImage,
                             pickedImage: hashtagController.pickedImage,
                             pickedProfileImageFile: hashtagController.pickedProfileImageFile,
@@ -91,7 +112,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -103,7 +124,14 @@ class AddNewHashtagScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (hashtagKey.currentState!.validate()) {
-                                hashtagController.createHashtag(context);
+                                if(widget.isEdit == true){
+                                  hashtagController.updateHashtag(
+                                    context,
+                                    widget.hashtag!.id!,
+                                  );
+                                }else {
+                                  hashtagController.createHashtag(context);
+                                }
                               }
                             },
                           ),
@@ -111,7 +139,7 @@ class AddNewHashtagScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -123,7 +151,14 @@ class AddNewHashtagScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (hashtagKey.currentState!.validate()) {
-                                hashtagController.createHashtag(context);
+                                if(widget.isEdit == true){
+                                  hashtagController.updateHashtag(
+                                    context,
+                                    widget.hashtag!.id!,
+                                  );
+                                }else {
+                                  hashtagController.createHashtag(context);
+                                }
                               }
                             },
                           ),

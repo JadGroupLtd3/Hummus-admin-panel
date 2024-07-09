@@ -83,6 +83,12 @@ class _AllQuestionsAndAnswersState extends State<AllQuestionsAndAnswers> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
+                                      onTap: () {
+                                        Get.to(()=> AddNewQuestionsScreen(
+                                          isEdit: true,
+                                          questions: question,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

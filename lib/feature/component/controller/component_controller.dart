@@ -12,12 +12,28 @@ class ComponentController extends GetxController {
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
-
+  String? imagePath;
   TextEditingController componentNameAr = TextEditingController();
   TextEditingController componentNameEn = TextEditingController();
   TextEditingController componentNameHe = TextEditingController();
 
   RxList<Component> componentList = <Component>[].obs;
+
+  initState(){
+    componentNameAr.clear();
+    componentNameEn.clear();
+    componentNameHe.clear();
+    status.value = false;
+    pickedProfileImageFile = null;
+  }
+
+  void isEdit(Component component){
+    componentNameAr.text = component.nameAr ?? '';
+    componentNameEn.text = component.nameEn ?? '';
+    componentNameHe.text = component.nameHe ?? '';
+    status.value = component.status == 1 ? true : false;
+    imagePath = component.image ?? '';
+  }
 
   Future<void> createComponent(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -38,10 +54,33 @@ class ComponentController extends GetxController {
       controllerState.value = ControllerState.success;
       ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getComponent(context);
-      componentNameAr.clear();
-      componentNameEn.clear();
-      componentNameHe.clear();
-      pickedProfileImageFile = null;
+      initState();
+      update();
+    });
+  }
+
+  Future<void> updateComponent(BuildContext context,int componentId) async {
+    controllerState.value = ControllerState.loading;
+    Component component = Component(
+      id: componentId,
+      nameAr: componentNameAr.text,
+      nameEn: componentNameEn.text,
+      nameHe: componentNameHe.text,
+      status: status.value == true ? 1 : 0,
+    );
+    final result = await componentRepo.updateComponent(
+      componentModel: component,
+      webImage: webImage,
+    );
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      getComponent(context);
+      initState();
+      Get.back();
       update();
     });
   }

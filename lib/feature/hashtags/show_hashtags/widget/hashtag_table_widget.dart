@@ -172,7 +172,12 @@ class _HashtagTableWidgetState extends State<HashtagTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(()=>AddNewHashtagScreen(
+                                          isEdit: true,
+                                          hashtag: hashtag,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/widgets/custom_switch.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class AddNewProductFields extends StatefulWidget {
   final bool isCoupon;
@@ -12,6 +8,7 @@ class AddNewProductFields extends StatefulWidget {
   final TextEditingController? controllerHE;
   final TextEditingController? sort;
   final bool isCategory;
+  final bool isEdit;
   final GlobalKey<FormState> fieldsKey;
   bool? enable;
   void Function(bool)? onChanged;
@@ -27,6 +24,7 @@ class AddNewProductFields extends StatefulWidget {
     this.enable,
     required this.fieldsKey,
     this.isCategory = false,
+    this.isEdit = false,
   });
 
   @override
@@ -149,8 +147,8 @@ class _AddNewProductFieldsState extends State<AddNewProductFields> {
                 },
               ),
             ),
-            widget.isCategory ? 30.verticalSpace : 0.verticalSpace,
-            widget.isCategory
+            widget.isCategory || widget.isEdit  ? 30.verticalSpace : 0.verticalSpace,
+            widget.isCategory || widget.isEdit
                 ? Text(
                     'Sort'.tr,
                     style: TajawalRegular.copyWith(
@@ -158,8 +156,8 @@ class _AddNewProductFieldsState extends State<AddNewProductFields> {
                     ),
                   ).paddingSymmetric(horizontal: 10)
                 : 0.verticalSpace,
-            widget.isCategory ? 3.verticalSpace : 0.verticalSpace,
-            widget.isCategory
+            widget.isCategory || widget.isEdit  ? 3.verticalSpace : 0.verticalSpace,
+            widget.isCategory || widget.isEdit
                 ? Container(
                     decoration: BoxDecoration(
                       color: Colors.white,

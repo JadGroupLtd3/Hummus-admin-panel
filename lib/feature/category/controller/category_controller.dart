@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +13,7 @@ class CategoryController extends GetxController {
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
   RxInt categorySelectedId = 0.obs;
+  String? imagePath;
   TextEditingController categoryNameAr = TextEditingController();
   TextEditingController categoryNameEn = TextEditingController();
   TextEditingController categoryNameHe = TextEditingController();
@@ -21,6 +21,22 @@ class CategoryController extends GetxController {
 
   RxList<Category> categoryList = <Category>[].obs;
 
+  initState(){
+    categoryNameAr.clear();
+    categoryNameEn.clear();
+    categoryNameHe.clear();
+    categorySort.clear();
+    pickedProfileImageFile = null;
+  }
+
+  void isEdit(Category category){
+    categoryNameAr.text = category.nameAr ?? '';
+    categoryNameEn.text = category.nameEn ?? '';
+    categoryNameHe.text = category.nameHe ?? '';
+    categorySort.text = category.sort.toString();
+    status.value = category.status == 1 ? true : false;
+    imagePath = category.image ?? '';
+  }
 
   Future<void> createCategory(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -42,10 +58,34 @@ class CategoryController extends GetxController {
       controllerState.value = ControllerState.success;
       ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getCategory(context);
-      categoryNameAr.clear();
-      categoryNameEn.clear();
-      categoryNameHe.clear();
-      pickedProfileImageFile = null;
+      initState();
+      update();
+    });
+  }
+
+  Future<void> updateCategory(BuildContext context,int categoryId) async {
+    controllerState.value = ControllerState.loading;
+    Category category = Category(
+      id: categoryId,
+      nameAr: categoryNameAr.text,
+      nameEn: categoryNameEn.text,
+      nameHe: categoryNameHe.text,
+      sort: int.parse(categorySort.text),
+      status: status.value == true ? 1 : 0,
+    );
+    final result = await categoryRepo.updateCategory(
+      categoryModel: category,
+      webImage: webImage,
+    );
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      getCategory(context);
+      initState();
+      Get.back();
       update();
     });
   }

@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/home/statistics/widget/statistics%D9%80widget.dart';
 
 class StatisticsScreen extends StatelessWidget {

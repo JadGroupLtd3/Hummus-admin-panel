@@ -5,7 +5,7 @@ import 'package:hummus_admin_panel/core/core_export.dart';
 class ComponentRepo {
 
   Future<Either<String, ComponentModel>> createComponent(
-      {required Component componentModel, XFile? data, Uint8List? webImage}) async {
+      {required Component componentModel, Uint8List? webImage}) async {
     Map<String, String> _body = Map();
     _body.addAll(<String, String>{
       'name_ar': componentModel.nameAr!,
@@ -15,6 +15,28 @@ class ComponentRepo {
     });
     Response? response = await ApiClient.postMultipartData(
       ApiUrl.CREATE_COMPONENT,
+      _body,
+      [MultipartBody('image', webImage: webImage)],
+    );
+    if (response.statusCode == 200) {
+      return Right(ComponentModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
+  Future<Either<String, ComponentModel>> updateComponent(
+      {required Component componentModel, Uint8List? webImage}) async {
+    Map<String, String> _body = Map();
+    _body.addAll(<String, String>{
+      'id': componentModel.id.toString(),
+      'name_ar': componentModel.nameAr!,
+      'name_en': componentModel.nameEn!,
+      'name_he': componentModel.nameHe!,
+      'status': componentModel.status.toString(),
+    });
+    Response? response = await ApiClient.postMultipartData(
+      ApiUrl.UPDATE_COMPONENT,
       _body,
       [MultipartBody('image', webImage: webImage)],
     );

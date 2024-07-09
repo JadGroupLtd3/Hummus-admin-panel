@@ -132,6 +132,12 @@ export 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dar
 export 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
 export 'package:google_maps_flutter/google_maps_flutter.dart';
 export 'package:geocoding/geocoding.dart';
-
-
-
+export 'package:hummus_admin_panel/feature/tables/model/tables_model.dart';
+export 'package:hummus_admin_panel/feature/tables/repo/tables_repo.dart';
+export 'package:hummus_admin_panel/feature/tables/show_tables/widget/show_tables_table.dart';
+export 'package:hummus_admin_panel/feature/tables/controller/tables_controller.dart';
+export 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/deals_nav_bar.dart';
+export 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/deals_texts_field.dart';
+export 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/dela_meals.dart';
+export 'package:hummus_admin_panel/feature/work_area/add_work_area/widget/address_text_field.dart';
+export 'package:hummus_admin_panel/feature/work_area/add_work_area/widget/map_widget.dart';

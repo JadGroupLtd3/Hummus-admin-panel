@@ -173,7 +173,12 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(() => AddNewComponentScreen(
+                                          isEdit: true,
+                                          component: component,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

@@ -1,9 +1,26 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewQuestionsScreen extends StatelessWidget {
-  const AddNewQuestionsScreen({super.key});
+class AddNewQuestionsScreen extends StatefulWidget {
+  final bool isEdit;
+  final Questions? questions;
+  const AddNewQuestionsScreen({super.key,this.isEdit = false,this.questions});
 
+  @override
+  State<AddNewQuestionsScreen> createState() => _AddNewQuestionsScreenState();
+}
+
+class _AddNewQuestionsScreenState extends State<AddNewQuestionsScreen> {
+  final QuestionsController questionsController = Get.find<QuestionsController>();
+
+  @override
+  void initState() {
+    questionsController.initState();
+    if(widget.isEdit == true){
+      questionsController.isEdit(widget.questions!);
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +33,9 @@ class AddNewQuestionsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Questions'.tr} / ${'Add New'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Questions'.tr} / ${'Edit question'.tr}'
+                        : '${'Home'.tr} / ${'Questions'.tr} / ${'Add New'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -92,7 +111,9 @@ class AddNewQuestionsScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: const QuestionsPhotosWidget(),
+                          child: QuestionsPhotosWidget(
+                            questions: widget.questions,
+                          ),
                         ),
                       ),
                     ],
@@ -108,7 +129,8 @@ class AddNewQuestionsScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true
+                                ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -120,7 +142,11 @@ class AddNewQuestionsScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if(questionsController.questionKey.currentState!.validate()){
-                                questionsController.createQuestion(context);
+                                if(widget.isEdit == true){
+                                  questionsController.updateQuestion(context, widget.questions!.id!);
+                                }else {
+                                  questionsController.createQuestion(context);
+                                }
                               }
                             },
                           ),
@@ -128,7 +154,8 @@ class AddNewQuestionsScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true
+                                ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -140,7 +167,11 @@ class AddNewQuestionsScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if(questionsController.questionKey.currentState!.validate()){
-                                questionsController.createQuestion(context);
+                                if(widget.isEdit == true){
+                                  questionsController.updateQuestion(context, widget.questions!.id!);
+                                }else {
+                                  questionsController.createQuestion(context);
+                                }
                               }
                             },
                           ),

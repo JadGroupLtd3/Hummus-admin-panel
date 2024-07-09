@@ -12,6 +12,7 @@ class QuestionsController extends GetxController {
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
+  String? imagePath;
   final GlobalKey<FormState> questionKey = GlobalKey<FormState>();
   TextEditingController questionNameAr = TextEditingController();
   TextEditingController questionNameEn = TextEditingController();
@@ -23,6 +24,29 @@ class QuestionsController extends GetxController {
 
   RxList<Questions> questionList = <Questions>[].obs;
   RxInt mainQuestionId = 0.obs;
+
+  initState(){
+    questionNameAr.clear();
+    questionNameEn.clear();
+    questionNameHe.clear();
+    answerNameAr.clear();
+    answerNameEn.clear();
+    answerNameHe.clear();
+    status.value = false;
+    pickedProfileImageFile = null;
+  }
+
+  void isEdit(Questions questions){
+    questionNameAr.text = questions.questionAr ?? '';
+    questionNameEn.text = questions.questionEn ?? '';
+    questionNameHe.text = questions.questionHe ?? '';
+    answerNameAr.text = questions.answerAr?? '';
+    answerNameEn.text = questions.answerEn ?? '';
+    answerNameHe.text = questions.answerHe ?? '';
+    imagePath = questions.imagesAr!.isNotEmpty
+        ? questions.imagesAr?.firstWhere((element) => element.id == questions.id).image
+        : '';
+  }
 
   Future<void> createQuestion(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -51,13 +75,40 @@ class QuestionsController extends GetxController {
       controllerState.value = ControllerState.success;
       ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getQuestion(context);
-      questionNameAr.clear();
-      questionNameEn.clear();
-      questionNameHe.clear();
-      answerNameAr.clear();
-      answerNameEn.clear();
-      answerNameHe.clear();
-      pickedProfileImageFile = null;
+
+      update();
+    });
+  }
+
+  Future<void> updateQuestion(BuildContext context,int questionId) async {
+    controllerState.value = ControllerState.loading;
+
+    Questions questions = Questions(
+      id: questionId,
+      parentId: mainQuestionId.value.toString(),
+      questionAr: questionNameAr.text,
+      questionEn: questionNameEn.text,
+      questionHe: questionNameHe.text,
+      answerAr: answerNameAr.text,
+      answerEn: answerNameEn.text,
+      answerHe: answerNameHe.text,
+      imagesAr: [],
+      imagesEn: [],
+      imagesHe: [],
+    );
+    final result = await questionsRepo.updateQuestion(
+      questionModel: questions,
+      webImage: webImage,
+    );
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      getQuestion(context);
+      initState();
+      Get.back();
       update();
     });
   }

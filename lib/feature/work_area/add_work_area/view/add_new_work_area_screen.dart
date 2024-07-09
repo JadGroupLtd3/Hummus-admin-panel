@@ -1,14 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/work_area/add_work_area/widget/address_text_field.dart';
-import 'package:hummus_admin_panel/feature/work_area/add_work_area/widget/map_widget.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewWorkAreaScreen extends StatelessWidget {
-  const AddNewWorkAreaScreen({super.key});
+class AddNewWorkAreaScreen extends StatefulWidget {
+  final bool isEdit;
+  final RegionsData? regionsData;
+  const AddNewWorkAreaScreen({super.key,this.isEdit = false,this.regionsData});
 
+  @override
+  State<AddNewWorkAreaScreen> createState() => _AddNewWorkAreaScreenState();
+}
+
+class _AddNewWorkAreaScreenState extends State<AddNewWorkAreaScreen> {
+  final RegionsController regionsController = Get.find<RegionsController>();
+  @override
+  void initState() {
+    regionsController.initState();
+    if(widget.isEdit == true){
+      regionsController.isEdit(widget.regionsData!);
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +30,9 @@ class AddNewWorkAreaScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Work Area'.tr} / ${'Add New'.tr}',
+                widget.isEdit == true
+                    ? '${'Home'.tr} / ${'Work Area'.tr} / ${'edit work area'.tr}'
+                    : '${'Home'.tr} / ${'Work Area'.tr} / ${'Add New'.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
@@ -65,7 +78,10 @@ class AddNewWorkAreaScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const MapWidget(),
+                      child: MapWidget(
+                        isEdit: widget.regionsData != null,
+                        regionsData: widget.regionsData,
+                      ),
                     ),
                   ),
                 ],

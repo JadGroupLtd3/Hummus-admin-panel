@@ -7,14 +7,14 @@ import 'package:hummus_admin_panel/feature/attributes/model/attribute_model.dart
 class AttributeRepo {
 
   Future<Either<String, AttributeModel>> createAttribute(
-      {required Attribute attribute, required int status}) async {
+      {required Attribute attribute}) async {
       Response? response = await ApiClient.postData(
         ApiUrl.CREATE_ATTRIBUTE,
         {
           "name_ar": attribute.nameAr ?? '',
           "name_en": attribute.nameEn ?? '',
           'name_he': attribute.nameHe ?? '',
-          'status': status,
+          'status': attribute.status,
         },
       );
       if (response.statusCode == 200) {
@@ -22,6 +22,25 @@ class AttributeRepo {
       } else {
         return Left(response.body['message'] ?? "Unknown Error Occurred");
       }
+  }
+
+  Future<Either<String, AttributeModel>> updateAttribute(
+      {required Attribute attribute}) async {
+    Response? response = await ApiClient.postData(
+      ApiUrl.UPDATE_ATTRIBUTE,
+      {
+        'id': attribute.id.toString(),
+        "name_ar": attribute.nameAr ?? '',
+        "name_en": attribute.nameEn ?? '',
+        'name_he': attribute.nameHe ?? '',
+        'status': attribute.status,
+      },
+    );
+    if (response.statusCode == 200) {
+      return Right(AttributeModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
   }
 
 

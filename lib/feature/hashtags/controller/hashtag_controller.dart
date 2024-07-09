@@ -12,12 +12,28 @@ class HashtagController extends GetxController {
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
-
+  String? imagePath;
   TextEditingController hashtagNameAr = TextEditingController();
   TextEditingController hashtagNameEn = TextEditingController();
   TextEditingController hashtagNameHe = TextEditingController();
 
   RxList<Hashtag> hashtagList = <Hashtag>[].obs;
+
+  initState(){
+    hashtagNameAr.clear();
+    hashtagNameEn.clear();
+    hashtagNameHe.clear();
+    status.value = false;
+    pickedProfileImageFile = null;
+  }
+
+  void isEdit(Hashtag hashtag){
+    hashtagNameAr.text = hashtag.nameAr ?? '';
+    hashtagNameEn.text = hashtag.nameEn ?? '';
+    hashtagNameHe.text = hashtag.nameHe ?? '';
+    status.value = hashtag.status == 1 ? true : false;
+    imagePath = hashtag.image ?? '';
+  }
 
   Future<void> createHashtag(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -38,10 +54,33 @@ class HashtagController extends GetxController {
       controllerState.value = ControllerState.success;
       ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
       getHashtag(context);
-      hashtagNameAr.clear();
-      hashtagNameEn.clear();
-      hashtagNameHe.clear();
-      pickedProfileImageFile = null;
+      initState();
+      update();
+    });
+  }
+
+  Future<void> updateHashtag(BuildContext context,int hashtagId) async {
+    controllerState.value = ControllerState.loading;
+    Hashtag hashtag = Hashtag(
+      id: hashtagId,
+      nameAr: hashtagNameAr.text,
+      nameEn: hashtagNameEn.text,
+      nameHe: hashtagNameHe.text,
+      status: status.value == true ? 1 : 0,
+    );
+    final result = await hashtagRepo.updateHashtag(
+      hashtagModel: hashtag,
+      webImage: webImage,
+    );
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      getHashtag(context);
+      initState();
+      Get.back();
       update();
     });
   }

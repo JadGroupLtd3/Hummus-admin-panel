@@ -187,7 +187,14 @@ class _CategoryTableWidgetState extends State<CategoryTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(() =>
+                                            AddNewCategoryScreen(
+                                              isEdit: true,
+                                              category: category,
+                                            ),
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

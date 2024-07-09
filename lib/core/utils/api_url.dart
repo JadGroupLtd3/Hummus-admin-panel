@@ -64,4 +64,9 @@ class ApiUrl {
   static const String UPDATE_MEALS = '/meals/update';
   static const String DELETE_MEALS = '/meals/delete/';
 
+  static const String CREATE_TABLES = '/restaurant-table/create';
+  static const String GET_TABLES = '/restaurant-table';
+  static const String UPDATE_TABLES = '/restaurant-table/update';
+  static const String DELETE_TABLES = '/restaurant-table/delete/';
+
 }

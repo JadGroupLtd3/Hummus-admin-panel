@@ -2,7 +2,8 @@ import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:get/get.dart';
 
 class QuestionsPhotosWidget extends StatelessWidget {
-  const QuestionsPhotosWidget({super.key});
+  final Questions? questions;
+  const QuestionsPhotosWidget({super.key,this.questions});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,8 @@ class QuestionsPhotosWidget extends StatelessWidget {
               child: Center(
                 child: AddPhotoWidget(
                   isQuestion: true,
+                  isEdit: questions !=null,
+                  imagePath: questionsController.imagePath,
                   webImage: questionsController.webImage,
                   pickedImage: questionsController.pickedImage,
                   pickedProfileImageFile: questionsController.pickedProfileImageFile,

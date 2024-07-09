@@ -16,7 +16,6 @@ class DealMealsState extends State<DealMeals> {
   final DealsController dealsController = Get.find<DealsController>();
   @override
   void initState() {
-    dealsController.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
      await mealsController.getMeals(context);
     });

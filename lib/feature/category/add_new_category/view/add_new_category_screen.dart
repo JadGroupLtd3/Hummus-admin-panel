@@ -1,10 +1,28 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewCategoryScreen extends StatelessWidget {
-  AddNewCategoryScreen({super.key});
+class AddNewCategoryScreen extends StatefulWidget {
+  final bool isEdit;
+  final Category? category;
 
+  const AddNewCategoryScreen({super.key, this.isEdit = false, this.category});
+
+  @override
+  State<AddNewCategoryScreen> createState() => _AddNewCategoryScreenState();
+}
+
+class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
   final GlobalKey<FormState> categoryKey = GlobalKey<FormState>();
+  final CategoryController categoryController = Get.find<CategoryController>();
+
+  @override
+  void initState() {
+    categoryController.initState();
+    if (widget.isEdit == true) {
+      categoryController.isEdit(widget.category!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +36,9 @@ class AddNewCategoryScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Category'.tr} / ${'Add category'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Category'.tr} / ${'Edit category'.tr}'
+                        : '${'Home'.tr} / ${'Category'.tr} / ${'Add category'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -49,6 +69,8 @@ class AddNewCategoryScreen extends StatelessWidget {
                             controllerEN: categoryController.categoryNameEn,
                             controllerHE: categoryController.categoryNameHe,
                             sort: categoryController.categorySort,
+                            isCategory: true,
+                            isEdit: widget.isEdit,
                             onChanged: (val) {
                               val == true
                                   ? categoryController.status.value = true
@@ -62,7 +84,9 @@ class AddNewCategoryScreen extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: AddPhotoWidget(
-                            isComponent: true,
+                            isCategory: true,
+                            isEdit: widget.category != null,
+                            imagePath: categoryController.imagePath,
                             webImage: categoryController.webImage,
                             pickedImage: categoryController.pickedImage,
                             pickedProfileImageFile: categoryController.pickedProfileImageFile,
@@ -82,7 +106,9 @@ class AddNewCategoryScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true
+                                ? 'edit'.tr
+                                : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -94,7 +120,14 @@ class AddNewCategoryScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (categoryKey.currentState!.validate()) {
-                                categoryController.createCategory(context);
+                                if(widget.isEdit == true){
+                                  categoryController.updateCategory(
+                                    context,
+                                    widget.category!.id!,
+                                  );
+                                }else {
+                                  categoryController.createCategory(context);
+                                }
                               }
                             },
                           ),
@@ -102,7 +135,9 @@ class AddNewCategoryScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true
+                                ? 'edit'.tr
+                                : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -114,9 +149,14 @@ class AddNewCategoryScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (categoryKey.currentState!.validate()) {
-                                categoryController.createCategory(
-                                  context,
-                                );
+                                if(widget.isEdit == true){
+                                  categoryController.updateCategory(
+                                    context,
+                                    widget.category!.id!,
+                                  );
+                                }else {
+                                  categoryController.createCategory(context);
+                                }
                               }
                             },
                           ),

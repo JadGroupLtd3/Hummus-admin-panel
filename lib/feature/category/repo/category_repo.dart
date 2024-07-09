@@ -5,7 +5,7 @@ import 'package:get/get_connect/http/src/response/response.dart';
 class CategoryRepo {
 
   Future<Either<String, CategoryModel>> createCategory(
-      {required Category categoryModel, XFile? data, Uint8List? webImage}) async {
+      {required Category categoryModel, Uint8List? webImage}) async {
     Map<String, String> _body = Map();
     _body.addAll(<String, String>{
       'name_ar': categoryModel.nameAr!,
@@ -16,6 +16,29 @@ class CategoryRepo {
     });
     Response? response = await ApiClient.postMultipartData(
       ApiUrl.CREATE_CATEGORY,
+      _body,
+      [MultipartBody('image', webImage: webImage)],
+    );
+    if (response.statusCode == 200) {
+      return Right(CategoryModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
+  Future<Either<String, CategoryModel>> updateCategory(
+      {required Category categoryModel, Uint8List? webImage}) async {
+    Map<String, String> _body = Map();
+    _body.addAll(<String, String>{
+      'id': categoryModel.id.toString(),
+      'name_ar': categoryModel.nameAr!,
+      'name_en': categoryModel.nameEn!,
+      'name_he': categoryModel.nameHe!,
+      'status': categoryModel.status.toString(),
+      'sort': categoryModel.sort.toString(),
+    });
+    Response? response = await ApiClient.postMultipartData(
+      ApiUrl.UPDATE_CATEGORY,
       _body,
       [MultipartBody('image', webImage: webImage)],
     );

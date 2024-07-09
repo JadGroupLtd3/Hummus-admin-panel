@@ -1,20 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/deals_nav_bar.dart';
-import 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/deals_texts_field.dart';
-import 'package:hummus_admin_panel/feature/deals/add_new_deals/widget/dela_meals.dart';
-import 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewDealsScreen extends StatelessWidget {
-  AddNewDealsScreen({super.key});
+class AddNewDealsScreen extends StatefulWidget {
+  final bool isEdit;
+  final Deals? deals;
+  const AddNewDealsScreen({super.key,this.isEdit = false, this.deals});
+
+  @override
+  State<AddNewDealsScreen> createState() => _AddNewDealsScreenState();
+}
+
+class _AddNewDealsScreenState extends State<AddNewDealsScreen> {
   final GlobalKey<FormState> dealKey = GlobalKey<FormState>();
+  final DealsController dealsController = Get.find<DealsController>();
+  @override
+  void initState() {
+    dealsController.initState();
+    if(widget.isEdit == true){
+      dealsController.isEdit(widget.deals!);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +29,14 @@ class AddNewDealsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: GetBuilder<DealsController>(
-            initState: (state) {
-              Get.find<DealsController>().initState();
-              state.controller?.initState();
-            },
             builder: (dealsController) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Deals'.tr} / ${'Add New'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Deals'.tr} / ${'edit deal'.tr}'
+                        : '${'Home'.tr} / ${'Deals'.tr} / ${'Add New'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -127,7 +132,7 @@ class AddNewDealsScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -139,7 +144,11 @@ class AddNewDealsScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (dealKey.currentState!.validate()) {
-                                dealsController.createDeals(context);
+                                if(widget.isEdit == true){
+                                  dealsController.updateDeals(context, widget.deals!.id);
+                                }else {
+                                  dealsController.createDeals(context);
+                                }
                               }
                             },
                           ),
@@ -147,7 +156,7 @@ class AddNewDealsScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -159,7 +168,11 @@ class AddNewDealsScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (dealKey.currentState!.validate()) {
-                                dealsController.createDeals(context);
+                                if(widget.isEdit == true){
+                                  dealsController.updateDeals(context, widget.deals!.id);
+                                }else {
+                                  dealsController.createDeals(context);
+                                }
                               }
                             },
                           ),

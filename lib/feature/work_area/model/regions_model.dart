@@ -31,25 +31,27 @@ class RegionsModel {
 class RegionsData {
   RegionsData({
     this.id,
+    this.status,
     required this.name,
     required this.regions,
   });
 
   late final id;
+  int? status;
   late final String name;
   late final List<Regions> regions;
 
   RegionsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    regions =
-        List.from(json['regions']).map((e) => Regions.fromJson(e)).toList();
+    regions = List.from(json['regions']).map((e) => Regions.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
     _data['name'] = name;
+    _data['status'] = status;
     _data['regions'] = regions.map((e) => e.toJson()).toList();
     return _data;
   }
@@ -82,10 +84,12 @@ class CreateRegionsModel {
     required this.name,
     required this.status,
     required this.regions,
+    this.id,
   });
 
   late final String name;
   late final status;
+  late final id;
   late final List<Regions> regions;
   late final int code;
   late final String message;

@@ -39,10 +39,10 @@ class AddPhotoWidget extends StatefulWidget {
   });
 
   @override
-  _AddPhotoWidgetState createState() => _AddPhotoWidgetState();
+  AddPhotoWidgetState createState() => AddPhotoWidgetState();
 }
 
-class _AddPhotoWidgetState extends State<AddPhotoWidget> {
+class AddPhotoWidgetState extends State<AddPhotoWidget> {
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     try {
@@ -94,6 +94,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("imagePath ${widget.imagePath}");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       height: widget.height ?? MediaQuery.of(context).size.height * 1 / 2.5,

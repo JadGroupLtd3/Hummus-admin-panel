@@ -1,20 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/component/controller/component_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/widgets/add_new_product_fields.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/add_photo_widget.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewComponentScreen extends StatelessWidget {
-  AddNewComponentScreen({super.key});
+class AddNewComponentScreen extends StatefulWidget {
+  final bool isEdit;
+  final Component? component;
 
+  const AddNewComponentScreen({super.key, this.isEdit = false, this.component});
+
+  @override
+  State<AddNewComponentScreen> createState() => _AddNewComponentScreenState();
+}
+
+class _AddNewComponentScreenState extends State<AddNewComponentScreen> {
   final GlobalKey<FormState> componentKey = GlobalKey<FormState>();
+  final ComponentController componentController = Get.find<ComponentController>();
+
+  @override
+  void initState() {
+    componentController.initState();
+    if (widget.isEdit == true) {
+      componentController.isEdit(widget.component!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,9 @@ class AddNewComponentScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Component'.tr} / ${'Add component'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Component'.tr} / ${'Edit component'.tr}'
+                        : '${'Home'.tr} / ${'Component'.tr} / ${'Add component'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -71,10 +81,13 @@ class AddNewComponentScreen extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: AddPhotoWidget(
-                            isCategory: true,
+                            isComponent: true,
+                            isEdit: widget.component != null,
+                            imagePath: componentController.imagePath,
                             webImage: componentController.webImage,
                             pickedImage: componentController.pickedImage,
-                            pickedProfileImageFile: componentController.pickedProfileImageFile,
+                            pickedProfileImageFile:
+                                componentController.pickedProfileImageFile,
                           ),
                         ),
                       ),
@@ -91,7 +104,8 @@ class AddNewComponentScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                                widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -103,7 +117,14 @@ class AddNewComponentScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (componentKey.currentState!.validate()) {
-                                componentController.createComponent(context);
+                                if (widget.isEdit == true) {
+                                  componentController.updateComponent(
+                                    context,
+                                    widget.component!.id!,
+                                  );
+                                } else {
+                                  componentController.createComponent(context);
+                                }
                               }
                             },
                           ),
@@ -111,7 +132,8 @@ class AddNewComponentScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                                widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -123,7 +145,14 @@ class AddNewComponentScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (componentKey.currentState!.validate()) {
-                                componentController.createComponent(context);
+                                if (widget.isEdit == true) {
+                                  componentController.updateComponent(
+                                    context,
+                                    widget.component!.id!,
+                                  );
+                                } else {
+                                  componentController.createComponent(context);
+                                }
                               }
                             },
                           ),

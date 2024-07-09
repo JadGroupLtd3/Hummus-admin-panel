@@ -18,6 +18,21 @@ class RegionsRepo{
     }
   }
 
+  Future<Either<String, CreateRegionsModel>> updateRegions({
+    required RegionsData regionsData}) async {
+    Response? response = await ApiClient.postData(
+      ApiUrl.UPDATE_REGIONS,
+      regionsData,
+    );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      return Right(CreateRegionsModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
   Future<Either<String, RegionsModel>> getRegions() async {
     Response? response = await ApiClient.getData(ApiUrl.GET_REGIONS);
     if (response.statusCode == 200) {

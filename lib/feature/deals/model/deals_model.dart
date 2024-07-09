@@ -78,6 +78,7 @@ class Deals {
 
 class CreateDealModel {
   CreateDealModel({
+    this.id,
     required this.startDate,
     required this.endDate,
     required this.userUseCount,
@@ -88,6 +89,7 @@ class CreateDealModel {
     required this.meals,
     required this.status,
   });
+  late final id;
   late final String startDate;
   late final String endDate;
   late final userUseCount;

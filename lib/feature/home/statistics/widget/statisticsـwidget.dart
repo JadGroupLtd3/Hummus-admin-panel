@@ -1,10 +1,5 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class StatisticsWidget extends StatelessWidget {
   const StatisticsWidget({super.key});
@@ -52,19 +47,19 @@ class StatisticsWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  statisticWidget(
+                  Obx(() =>statisticWidget(
                     context: context,
-                    number: "0",
+                    number: "${Get.find<CouponController>().couponList.length}",
                     title: 'Coupons'.tr,
                     page: 5,
-                  ),
+                  )),
                   const SizedBox(width: 10),
-                  statisticWidget(
+                  Obx(() => statisticWidget(
                     context: context,
-                    number: "0",
+                    number: "${Get.find<MealsController>().mealsList.length}",
                     title: 'Meals'.tr,
                     page: 28,
-                  ),
+                  ),),
                 ],
               ),
             ],

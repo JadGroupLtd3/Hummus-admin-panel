@@ -1,19 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/attributes/controller/attribute_controller.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/widgets/add_new_product_fields.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewAttributeScreen extends StatelessWidget {
-  AddNewAttributeScreen({super.key});
+class AddNewAttributeScreen extends StatefulWidget {
+  final bool isEdit;
+  final Attribute? attribute;
 
+  const AddNewAttributeScreen({super.key, this.isEdit = false, this.attribute});
+
+  @override
+  State<AddNewAttributeScreen> createState() => _AddNewAttributeScreenState();
+}
+
+class _AddNewAttributeScreenState extends State<AddNewAttributeScreen> {
   final GlobalKey<FormState> attributeKey = GlobalKey<FormState>();
+  final AttributeController attributeController =
+      Get.find<AttributeController>();
+
+  @override
+  void initState() {
+    if (widget.isEdit == true) {
+      attributeController.isEdit(widget.attribute!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,9 @@ class AddNewAttributeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Attributes'.tr} / ${'Add attribute'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Attributes'.tr} / ${'Edit attribute'.tr}'
+                        : '${'Home'.tr} / ${'Attributes'.tr} / ${'Add attribute'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -99,7 +110,8 @@ class AddNewAttributeScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                            widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -111,7 +123,14 @@ class AddNewAttributeScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (attributeKey.currentState!.validate()) {
-                                attributeController.createAttribute(context);
+                                if (widget.isEdit == true) {
+                                  attributeController.updateAttribute(
+                                    context,
+                                    widget.attribute!.id!,
+                                  );
+                                } else {
+                                  attributeController.createAttribute(context);
+                                }
                               }
                             },
                           ),
@@ -119,7 +138,8 @@ class AddNewAttributeScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                                widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -131,7 +151,14 @@ class AddNewAttributeScreen extends StatelessWidget {
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
                               if (attributeKey.currentState!.validate()) {
-                                attributeController.createAttribute(context);
+                                if (widget.isEdit == true) {
+                                  attributeController.updateAttribute(
+                                    context,
+                                    widget.attribute!.id!,
+                                  );
+                                } else {
+                                  attributeController.createAttribute(context);
+                                }
                               }
                             },
                           ),

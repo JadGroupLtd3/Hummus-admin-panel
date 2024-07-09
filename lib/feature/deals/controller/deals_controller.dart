@@ -42,6 +42,13 @@ class DealsController extends GetxController {
     selectedMealsList.clear();
   }
 
+  void isEdit(Deals deals){
+    startDateDeal.text = deals.startDate;
+    endDateDeal.text = deals.endDate;
+    userUseCountDeal.text = deals.userUseCount.toString();
+    totalPriceDeal.text = deals.totalPrice;
+  }
+
   Future<void> createDeals(BuildContext context) async {
     if (pickedProfileImageFile == null) {
       ShowSnackBar.show(context: context, message: "Please select an image", color: Colors.red);
@@ -84,6 +91,49 @@ class DealsController extends GetxController {
     });
   }
 
+  Future<void> updateDeals(BuildContext context,int dealId) async {
+    if (pickedProfileImageFile == null) {
+      ShowSnackBar.show(context: context, message: "Please select an image", color: Colors.red);
+      return;
+    }
+    controllerState.value = ControllerState.loading;
+    CreateDealModel dealModel = CreateDealModel(
+      id: dealId,
+      startDate: startDateDeal.text,
+      endDate: endDateDeal.text,
+      userUseCount: userUseCountDeal.text,
+      totalPrice: totalPriceDeal.text,
+      ar: TextType(
+        name: dealArabicName.text,
+        description: dealArabicDescription.text,
+        image: pickedProfileImageFile?.path ?? "",
+      ),
+      en: TextType(
+        name: dealEnglishName.text,
+        description: dealEnglishDescription.text,
+        image: pickedProfileImageFile?.path ?? "",
+      ),
+      he: TextType(
+        name: dealHebrewName.text,
+        description: dealHebrewDescription.text,
+        image: pickedProfileImageFile?.path ?? "",
+      ),
+      meals: selectedMealsList,
+      status: status.value == true ? 1 : 0,
+    );
+    final result = await dealsRepo.updateDeals(dealModel, webImage);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.red);
+      getDeals(context);
+      initState();
+      Get.back();
+      update();
+    });
+  }
 
   Future<void> getDeals(BuildContext context) async {
     controllerState.value = ControllerState.loading;
@@ -113,4 +163,5 @@ class DealsController extends GetxController {
           context: context, message: right.message, color: Colors.green);
     });
   }
+
 }
