@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
           title: AppConstants.APP_NAME,
-          locale: Locale(GetStorage().read<String>('lang') ?? ara),
+          locale: Locale(GetStorage().read<String>('lang') ?? eng),
           translations: LocalizationApp(),
           fallbackLocale: Locale(ara),
           theme: MyThemeData.light,
