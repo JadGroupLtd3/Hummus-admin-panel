@@ -1,11 +1,29 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
-class AddNewCouponScreen extends StatelessWidget {
-  AddNewCouponScreen({super.key});
+class AddNewCouponScreen extends StatefulWidget {
+  final bool isEdit;
+  final Coupon? coupon;
 
+  const AddNewCouponScreen({super.key, this.isEdit = false, this.coupon});
+
+  @override
+  State<AddNewCouponScreen> createState() => _AddNewCouponScreenState();
+}
+
+class _AddNewCouponScreenState extends State<AddNewCouponScreen> {
   final GlobalKey<FormState> couponKey = GlobalKey<FormState>();
   final GlobalKey<FormState> couponNameKey = GlobalKey<FormState>();
+  final CouponController couponController = Get.find<CouponController>();
+
+  @override
+  void initState() {
+    couponController.initState();
+    if (widget.isEdit == true) {
+      couponController.isEdit(widget.coupon!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +37,9 @@ class AddNewCouponScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Coupons'.tr} / ${'Add New'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Coupons'.tr} / ${'edit Coupon'.tr} '
+                        : '${'Home'.tr} / ${'Coupons'.tr} / ${'Add New'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -91,7 +111,7 @@ class AddNewCouponScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -102,8 +122,14 @@ class AddNewCouponScreen extends StatelessWidget {
                             height: 45,
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
-                              if(couponKey.currentState!.validate() && couponNameKey.currentState!.validate()){
-                                couponController.createCoupon(context);
+                              if (couponKey.currentState!.validate() &&
+                                  couponNameKey.currentState!.validate()) {
+                                if (widget.isEdit == true) {
+                                  couponController.updateCoupon(
+                                      context, widget.coupon!.id!);
+                                } else {
+                                  couponController.createCoupon(context);
+                                }
                               }
                             },
                           ),
@@ -111,7 +137,7 @@ class AddNewCouponScreen extends StatelessWidget {
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText: widget.isEdit ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -122,15 +148,20 @@ class AddNewCouponScreen extends StatelessWidget {
                             height: 45,
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
-                              if(couponKey.currentState!.validate() && couponNameKey.currentState!.validate()){
-                                couponController.createCoupon(context);
+                              if (couponKey.currentState!.validate() &&
+                                  couponNameKey.currentState!.validate()) {
+                                if (widget.isEdit == true) {
+                                  couponController.updateCoupon(
+                                      context, widget.coupon!.id!);
+                                } else {
+                                  couponController.createCoupon(context);
+                                }
                               }
                             },
                           ),
                         );
                     }
                   }),
-
                 ],
               );
             },

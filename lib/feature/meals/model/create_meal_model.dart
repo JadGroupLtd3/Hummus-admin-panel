@@ -4,6 +4,7 @@ class CreateMealModel {
     required this.fakePrice,
     required this.price,
     this.image,
+    this.id,
     required this.texts,
     required this.images,
     required this.hashtags,
@@ -14,6 +15,7 @@ class CreateMealModel {
     required this.coinPoints,
   });
   late final int categoryId;
+  late final id;
   late final fakePrice;
   late final price;
   late final String? image;
@@ -124,6 +126,7 @@ class CreateMealModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
     _data['category_id'] = categoryId;
     _data['fake_price'] = fakePrice;
     _data['price'] = price;

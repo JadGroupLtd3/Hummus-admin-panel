@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
 
 class MealsPhotosWidget extends StatefulWidget {
-  const MealsPhotosWidget({super.key});
+  final Meals? meals;
+
+  const MealsPhotosWidget({super.key, this.meals});
 
   @override
   State<MealsPhotosWidget> createState() => _MealsPhotosWidgetState();
@@ -11,11 +14,32 @@ class MealsPhotosWidget extends StatefulWidget {
 class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
   final CategoryController categoryController = Get.find<CategoryController>();
   final LanguageController languageController = Get.find<LanguageController>();
+  final MealsController mealsController = Get.find<MealsController>();
   String title = 'Category'.tr;
 
   @override
   void initState() {
     categoryController.getCategory(context);
+    if (widget.meals != null) {
+      setState(() {
+        String selectedId =
+            categoryController.categorySelectedId.value.toString();
+        title = languageController.langLocal == eng
+            ? categoryController.categoryList.firstWhere(
+                (element) => element.id.toString() == selectedId).nameEn ?? ''
+            : languageController.langLocal == ara
+                ? categoryController.categoryList.firstWhere(
+                            (element) => element.id.toString() == selectedId)
+                        .nameAr ??
+                    ''
+                : categoryController.categoryList
+                        .firstWhere(
+                            (element) => element.id.toString() == selectedId)
+                        .nameHe ??
+                    '';
+        print('new title $title');
+      });
+    }
     super.initState();
   }
 
@@ -46,9 +70,12 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                 child: Center(
                   child: AddPhotoWidget(
                     isMeal: true,
-                    webImage: categoryController.webImage,
-                    pickedImage: categoryController.pickedImage,
-                    pickedProfileImageFile: categoryController.pickedProfileImageFile,
+                    isEdit: widget.meals != null,
+                    imagePath: mealsController.imagePath,
+                    webImage: mealsController.webImage,
+                    pickedImage: mealsController.pickedImage,
+                    pickedProfileImageFile:
+                        mealsController.pickedProfileImageFile,
                   ),
                 ),
               ),
@@ -115,7 +142,8 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                             ? categoryController.categoryList
                                     .firstWhere((element) =>
                                         element.id.toString() == val)
-                                    .nameEn ?? ''
+                                    .nameEn ??
+                                ''
                             : languageController.langLocal == ara
                                 ? categoryController.categoryList
                                         .firstWhere((element) =>
@@ -129,7 +157,8 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                                     '';
                       }
                     });
-                    categoryController.categorySelectedId.value = int.parse(val ?? '');
+                    categoryController.categorySelectedId.value =
+                        int.parse(val ?? '');
                     print(categoryController.categorySelectedId.value);
                   },
                   items: categoryController.categoryList.map(

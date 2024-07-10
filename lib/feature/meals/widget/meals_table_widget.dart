@@ -200,7 +200,12 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(()=>AddNewMealScreen(
+                                          isEdit: true,
+                                          meals: meal,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

@@ -174,7 +174,12 @@ class _CouponTableWidgetState extends State<CouponTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(()=> AddNewCouponScreen(
+                                          isEdit: true,
+                                          coupon: coupon,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,

@@ -77,7 +77,6 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
           }
           if (widget.isMeal == true) {
             Get.find<MealsController>().webImage = widget.webImage;
-            Get.find<MealsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
         } else {
           widget.pickedImage = File(widget.pickedProfileImageFile!.path);
@@ -95,6 +94,8 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
   @override
   Widget build(BuildContext context) {
     print("imagePath ${widget.imagePath}");
+    print("pickedProfileImageFile ${widget.pickedProfileImageFile}");
+    print("isEdit ${widget.isEdit}");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       height: widget.height ?? MediaQuery.of(context).size.height * 1 / 2.5,
@@ -128,7 +129,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
                     height: 50,
                     width: 80,
                     child: widget.isEdit &&
-                            widget.imagePath != null &&
+                        widget.imagePath != null &&
                             widget.pickedProfileImageFile?.path == null
                         ? Image.network(
                             widget.imagePath!,

@@ -140,7 +140,9 @@ class _CouponDetailsFieldsState extends State<CouponDetailsFields> {
                                 ),
                               ),
                               DropDownBTN(
-                                title: title,
+                                title: couponController.discountType.value == 1
+                                    ? 'static price'
+                                    : title,
                                 onChanged: (String? val) {
                                   setState(() {
                                     if(val != null){

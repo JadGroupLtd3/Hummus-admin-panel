@@ -1,8 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/tables/controller/tables_controller.dart';
-import 'package:hummus_admin_panel/feature/tables/repo/tables_repo.dart';
-
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   final DealsController dealsController = Get.put(DealsController(DealsRepo()));
   final MealsController mealsController = Get.put(MealsController(MealsRepo()));
   final TablesController tablesController = Get.put(TablesController(TablesRepo()));
-
+  final AllOrderController orderController = Get.put(AllOrderController(AllOrderRepository()));
   @override
   void initState() {
     super.initState();
@@ -50,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
     await dealsController.getDeals(context);
     await mealsController.getMeals(context);
     await tablesController.getTables(context);
+    await orderController.getAllOrder(context);
   }
 
   @override

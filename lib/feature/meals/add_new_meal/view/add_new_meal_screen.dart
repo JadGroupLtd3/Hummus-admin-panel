@@ -1,8 +1,28 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
 
-class AddNewMealScreen extends StatelessWidget {
-  const AddNewMealScreen({super.key});
+class AddNewMealScreen extends StatefulWidget {
+  final bool isEdit;
+  final Meals? meals;
+
+  const AddNewMealScreen({super.key, this.isEdit = false, this.meals});
+
+  @override
+  State<AddNewMealScreen> createState() => _AddNewMealScreenState();
+}
+
+class _AddNewMealScreenState extends State<AddNewMealScreen> {
+  final MealsController mealsController = Get.find<MealsController>();
+
+  @override
+  void initState() {
+    mealsController.initState();
+    if (widget.isEdit == true) {
+      mealsController.isEdit(widget.meals!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,16 +31,14 @@ class AddNewMealScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: GetBuilder<MealsController>(
-            initState: (state) {
-              Get.find<MealsController>().initState();
-              state.controller?.initState();
-            },
             builder: (mealsController) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    '${'Home'.tr} / ${'Meals'.tr} / ${'Add New'.tr}',
+                    widget.isEdit == true
+                        ? '${'Home'.tr} / ${'Meals'.tr} / ${'Edit meal'.tr}'
+                        : '${'Home'.tr} / ${'Meals'.tr} / ${'Add New'.tr}',
                     style: TajawalRegular.copyWith(
                       fontSize: 16,
                     ),
@@ -48,17 +66,25 @@ class AddNewMealScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   MealsNavBar(
-                                    sliderPagesController: sliderPagesController,
+                                    sliderPagesController:
+                                        sliderPagesController,
                                   ),
                                   const SizedBox(height: 20),
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height * 1 / 1.77,
+                                    height: MediaQuery.of(context).size.height *
+                                        1 /
+                                        1.77,
                                     child: PageView(
-                                      onPageChanged: sliderPagesController.animateToMealsNameTab,
-                                      controller: sliderPagesController.mealPageController,
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      onPageChanged: sliderPagesController
+                                          .animateToMealsNameTab,
+                                      controller: sliderPagesController
+                                          .mealPageController,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       clipBehavior: Clip.none,
-                                      children: [...sliderPagesController.mealNamesPages],
+                                      children: [
+                                        ...sliderPagesController.mealNamesPages
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(height: 20),
@@ -86,7 +112,9 @@ class AddNewMealScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: const MealsPhotosWidget(),
+                          child: MealsPhotosWidget(
+                            meals: widget.meals,
+                          ),
                         ),
                       ),
                     ],
@@ -106,7 +134,8 @@ class AddNewMealScreen extends StatelessWidget {
                       case ControllerState.error:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                                widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -117,14 +146,20 @@ class AddNewMealScreen extends StatelessWidget {
                             height: 45,
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
-                              mealsController.createMeals(context);
+                              if (widget.isEdit == true) {
+                                mealsController.updateMeals(
+                                    context, widget.meals!.id);
+                              } else {
+                                mealsController.createMeals(context);
+                              }
                             },
                           ),
                         );
                       default:
                         return Center(
                           child: CustomButton(
-                            buttonText: 'save'.tr,
+                            buttonText:
+                            widget.isEdit == true ? 'edit'.tr : 'save'.tr,
                             icon: SvgPicture.asset(Images.correct)
                                 .paddingSymmetric(horizontal: 4),
                             style: TajawalBold.copyWith(
@@ -135,7 +170,12 @@ class AddNewMealScreen extends StatelessWidget {
                             height: 45,
                             backGroundColor: MyThemeData.light.primaryColor,
                             onPressed: () {
-                              mealsController.createMeals(context);
+                              if (widget.isEdit == true) {
+                                mealsController.updateMeals(
+                                    context, widget.meals!.id);
+                              } else {
+                                mealsController.createMeals(context);
+                              }
                             },
                           ),
                         );

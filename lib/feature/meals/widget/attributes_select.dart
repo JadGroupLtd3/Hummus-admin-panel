@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/meals/model/create_meal_model.dart';
 
 class AttributesSelect extends StatefulWidget {
   const AttributesSelect({super.key});
