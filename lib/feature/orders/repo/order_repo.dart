@@ -12,11 +12,10 @@ class AllOrderRepository {
   };
 
   Future<Either<String, AllOrderModel>> getAllOrder() async {
-    var url =
-    Uri.parse('https://marcelia.online/test/hummus-back/api/v1/order/all');
+    var url = Uri.parse('${ApiUrl.LOGIN_BASE_URL}/order/index');
     final http.Response response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
-      //log(response.body);
+      log(response.body);
       return Right(AllOrderModel.fromJson(jsonDecode(response.body)));
     } else {
       log('Api Error ${response.statusCode} . ${response.body}//////////');
@@ -29,7 +28,7 @@ class AllOrderRepository {
       int idOfOrderDetails, String stateOfOrder, String? expectedTime) async {
     final http.Response response = await http.get(
         Uri.parse(
-          'https://marcelia.online/test/hummus-back/api/v1//order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}',
+          '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}',
         ),
         headers: headers);
     //log('${ApiUrl.BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}');

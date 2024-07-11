@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
-class CompleteOrderScreen extends StatelessWidget {
-  const CompleteOrderScreen({super.key});
+class WaitingForDeliveryScreen extends StatelessWidget {
+  const WaitingForDeliveryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CompleteOrderScreen extends StatelessWidget {
             return Expanded(
                 child: ListView.builder(
               shrinkWrap: true,
-              itemCount: allOrderController.completedList.length,
+              itemCount: allOrderController.waitingDeliveredList.length,
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class CompleteOrderScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text(
-                                  'order #${allOrderController.completedList[index].id}',
+                                  'order #${allOrderController.waitingDeliveredList[index].id}',
                                   style: TajawalRegular.copyWith(
                                     fontSize: 14,
                                   ),
@@ -54,7 +54,8 @@ class CompleteOrderScreen extends StatelessWidget {
                                 Text(
                                   allOrderController.calculateSinceDays(
                                       allOrderController
-                                          .completedList[index].createdAt),
+                                          .waitingDeliveredList[index]
+                                          .createdAt),
                                   style: TajawalLight.copyWith(
                                     fontSize: 12,
                                   ),
@@ -66,7 +67,7 @@ class CompleteOrderScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₪ ${allOrderController.completedList[index].totalPrice}',
+                              '₪ ${allOrderController.waitingDeliveredList[index].totalPrice}',
                               style: TajawalBold.copyWith(
                                 fontSize: 14,
                                 color: MyThemeData.light.focusColor,
@@ -76,7 +77,8 @@ class CompleteOrderScreen extends StatelessWidget {
                             InkWell(
                                 onTap: () {
                                   allOrderController.selectOrder(
-                                      allOrderController.completedList[index]);
+                                      allOrderController
+                                          .waitingDeliveredList[index]);
                                 },
                                 child: SvgPicture.asset(Images.order_details)),
                           ],

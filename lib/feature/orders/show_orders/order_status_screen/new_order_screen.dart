@@ -1,24 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class NewOrderScreen extends StatelessWidget {
   const NewOrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AllOrderController allOrderController = Get.find<AllOrderController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
       child: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
+          Obx(() {
+            if (allOrderController.controllerState.value ==
+                ControllerState.loading) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            return Expanded(
+                child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: allOrderController.waitingList.length,
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
@@ -27,7 +30,8 @@ class NewOrderScreen extends StatelessWidget {
                     border: Border.all(color: Colors.black.withOpacity(0.08)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -41,14 +45,16 @@ class NewOrderScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text(
-                                  'order #144',
+                                  'order #${allOrderController.waitingList[index].id}',
                                   style: TajawalRegular.copyWith(
                                     fontSize: 14,
                                   ),
                                 ),
                                 3.verticalSpace,
                                 Text(
-                                  'since 4 days',
+                                  allOrderController.calculateSinceDays(
+                                      allOrderController
+                                          .waitingList[index].createdAt),
                                   style: TajawalLight.copyWith(
                                     fontSize: 12,
                                   ),
@@ -60,14 +66,19 @@ class NewOrderScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₪ 27',
+                              '₪ ${allOrderController.waitingList[index].totalPrice}',
                               style: TajawalBold.copyWith(
                                 fontSize: 14,
                                 color: MyThemeData.light.focusColor,
                               ),
                             ),
                             5.horizontalSpace,
-                            SvgPicture.asset(Images.order_details),
+                            InkWell(
+                                onTap: () {
+                                  allOrderController.selectOrder(
+                                      allOrderController.waitingList[index]);
+                                },
+                                child: SvgPicture.asset(Images.order_details)),
                           ],
                         ),
                       ],
@@ -75,8 +86,8 @@ class NewOrderScreen extends StatelessWidget {
                   ),
                 ).paddingSymmetric(vertical: 5);
               },
-            ),
-          ),
+            ));
+          }),
         ],
       ),
     );

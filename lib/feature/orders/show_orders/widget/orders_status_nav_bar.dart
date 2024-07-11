@@ -24,7 +24,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             questionNavBarItem(0),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.height * 1 / 5.5,
+              width: MediaQuery.of(context).size.height * 1 / 4.5,
               color: sliderPagesController.currentOrderStatusName.value == 0
                   ? MyThemeData.light.primaryColor
                   : sliderPagesController.currentOrderStatusName.value == 1
@@ -34,20 +34,28 @@ class OrdersStatusNavBar extends StatelessWidget {
             questionNavBarItem(1),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.height * 1 / 5.5,
-              color: sliderPagesController.currentOrderStatusName.value == 1 ||
-                      sliderPagesController.currentOrderStatusName.value == 2
+              width: MediaQuery.of(context).size.height * 1 / 4.5,
+              color: sliderPagesController.currentOrderStatusName.value == 1
                   ? MyThemeData.light.primaryColor
                   : const Color(0xffE4E4E4),
             ),
             questionNavBarItem(2),
+            Container(
+              height: 2,
+              width: MediaQuery.of(context).size.height * 1 / 4.5,
+              color: sliderPagesController.currentOrderStatusName.value == 2 ||
+                      sliderPagesController.currentOrderStatusName.value == 3
+                  ? MyThemeData.light.primaryColor
+                  : const Color(0xffE4E4E4),
+            ),
+            questionNavBarItem(3),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Arabic'.tr,
+              'new Orders'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 0
@@ -65,7 +73,7 @@ class OrdersStatusNavBar extends StatelessWidget {
               color: Colors.transparent,
             ),
             Text(
-              'English'.tr,
+              'Processing'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 1
@@ -83,10 +91,24 @@ class OrdersStatusNavBar extends StatelessWidget {
               color: Colors.transparent,
             ),
             Text(
-              'Hebrew'.tr,
+              'waiting For Delivery'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 2
+                    ? MyThemeData.light.primaryColor
+                    : Colors.black,
+              ),
+            ).paddingOnly(top: 10),
+            Container(
+              height: 1,
+              width: MediaQuery.of(context).size.height * 1 / 6.3,
+              color: Colors.transparent,
+            ),
+            Text(
+              'Completed'.tr,
+              style: TajawalRegular.copyWith(
+                fontSize: 14,
+                color: sliderPagesController.currentOrderStatusName.value == 3
                     ? MyThemeData.light.primaryColor
                     : Colors.black,
               ),
@@ -104,7 +126,9 @@ class OrdersStatusNavBar extends StatelessWidget {
         sliderPagesController.goToOrderStatusNameTab(page);
       },
       builder: (isHovered) {
-        final color = isHovered ? MyThemeData.light.primaryColor : const Color(0xffE4E4E4);
+        final color = isHovered
+            ? MyThemeData.light.primaryColor
+            : const Color(0xffE4E4E4);
         return Container(
           height: 20,
           width: 20,

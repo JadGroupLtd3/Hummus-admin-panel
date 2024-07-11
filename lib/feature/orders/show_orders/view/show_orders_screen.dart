@@ -42,7 +42,8 @@ class ShowOrdersScreen extends StatelessWidget {
                             ],
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10,top:20,bottom: 10),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20, bottom: 10),
                             child: Column(
                               children: [
                                 OrdersStatusNavBar(
@@ -50,13 +51,21 @@ class ShowOrdersScreen extends StatelessWidget {
                                 ),
                                 10.verticalSpace,
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height * 1 / 1.5,
+                                  height: MediaQuery.of(context).size.height *
+                                      1 /
+                                      1.5,
                                   child: PageView(
-                                    onPageChanged: sliderPagesController.animateToOrderStatusNameTab,
-                                    controller: sliderPagesController.orderStatusPageController,
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    onPageChanged: sliderPagesController
+                                        .animateToOrderStatusNameTab,
+                                    controller: sliderPagesController
+                                        .orderStatusPageController,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     clipBehavior: Clip.none,
-                                    children: [...sliderPagesController.orderStatusNamesPages],
+                                    children: [
+                                      ...sliderPagesController
+                                          .orderStatusNamesPages
+                                    ],
                                   ),
                                 ),
                               ],
@@ -87,39 +96,6 @@ class ShowOrdersScreen extends StatelessWidget {
                             ],
                           ),
                           child: OrderDetailsWidget(),
-                        ),
-                        20.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            OnHover(
-                              builder: (isHovered) {
-                                return CustomButton(
-                                  buttonText: 'Accept'.tr,
-                                  icon: SvgPicture.asset(Images.correct),
-                                  backGroundColor: MyThemeData.light.primaryColor,
-                                  radius: 7,
-                                  width: 120,
-                                  height: 45,
-                                  onPressed: (){},
-                                );
-                              },
-                            ),
-                            7.horizontalSpace,
-                            OnHover(
-                              builder: (isHovered) {
-                                return CustomButton(
-                                  buttonText: 'Reject'.tr,
-                                  icon: SvgPicture.asset(Images.close),
-                                  backGroundColor: MyThemeData.light.focusColor,
-                                  radius: 7,
-                                  width: 120,
-                                  height: 45,
-                                  onPressed: (){},
-                                );
-                              },
-                            ),
-                          ],
                         ),
                       ],
                     ),
