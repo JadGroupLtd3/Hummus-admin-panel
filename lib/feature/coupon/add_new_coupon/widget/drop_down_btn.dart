@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 
 class DropDownBTN extends StatefulWidget {
@@ -41,7 +42,7 @@ class _DropDownBTNState extends State<DropDownBTN> {
             fontSize: 14,
             color: Colors.black,
           ),
-          items: widget.items ?? ['One', 'Two', 'Three'].map(
+          items: widget.items ?? ['One'.tr, 'Two'.tr, 'Three'.tr].map(
                 (val) {
               return DropdownMenuItem<String>(
                 value: val,

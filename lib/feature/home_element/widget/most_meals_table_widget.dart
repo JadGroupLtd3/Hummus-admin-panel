@@ -86,12 +86,12 @@ class MostMealsTableWidget extends StatelessWidget {
                       ).paddingOnly(
                           left: languageController.langLocal == eng ? 0 : 30,
                           right: languageController.langLocal == eng ? 30 : 0,top: 10,bottom: 10),
-                      const TextUtils(title: 'Meal name').paddingOnly(
+                       TextUtils(title: 'Meal name'.tr).paddingOnly(
                           left: languageController.langLocal == eng ? 40 : 0,
                           right: languageController.langLocal == eng ? 0 : 40 ,top: 10,bottom: 10),
                       Center(child: const TextUtils(title: '\$15').paddingOnly(top: 10, bottom: 10)),
                       Center(child: const TextUtils(title: '\$20').paddingOnly(top: 10, bottom: 10)),
-                      Center(child: const TextUtils(title: 'Category').paddingOnly(top: 10, bottom: 10)),
+                      Center(child:  TextUtils(title: 'Category'.tr).paddingOnly(top: 10, bottom: 10)),
                       Center(
                         child: SvgPicture.asset(
                           Images.dot,

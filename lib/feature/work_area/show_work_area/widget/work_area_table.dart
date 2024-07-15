@@ -43,12 +43,12 @@ class _WorkAreaTableState extends State<WorkAreaTable> {
                             left: languageController.langLocal == eng ? 40 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 40),
-                    const Center(
+                    Center(
                         child: TextUtils(
-                            title: 'Activation status', color: Colors.white)),
-                    const Center(
+                            title: 'Activation status'.tr, color: Colors.white)),
+                    Center(
                       child:
-                          TextUtils(title: 'Operations', color: Colors.white),
+                          TextUtils(title: 'Operations'.tr, color: Colors.white),
                     ),
                   ],
                 ),

@@ -53,12 +53,12 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                 languageController.langLocal == eng ? 0 : 40),
                     Center(
                         child:
-                            TextUtils(title: 'price'.tr, color: Colors.white)),
+                            TextUtils(title: 'Price'.tr, color: Colors.white)),
                     TextUtils(title: 'starting date'.tr, color: Colors.white),
                     TextUtils(title: 'Expiry date'.tr, color: Colors.white),
-                    const TextUtils(
-                        title: 'Activation status', color: Colors.white),
-                    const TextUtils(title: 'Operations', color: Colors.white)
+                    TextUtils(
+                        title: 'Activation status'.tr, color: Colors.white),
+                    TextUtils(title: 'Operations'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 20 : 0,
                             right:
@@ -132,7 +132,7 @@ class _DealsTableWidgetState extends State<DealsTableWidget> {
                                         : 0,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(title: 'deal').paddingOnly(
+                                TextUtils(title: 'deal'.tr).paddingOnly(
                                     left: languageController.langLocal == eng
                                         ? 40
                                         : 0,

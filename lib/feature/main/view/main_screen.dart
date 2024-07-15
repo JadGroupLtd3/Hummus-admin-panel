@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/home/notification_settings/controller/notification_controller.dart';
+import 'package:hummus_admin_panel/feature/home/notification_settings/repo/notification_repo.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -25,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   final MealsController mealsController = Get.put(MealsController(MealsRepo()));
   final TablesController tablesController = Get.put(TablesController(TablesRepo()));
   final AllOrderController orderController = Get.put(AllOrderController(AllOrderRepository()));
+  final NotificationController notificationController = Get.put(NotificationController(NotificationRepo()));
   @override
   void initState() {
     super.initState();
@@ -34,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> fetchData() async {
+    await notificationController.getNotification(context);
     await categoryController.getCategory(context);
     await attributeController.getAttribute(context);
     await componentController.getComponent(context);

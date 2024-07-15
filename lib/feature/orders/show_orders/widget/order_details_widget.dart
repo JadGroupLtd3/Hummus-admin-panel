@@ -22,14 +22,14 @@ class OrderDetailsWidget extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    'order #144',
+                    '${'order'.tr} #144',
                     style: TajawalRegular.copyWith(
                       fontSize: 14,
                     ),
                   ),
                   5.verticalSpace,
                   Text(
-                    'since 4 days',
+                    'since 4 days'.tr,
                     style: TajawalLight.copyWith(
                       fontSize: 12,
                     ),
@@ -187,7 +187,7 @@ class OrderDetailsWidget extends StatelessWidget {
                         ),
                         3.horizontalSpace,
                         Text(
-                          'meal name',
+                          'meal name'.tr,
                           style: TajawalRegular.copyWith(
                             fontSize: 14,
                           ),

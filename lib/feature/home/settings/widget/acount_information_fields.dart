@@ -288,7 +288,7 @@ class _AccountInformationFieldsState extends State<AccountInformationFields> {
                                           title = val;
                                         }
                                       });
-                                      if(val == 'Drinks'){
+                                      if(val == 'Drinks'.tr){
                                         settingsController.drinkCatId.value = 1;
                                       }
                                     },

@@ -41,14 +41,14 @@ class NewOrderScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text(
-                                  'order #144',
+                                  '${'order'.tr} #144',
                                   style: TajawalRegular.copyWith(
                                     fontSize: 14,
                                   ),
                                 ),
                                 3.verticalSpace,
                                 Text(
-                                  'since 4 days',
+                                  'since 4 days'.tr,
                                   style: TajawalLight.copyWith(
                                     fontSize: 12,
                                   ),
@@ -60,7 +60,7 @@ class NewOrderScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₪ 27',
+                              '₪ 27'.tr,
                               style: TajawalBold.copyWith(
                                 fontSize: 14,
                                 color: MyThemeData.light.focusColor,

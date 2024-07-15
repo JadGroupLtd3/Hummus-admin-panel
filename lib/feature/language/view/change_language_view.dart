@@ -32,7 +32,7 @@ class ChangeLanguageDialog extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
                   Text(
-                    'تغير اللغة'.tr,
+                    'change language'.tr,
                     style: TajawalBold.copyWith(
                       fontSize: 18,
                     ),

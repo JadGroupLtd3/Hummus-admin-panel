@@ -47,7 +47,7 @@ class OrdersStatusNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Arabic'.tr,
+              'Waiting'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 0
@@ -65,7 +65,7 @@ class OrdersStatusNavBar extends StatelessWidget {
               color: Colors.transparent,
             ),
             Text(
-              'English'.tr,
+              'Processing'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 1
@@ -83,7 +83,7 @@ class OrdersStatusNavBar extends StatelessWidget {
               color: Colors.transparent,
             ),
             Text(
-              'Hebrew'.tr,
+              'Complete'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 2

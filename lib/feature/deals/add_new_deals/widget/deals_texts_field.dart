@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/deals/controller/deals_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_switch.dart';
-import 'package:hummus_admin_panel/widgets/custom_text_field.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 
 class DealsTextsField extends StatefulWidget {
   final GlobalKey<FormState> dealKey;
@@ -181,7 +175,7 @@ class _DealsTextsFieldState extends State<DealsTextsField> {
                                       color: MyThemeData.light.focusColor,
                                     ).paddingSymmetric(horizontal: 7),
                                     Text(
-                                      'Number of uses for the laser'.tr,
+                                      'Number of uses per laser'.tr,
                                       style: TajawalRegular.copyWith(
                                         fontSize: 13,
                                       ),
@@ -196,7 +190,7 @@ class _DealsTextsFieldState extends State<DealsTextsField> {
                                   child: CustomTextField(
                                     height: 45,
                                     radius: 20,
-                                    hintText: 'Number of uses for the laser'.tr,
+                                    hintText: 'Number of uses per laser'.tr,
                                     inputType: TextInputType.phone,
                                     controller: dealsController.userUseCountDeal,
                                   ),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/utils/images.dart';
 import 'package:hummus_admin_panel/core/utils/styles.dart';
 import 'package:hummus_admin_panel/theme/light_theme.dart';
+
 class CompleteOrderScreen extends StatelessWidget {
   const CompleteOrderScreen({super.key});
 
@@ -40,14 +41,14 @@ class CompleteOrderScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text(
-                                  'order #144',
+                                  '${'order'.tr} #144',
                                   style: TajawalRegular.copyWith(
                                     fontSize: 14,
                                   ),
                                 ),
                                 3.verticalSpace,
                                 Text(
-                                  'since 4 days',
+                                  'since 4 days'.tr,
                                   style: TajawalLight.copyWith(
                                     fontSize: 12,
                                   ),
@@ -59,7 +60,7 @@ class CompleteOrderScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₪ 27',
+                              '₪ 27'.tr,
                               style: TajawalBold.copyWith(
                                 fontSize: 14,
                                 color: MyThemeData.light.focusColor,
