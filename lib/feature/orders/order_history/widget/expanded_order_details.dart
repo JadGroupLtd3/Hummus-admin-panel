@@ -1,6 +1,15 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/core/helper/responsive_helper.dart';
+import 'package:hummus_admin_panel/core/utils/app_constants.dart';
+import 'package:hummus_admin_panel/core/utils/images.dart';
+import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
+import 'package:hummus_admin_panel/theme/light_theme.dart';
+import 'package:hummus_admin_panel/widgets/on_hover.dart';
+import 'package:hummus_admin_panel/widgets/text_utils.dart';
 
 class ExpandedOrderDetails extends StatefulWidget {
   const ExpandedOrderDetails({super.key});
@@ -130,7 +139,7 @@ class _ExpandedOrderDetailsState extends State<ExpandedOrderDetails> {
                   children: [
                     TableRow(
                       children: [
-                        TextUtils(title:'meal name'.tr).paddingOnly(
+                        const TextUtils(title:'meal name').paddingOnly(
                             right: languageController.langLocal == eng ? 0 : 20,
                             left: languageController.langLocal == eng ? 20 : 0,
                             top: 5,bottom: 5),

@@ -49,7 +49,7 @@ class AllOrders extends Equatable {
   late bool isExpanded;
   late final String? note;
   late final createdAt;
-  late final customer;
+  late final Customer? customer;
   late final customerAddressId;
   late final deliveryTime;
   late final List<Meal>? meals;
@@ -106,7 +106,7 @@ class AllOrders extends Equatable {
     "order_type": orderType,
     "note": note,
     "created_at": createdAt.toIso8601String(),
-    "customer": customer.toJson(),
+    "customer": customer?.toJson(),
     "customer_address_id": customerAddressId,
     "delivery_time": deliveryTime,
     "meals": List<dynamic>.from(meals!.map((x) => x.toJson())),

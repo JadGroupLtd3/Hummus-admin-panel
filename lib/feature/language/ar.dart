@@ -149,8 +149,8 @@ const Map<String, String> ar = {
   "Show components": "عرض المكونات",
   "Show Attributes": "عرض الخصائص",
   "Show Category": "عرض الفئات",
-  "Tables": "الجداول",
-  "Show Tables": "عرض الجداول",
+  "Tables": "الطاولات",
+  "Show Tables": "عرض الطاولات",
   "Show Orders": "عرض الطلبات",
   "Orders History": "تاريخ الطلبات",
   "Edit meal": "تحرير الوجبة",
@@ -240,4 +240,6 @@ const Map<String, String> ar = {
   "Order On Way": "على الطريق",
   "Order Complete": "اكتمل الطلب",
   "Not Found": "غير موجود",
+  "waiting For Delivery": "بانتظار الطلبية",
+  "Table number": "رقم الطاولة",
 };

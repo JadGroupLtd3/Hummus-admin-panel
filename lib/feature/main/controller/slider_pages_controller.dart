@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/orders/show_orders/order_status_screen/waiting_for_delivery_screen.dart';
 
 enum ControllerState {
   idle,
@@ -89,6 +90,7 @@ class SliderPagesController extends GetxController {
   List<Widget> orderStatusNamesPages = [
     NewOrderScreen(),
     ProcessingOrderScreen(),
+    WaitingForDeliveryScreen(),
     CompleteOrderScreen(),
   ];
 

@@ -240,4 +240,6 @@ const Map<String, String> he = {
   "Order On Way": "הזמנה בדרך",
   "Order Complete": "הזמנה הושלמה",
   "Not Found": "לא נמצא",
+  "waiting For Delivery": "מחכה למשלוח",
+  "Table number": "מספר הטבלה",
 };

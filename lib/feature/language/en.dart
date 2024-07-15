@@ -240,4 +240,6 @@ const Map<String, String> en = {
   "Order On Way": "Order On Way",
   "Order Complete": "Order Complete",
   "Not Found": "Not Found",
+  "waiting For Delivery": "waiting For Delivery",
+  "Table number": "Table number",
 };
