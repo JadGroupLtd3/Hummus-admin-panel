@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import 'package:hummus_admin_panel/core/core_export.dart';
@@ -260,6 +262,7 @@ class OrderDetailsWidget extends StatelessWidget {
                             width: 120,
                             height: 45,
                             onPressed: () {
+                              inspect(allOrderController.currentOrderSelected);
                               if (allOrderController.currentOrderSelected.value
                                       ?.executionStep ==
                                   null) {
