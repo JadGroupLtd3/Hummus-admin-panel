@@ -1,33 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/feature/home/notification_settings/controller/notification_controller.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
 
 class NotificationTableWidget extends StatefulWidget {
-  const NotificationTableWidget({
-    super.key,
-  });
-
+  const NotificationTableWidget({super.key});
   @override
   State<NotificationTableWidget> createState() => _NotificationTableWidgetState();
 }
 
 class _NotificationTableWidgetState extends State<NotificationTableWidget> {
   final LanguageController languageController = Get.find<LanguageController>();
-
   @override
   void initState() {
-    Get.find<NotificationController>().getNotification(context);
+    Get.find<PushNotificationController>().getPushNotification(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NotificationController>(
-      builder: (notificationController) {
+    return GetBuilder<PushNotificationController>(
+      builder: (pushNotificationController) {
         return Column(
           children: [
             Table(
@@ -63,7 +55,7 @@ class _NotificationTableWidgetState extends State<NotificationTableWidget> {
                     )).paddingOnly(
                       right: languageController.langLocal == eng ? 0 : 60,
                     ),
-                    TextUtils(title: 'Meal'.tr, color: Colors.white)
+                    TextUtils(title: ''.tr, color: Colors.white)
                         .paddingOnly(
                       right: languageController.langLocal == eng ? 0 : 30,
                       left: languageController.langLocal == eng ? 35 : 0,
@@ -77,66 +69,130 @@ class _NotificationTableWidgetState extends State<NotificationTableWidget> {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 0,
-                itemBuilder: (context, index) {
-                  return Table(
-                    columnWidths: const {
-                      1: IntrinsicColumnWidth(),
-                    },
+            Obx(
+              () {
+                if (pushNotificationController.controllerState.value ==
+                    ControllerState.loading) {
+                  return Column(
                     children: [
-                      TableRow(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                                color: Colors.black.withOpacity(0.1)),
-                            bottom: BorderSide(
-                                color: Colors.black.withOpacity(0.1)),
-                          ),
+                      const SizedBox(height: 30),
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: MyThemeData.light.primaryColor,
                         ),
-                        children: [
-                          const TextUtils(title: '#').paddingOnly(
-                              right:
-                                  languageController.langLocal == eng ? 0 : 20,
-                              left:
-                                  languageController.langLocal == eng ? 20 : 0,
-                              top: 10,
-                              bottom: 10),
-                          TextUtils(title: 'Address'.tr).paddingOnly(
-                              left: languageController.langLocal == eng ? 0 : 0,
-                              right:
-                                  languageController.langLocal == eng ? 20 : 0,
-                              top: 10,
-                              bottom: 10),
-                          Center(
-                            child: TextUtils(title: 'Kind'.tr).paddingOnly(
-                                left: languageController.langLocal == eng
-                                    ? 20
-                                    : 0,
-                                right: languageController.langLocal == eng
-                                    ? 0
-                                    : 20,
-                                top: 10,
-                                bottom: 10),
-                          ),
-                          Center(
-                              child: TextUtils(title: 'Department'.tr)
-                                  .paddingOnly(top: 10, bottom: 10)),
-                          TextUtils(title: 'Meal'.tr).paddingOnly(
-                            right: languageController.langLocal == eng ? 0 : 27,
-                            left: languageController.langLocal == eng ? 27 : 0,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          TextUtils(title: 'Notice text'.tr)
-                              .paddingOnly(top: 10, bottom: 10),
-                        ],
                       ),
                     ],
                   );
-                },
-              ),
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: pushNotificationController
+                          .pushNotificationList.length,
+                      itemBuilder: (context, index) {
+                        final notification = pushNotificationController
+                            .pushNotificationList[index];
+                        return Table(
+                          columnWidths: const {
+                            1: IntrinsicColumnWidth(),
+                          },
+                          children: [
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                      color: Colors.black.withOpacity(0.1)),
+                                  bottom: BorderSide(
+                                      color: Colors.black.withOpacity(0.1)),
+                                ),
+                              ),
+                              children: [
+                                TextUtils(title: '${index + 1}').paddingOnly(
+                                    right: languageController.langLocal == eng
+                                        ? 0
+                                        : 20,
+                                    left: languageController.langLocal == eng
+                                        ? 20
+                                        : 0,
+                                    top: 10,
+                                    bottom: 10),
+                                TextUtils(
+                                        title: languageController.langLocal ==
+                                                eng
+                                            ? notification.titleEn
+                                            : languageController.langLocal ==
+                                                    ara
+                                                ? notification.titleAr
+                                                : notification.titleHe)
+                                    .paddingOnly(
+                                        left:
+                                            languageController.langLocal == eng
+                                                ? 0
+                                                : 0,
+                                        right:
+                                            languageController.langLocal == eng
+                                                ? 20
+                                                : 0,
+                                        top: 10,
+                                        bottom: 10),
+                                Center(
+                                  child: TextUtils(title:
+                                  notification.type == "cat_id"
+                                      ? 'Category'.tr
+                                      : "Meal".tr)
+                                      .paddingOnly(
+                                          left: languageController.langLocal ==
+                                                  eng
+                                              ? 20
+                                              : 0,
+                                          right: languageController.langLocal ==
+                                                  eng
+                                              ? 0
+                                              : 20,
+                                          top: 10,
+                                          bottom: 10),
+                                ),
+                                Center(
+                                    child: TextUtils(
+                                            title: languageController
+                                                        .langLocal ==
+                                                    eng
+                                                ? notification.category?.nameEn ?? ''
+                                                : languageController
+                                                            .langLocal ==
+                                                        ara
+                                                    ? notification
+                                                        .category?.nameAr ?? ''
+                                                    : notification
+                                                        .category?.nameHe ?? '')
+                                        .paddingOnly(top: 10, bottom: 10)),
+                                const TextUtils(title: '').paddingOnly(
+                                  right: languageController.langLocal == eng
+                                      ? 0
+                                      : 27,
+                                  left: languageController.langLocal == eng
+                                      ? 27
+                                      : 0,
+                                  top: 10,
+                                  bottom: 10,
+                                ),
+                                TextUtils(
+                                        title: languageController.langLocal ==
+                                                eng
+                                            ? notification.descriptionEn
+                                            : languageController.langLocal ==
+                                                    ara
+                                                ? notification.descriptionAr
+                                                : notification.descriptionHe)
+                                    .paddingOnly(top: 10, bottom: 10),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
             ),
           ],
         );

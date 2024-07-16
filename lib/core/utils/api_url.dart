@@ -69,4 +69,9 @@ class ApiUrl {
   static const String UPDATE_TABLES = '/restaurant-table/update';
   static const String DELETE_TABLES = '/restaurant-table/delete/';
 
+  static const String GET_NOTIFICATION_DASHBOARD = '/notifications';
+  static const String CREATE_NOTIFICATION_DASHBOARD = '/notifications/create';
+  static const String GET_MEALS_NOTIFICATION = '/notifications/meals';
+  static const String GET_CATEGORY_NOTIFICATION = '/notifications/categories';
+
 }

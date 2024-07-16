@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
 
 class AddPhotoWidget extends StatefulWidget {
   final double? vertical;
@@ -12,6 +13,9 @@ class AddPhotoWidget extends StatefulWidget {
   dynamic webImage;
   File? pickedImage;
   final bool? isCategory;
+  final bool? isNotificationAr;
+  final bool? isNotificationEn;
+  final bool? isNotificationHe;
   final bool? isComponent;
   final bool? isHashtag;
   final bool? isQuestion;
@@ -26,6 +30,9 @@ class AddPhotoWidget extends StatefulWidget {
     this.height,
     this.width,
     this.isCategory,
+    this.isNotificationAr,
+    this.isNotificationEn,
+    this.isNotificationHe,
     this.isQuestion,
     this.isMeal,
     this.isHashtag,
@@ -78,10 +85,39 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
           if (widget.isMeal == true) {
             Get.find<MealsController>().webImage = widget.webImage;
           }
+          if (widget.isNotificationAr == true) {
+            Get.find<PushNotificationController>().webImageAr = widget.webImage;
+            Get.find<PushNotificationController>().pickedProfileImageFileAr = widget.pickedProfileImageFile;
+            print('Ar');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileAr);
+            print('En');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileEn);
+            print('He');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileHe);
+          }
+          if (widget.isNotificationEn == true) {
+            Get.find<PushNotificationController>().webImageEn = widget.webImage;
+            Get.find<PushNotificationController>().pickedProfileImageFileEn = widget.pickedProfileImageFile;
+            print('Ar');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileAr);
+            print('En');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileEn);
+            print('He');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileHe);
+          }
+          if (widget.isNotificationHe == true) {
+            Get.find<PushNotificationController>().webImageHe = widget.webImage;
+            Get.find<PushNotificationController>().pickedProfileImageFileHe = widget.pickedProfileImageFile;
+            print('Ar');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileAr);
+            print('En');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileEn);
+            print('He');
+            print(Get.find<PushNotificationController>().pickedProfileImageFileHe);
+          }
         } else {
           widget.pickedImage = File(widget.pickedProfileImageFile!.path);
         }
-        print(widget.pickedProfileImageFile?.path);
       } else {
         print('No Image has been picked');
       }
@@ -93,13 +129,10 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("imagePath ${widget.imagePath}");
-    print("pickedProfileImageFile ${widget.pickedProfileImageFile}");
-    print("isEdit ${widget.isEdit}");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       height: widget.height ?? MediaQuery.of(context).size.height * 1 / 2.5,
-      width: double.infinity,
+      width: widget.width ?? double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,

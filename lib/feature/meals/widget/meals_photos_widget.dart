@@ -157,8 +157,7 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                                     '';
                       }
                     });
-                    categoryController.categorySelectedId.value =
-                        int.parse(val ?? '');
+                    categoryController.categorySelectedId.value = int.parse(val ?? '');
                     print(categoryController.categorySelectedId.value);
                   },
                   items: categoryController.categoryList.map(

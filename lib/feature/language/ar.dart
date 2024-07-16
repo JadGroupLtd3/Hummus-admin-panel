@@ -242,4 +242,7 @@ const Map<String, String> ar = {
   "Not Found": "غير موجود",
   "waiting For Delivery": "بانتظار الطلبية",
   "Table number": "رقم الطاولة",
+  "Type of notification": "نوع الإشعار",
+  "Text of notification": "نص الإشعار",
+  "Send successfully": "تم الإرسال بنجاح",
 };

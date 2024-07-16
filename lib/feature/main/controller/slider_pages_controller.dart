@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/orders/show_orders/order_status_screen/waiting_for_delivery_screen.dart';
 
 enum ControllerState {
   idle,
@@ -16,6 +15,7 @@ class SliderPagesController extends GetxController {
   late PageController dealPageController;
   late PageController notificationPageController;
   late PageController orderStatusPageController;
+  late PageController pushNotificationPageController;
 
   /// variable for changing index of Bottom AppBar
   RxInt currentPage = 0.obs;
@@ -25,8 +25,11 @@ class SliderPagesController extends GetxController {
   RxInt currentDealName = 0.obs;
   RxInt currentNotificationName = 0.obs;
   RxInt currentOrderStatusName = 0.obs;
+  RxInt pushNotificationStatusName = 0.obs;
 
   List<Widget> pages = [
+
+
     const StatisticsScreen(),
     const SettingsScreen(),
     DeliveryTimesScreen(),
@@ -75,6 +78,12 @@ class SliderPagesController extends GetxController {
     MealsHeScreen(),
   ];
 
+  List<Widget> pushNotificationNamesPages = [
+    PushNotificationAr(),
+    PushNotificationEn(),
+    PushNotificationHe(),
+  ];
+
   List<Widget> dealNamesPages = [
     DealsArScreen(),
     DealsEnScreen(),
@@ -102,6 +111,7 @@ class SliderPagesController extends GetxController {
     dealPageController = PageController(initialPage: 0);
     notificationPageController = PageController(initialPage: 0);
     orderStatusPageController = PageController(initialPage: 0);
+    pushNotificationPageController = PageController(initialPage: 0);
     super.onInit();
   }
 
@@ -179,6 +189,18 @@ class SliderPagesController extends GetxController {
         duration: const Duration(milliseconds: 0), curve: Curves.ease);
   }
 
+  void goToPushNotificationNameTab(int page) {
+    pushNotificationStatusName.value = page;
+    pushNotificationPageController.jumpToPage(page);
+    update();
+  }
+
+  void animateToPushNotificationNameTab(int page) {
+    pushNotificationStatusName.value = page;
+    pushNotificationPageController.animateToPage(page,
+        duration: const Duration(milliseconds: 0), curve: Curves.ease);
+  }
+
   @override
   void dispose() {
     pageController.dispose();
@@ -187,6 +209,7 @@ class SliderPagesController extends GetxController {
     dealPageController.dispose();
     notificationPageController.dispose();
     orderStatusPageController.dispose();
+    pushNotificationPageController.dispose();
     super.dispose();
   }
 }

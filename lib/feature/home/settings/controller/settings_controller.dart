@@ -1,9 +1,7 @@
 import 'dart:typed_data';
-
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/home/settings/model/settings_model.dart';
-import 'package:hummus_admin_panel/feature/home/settings/repo/settings_repo.dart';
 
 class SettingsController extends GetxController {
   late SettingsRepo settingsRepo;

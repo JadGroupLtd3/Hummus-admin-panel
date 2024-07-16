@@ -242,4 +242,7 @@ const Map<String, String> he = {
   "Not Found": "לא נמצא",
   "waiting For Delivery": "מחכה למשלוח",
   "Table number": "מספר הטבלה",
+  "Type of notification": "סוג הודעה",
+  "Text of notification": "טקסט הודעה",
+  "Send successfully": "שלח בהצלחה",
 };

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/home/notification_settings/controller/notification_controller.dart';
+import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
 
 class ShowNotificationScreen extends StatelessWidget {
   const ShowNotificationScreen({super.key});
@@ -35,7 +35,19 @@ class ShowNotificationScreen extends StatelessWidget {
                             width: 170,
                             height: 45,
                             onPressed: () {
-                              Get.find<SliderPagesController>().goToTab(3);
+                              Get.find<PushNotificationController>().initState();
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ConfirmationDialog(
+                                    backgroundColor: Colors.white,
+                                    width: MediaQuery.of(context).size.height * 1 / 1.0,
+                                    padding: 0,
+                                    widget: const AddPushNotification(),
+                                    onYesPressed: (){},
+                                  );
+                                },
+                              );
                             },
                           );
                         },
@@ -49,10 +61,8 @@ class ShowNotificationScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            height:
-                                MediaQuery.of(context).size.height * 1 / 1.43,
+                            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            height: MediaQuery.of(context).size.height * 1 / 1.43,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -65,7 +75,7 @@ class ShowNotificationScreen extends StatelessWidget {
                                 )
                               ],
                             ),
-                            child: NotificationTableWidget()),
+                            child: const NotificationTableWidget()),
                       ),
                     ],
                   )

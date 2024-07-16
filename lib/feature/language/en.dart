@@ -242,4 +242,7 @@ const Map<String, String> en = {
   "Not Found": "Not Found",
   "waiting For Delivery": "waiting For Delivery",
   "Table number": "Table number",
+  "Type of notification": "Type of notification",
+  "Text of notification": "Text of notification",
+  "Send successfully": "Send successfully",
 };
