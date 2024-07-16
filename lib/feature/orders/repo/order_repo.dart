@@ -14,6 +14,7 @@ class AllOrderRepository {
   Future<Either<String, AllOrderModel>> getAllOrder() async {
     var url = Uri.parse('${ApiUrl.LOGIN_BASE_URL}/order/index');
     final http.Response response = await http.get(url, headers: headers);
+    print('${ApiUrl.LOGIN_BASE_URL}/order/index');
     if (response.statusCode == 200) {
       log(response.body);
       return Right(AllOrderModel.fromJson(jsonDecode(response.body)));
@@ -24,22 +25,22 @@ class AllOrderRepository {
     }
   }
 
-  Future<AllOrderModel> changeStatusOfOrder(
+  Future<Either<String, AllOrderModel>> changeStatusOfOrder(
       int idOfOrderDetails, String stateOfOrder, String? expectedTime) async {
     final http.Response response = await http.get(
         Uri.parse(
           '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}',
         ),
         headers: headers);
-    //log('${ApiUrl.BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}');
-    log(response.body);
-    //log(response.request!.url.toString());
+    print(
+        '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}');
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return AllOrderModel.fromJson(data);
+      return Right(AllOrderModel.fromJson(data));
     } else {
-      throw Exception('Failed to fetch order details');
+      return Left(
+          jsonDecode(response.body)['message'] ?? "unknown Error Occurred");
     }
   }
 }

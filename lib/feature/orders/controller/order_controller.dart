@@ -88,45 +88,47 @@ class AllOrderController extends GetxController {
   changeStatusOfOrder(
       int orderId, String taskStatus, BuildContext context) async {
     isLoading.value = true;
-    // try {
-    final data = await allOrderRepository.changeStatusOfOrder(
-        orderId, taskStatus, selectedIndex.value);
-    currentOrderSelected.value = null;
-    // orderDetails.value.executionStep = data.data[index].executionStep;
-    getAllOrder(context);
-    // switch (taskStatus) {
-    //   case "waiting":
-    //     // waitingList
-    //     //     .firstWhere((element) => element.id == orderId)
-    //     //     .executionStep = data.data[index].executionStep;
-    //     isLoading.value = false;
-    //     break;
-    //   case "preparing":
-    //     // preparingList
-    //     //     .firstWhere((element) => element.id == orderId)
-    //     //     .executionStep = data.data[index].executionStep;
-    //     isLoading.value = false;
-    //     break;
-    //   case "waiting_pickup":
-    //     // onWayList
-    //     //     .firstWhere((element) => element.id == orderId)
-    //     //     .executionStep = data.data[index].executionStep;
-    //     isLoading.value = false;
-    //     break;
-    //   case "waiting_delivery":
-    //     // waitingDeliveredList
-    //     //     .firstWhere((element) => element.id == orderId)
-    //     //     .executionStep = data.data[index].executionStep;
-    //     isLoading.value = false;
-    //     break;
-    //   case "done":
-    //     // completedList
-    //     //     .firstWhere((element) => element.id == orderId)
-    //     //     .executionStep = data.data[index].executionStep;
-    //     isLoading.value = false;
-    //     break;
-    //   default:
-    // }    //   isLoading.value = false;
-    // } catch (e) {}
+    try {
+      final data = await allOrderRepository.changeStatusOfOrder(
+          orderId, taskStatus, selectedIndex.value);
+      currentOrderSelected.value = null;
+      // orderDetails.value.executionStep = data.data[index].executionStep;
+      getAllOrder(context);
+      // switch (taskStatus) {
+      //   case "waiting":
+      //     // waitingList
+      //     //     .firstWhere((element) => element.id == orderId)
+      //     //     .executionStep = data.data[index].executionStep;
+      //     isLoading.value = false;
+      //     break;
+      //   case "preparing":
+      //     // preparingList
+      //     //     .firstWhere((element) => element.id == orderId)
+      //     //     .executionStep = data.data[index].executionStep;
+      //     isLoading.value = false;
+      //     break;
+      //   case "waiting_pickup":
+      //     // onWayList
+      //     //     .firstWhere((element) => element.id == orderId)
+      //     //     .executionStep = data.data[index].executionStep;
+      //     isLoading.value = false;
+      //     break;
+      //   case "waiting_delivery":
+      //     // waitingDeliveredList
+      //     //     .firstWhere((element) => element.id == orderId)
+      //     //     .executionStep = data.data[index].executionStep;
+      //     isLoading.value = false;
+      //     break;
+      //   case "done":
+      //     // completedList
+      //     //     .firstWhere((element) => element.id == orderId)
+      //     //     .executionStep = data.data[index].executionStep;
+      //     isLoading.value = false;
+      //     break;
+      //   default:
+      // }    //   isLoading.value = false;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

@@ -15,7 +15,7 @@ class OrdersStatusNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LanguageController languageController =
-    Get.find<LanguageController>();
+        Get.find<LanguageController>();
     return Column(
       children: [
         Row(
@@ -28,8 +28,8 @@ class OrdersStatusNavBar extends StatelessWidget {
               color: sliderPagesController.currentOrderStatusName.value == 0
                   ? MyThemeData.light.primaryColor
                   : sliderPagesController.currentOrderStatusName.value == 1
-                  ? MyThemeData.light.primaryColor
-                  : const Color(0xffE4E4E4),
+                      ? MyThemeData.light.primaryColor
+                      : const Color(0xffE4E4E4),
             ),
             questionNavBarItem(1),
             Container(
@@ -44,7 +44,7 @@ class OrdersStatusNavBar extends StatelessWidget {
               height: 2,
               width: MediaQuery.of(context).size.height * 1 / 6.5,
               color: sliderPagesController.currentOrderStatusName.value == 2 ||
-                  sliderPagesController.currentOrderStatusName.value == 3
+                      sliderPagesController.currentOrderStatusName.value == 3
                   ? MyThemeData.light.primaryColor
                   : const Color(0xffE4E4E4),
             ),
