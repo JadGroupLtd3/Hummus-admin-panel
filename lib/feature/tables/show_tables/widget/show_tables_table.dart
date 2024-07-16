@@ -44,12 +44,12 @@ class _ShowTablesTableState extends State<ShowTablesTable> {
                             left: languageController.langLocal == eng ? 10 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 10),
-                    const Center(
+                    Center(
                         child: TextUtils(
-                            title: 'Activation status', color: Colors.white)),
-                    const Center(
+                            title: 'Activation status'.tr, color: Colors.white)),
+                    Center(
                       child:
-                          TextUtils(title: 'Operations', color: Colors.white),
+                          TextUtils(title: 'Operations'.tr, color: Colors.white),
                     ),
                   ],
                 ),

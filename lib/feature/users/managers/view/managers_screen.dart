@@ -60,11 +60,11 @@ class ManagersScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: const UsersTableWidget(
-                        name: 'Manager name',
+                      child: UsersTableWidget(
+                        name: 'Manager name'.tr,
                         email: 'name@gmail.com',
                         phone: '0509876543',
-                        kind: 'Admin',
+                        kind: 'Admin'.tr,
                         imagePath: 'https://plus.unsplash.com/premium_photo-1720022609993-472f180738ed?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                       ),
                     ),

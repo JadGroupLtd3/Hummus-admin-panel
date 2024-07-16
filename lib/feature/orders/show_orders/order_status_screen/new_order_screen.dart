@@ -20,73 +20,73 @@ class NewOrderScreen extends StatelessWidget {
             }
             return Expanded(
                 child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: allOrderController.waitingList.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffFAFAFA),
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.black.withOpacity(0.08)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                  shrinkWrap: true,
+                  itemCount: allOrderController.waitingList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFAFAFA),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.black.withOpacity(0.08)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset(
-                              Images.order,
-                              color: Colors.black,
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  Images.order,
+                                  color: Colors.black,
+                                ),
+                                5.horizontalSpace,
+                                Column(
+                                  children: [
+                                    Text(
+                                      'order #${allOrderController.waitingList[index].id}',
+                                      style: TajawalRegular.copyWith(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    3.verticalSpace,
+                                    Text(
+                                      allOrderController.calculateSinceDays(
+                                          allOrderController
+                                              .waitingList[index].createdAt),
+                                      style: TajawalLight.copyWith(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            5.horizontalSpace,
-                            Column(
+                            Row(
                               children: [
                                 Text(
-                                  'order #${allOrderController.waitingList[index].id}',
-                                  style: TajawalRegular.copyWith(
+                                  '₪ ${allOrderController.waitingList[index].totalPrice}',
+                                  style: TajawalBold.copyWith(
                                     fontSize: 14,
+                                    color: MyThemeData.light.focusColor,
                                   ),
                                 ),
-                                3.verticalSpace,
-                                Text(
-                                  allOrderController.calculateSinceDays(
-                                      allOrderController
-                                          .waitingList[index].createdAt),
-                                  style: TajawalLight.copyWith(
-                                    fontSize: 12,
-                                  ),
-                                ),
+                                5.horizontalSpace,
+                                InkWell(
+                                    onTap: () {
+                                      allOrderController.selectOrder(
+                                          allOrderController.waitingList[index]);
+                                    },
+                                    child: SvgPicture.asset(Images.order_details)),
                               ],
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '₪ ${allOrderController.waitingList[index].totalPrice}',
-                              style: TajawalBold.copyWith(
-                                fontSize: 14,
-                                color: MyThemeData.light.focusColor,
-                              ),
                             ),
-                            5.horizontalSpace,
-                            InkWell(
-                                onTap: () {
-                                  allOrderController.selectOrder(
-                                      allOrderController.waitingList[index]);
-                                },
-                                child: SvgPicture.asset(Images.order_details)),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                ).paddingSymmetric(vertical: 5);
-              },
-            ));
+                      ),
+                    ).paddingSymmetric(vertical: 5);
+                  },
+                ));
           }),
         ],
       ),

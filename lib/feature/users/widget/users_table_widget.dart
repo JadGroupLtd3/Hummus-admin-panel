@@ -45,27 +45,25 @@ class UsersTableWidget extends StatelessWidget {
                 const TextUtils(title: '#', color: Colors.white)
                     .paddingOnly(right: languageController.langLocal == eng ? 0 : 20,
                 left: languageController.langLocal == eng ? 20 : 0),
-                const TextUtils(title: 'Name', color: Colors.white)
+                 TextUtils(title: 'Name'.tr, color: Colors.white)
                     .paddingOnly(
                     left: languageController.langLocal == eng ? 85 : 0,
                     right: languageController.langLocal == eng ? 0 : 85),
                 const TextUtils(title: '   ', color: Colors.white),
                 const TextUtils(title: '   ', color: Colors.white),
-                const TextUtils(title: 'Email', color: Colors.white).paddingOnly(
+                TextUtils(title: 'Email'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 0 : 20,
                     right: languageController.langLocal == eng ? 20 : 0),
-                Center(child: const TextUtils(title: 'Phone', color: Colors.white).paddingOnly(
-                  left: 25,
-                )
-                ).paddingOnly(
-                  right: languageController.langLocal == eng ? 0 : 60,
+                TextUtils(title: 'Phone'.tr, color: Colors.white).paddingOnly(
+                  right: languageController.langLocal == eng ? 0 : 20,
+                  left: languageController.langLocal == eng ? 50 : 0,
                 ),
-                const TextUtils(title: 'Kind', color: Colors.white).paddingOnly(
-                  right: languageController.langLocal == eng ? 0 : 40,
+                TextUtils(title: 'Kind'.tr, color: Colors.white).paddingOnly(
+                  right: languageController.langLocal == eng ? 0 : 10,
                   left: languageController.langLocal == eng ? 40 : 0,
                 ),
-                const TextUtils(title: 'Activation status', color: Colors.white),
-                const TextUtils(title: 'Operations', color: Colors.white).paddingOnly(
+                TextUtils(title: 'Activation status'.tr, color: Colors.white),
+                TextUtils(title: 'Operations'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 10 : 0,
                     right: languageController.langLocal == eng ? 0 : 10),
               ],

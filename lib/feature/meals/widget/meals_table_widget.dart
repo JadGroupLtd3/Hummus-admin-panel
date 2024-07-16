@@ -1,15 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/core/utils/app_constants.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/language/controller/language_controller.dart';
-import 'package:hummus_admin_panel/feature/meals/controller/meals_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
-import 'package:hummus_admin_panel/widgets/text_utils.dart';
+
 
 class MealsTableWidget extends StatefulWidget {
   const MealsTableWidget({super.key});
@@ -66,9 +57,9 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                             title: 'Fake price'.tr, color: Colors.white)),
                     TextUtils(title: 'Actual price'.tr, color: Colors.white),
                     TextUtils(title: 'Category'.tr, color: Colors.white),
-                    const TextUtils(
-                        title: 'Activation status', color: Colors.white),
-                    const TextUtils(title: 'Operations', color: Colors.white)
+                    TextUtils(
+                        title: 'Activation status'.tr, color: Colors.white),
+                    TextUtils(title: 'Operations'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 20 : 0,
                             right:

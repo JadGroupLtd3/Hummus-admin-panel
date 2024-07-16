@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:intl/intl.dart';
 
 class DateTimePickerDialog extends StatefulWidget {
@@ -48,18 +49,33 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Select Date and Time'),
+      title: Text(
+        'Select Date and Time'.tr,
+        style: TajawalRegular.copyWith(
+          fontSize: 16,
+        ),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: Text('Date: ${DateFormat('yyyy-MM-dd').format(selectedDate)}'),
-            trailing: Icon(Icons.calendar_today),
+            title: Text(
+              '${'Date:'.tr} ${DateFormat('yyyy-MM-dd').format(selectedDate)}',
+              style: TajawalRegular.copyWith(
+                fontSize: 14,
+              ),
+            ),
+            trailing: const Icon(Icons.calendar_today),
             onTap: () => _selectDate(context),
           ),
           ListTile(
-            title: Text('Time: ${selectedTime.format(context)}'),
-            trailing: Icon(Icons.access_time),
+            title: Text(
+              '${'Time:'.tr} ${selectedTime.format(context)}',
+              style: TajawalRegular.copyWith(
+                fontSize: 14,
+              ),
+            ),
+            trailing: const Icon(Icons.access_time),
             onTap: () => _selectTime(context),
           ),
         ],
@@ -67,7 +83,12 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, null),
-          child: Text('Cancel'),
+          child: Text(
+            'Cancel'.tr,
+            style: TajawalRegular.copyWith(
+              fontSize: 16,
+            ),
+          ),
         ),
         TextButton(
           onPressed: () {
@@ -80,7 +101,12 @@ class _DateTimePickerDialogState extends State<DateTimePickerDialog> {
             );
             Navigator.pop(context, selectedDateTime);
           },
-          child: Text('OK'),
+          child: Text(
+            'OK'.tr,
+            style: TajawalRegular.copyWith(
+              fontSize: 16,
+            ),
+          ),
         ),
       ],
     );

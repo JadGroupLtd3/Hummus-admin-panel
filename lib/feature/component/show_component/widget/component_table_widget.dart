@@ -200,8 +200,8 @@ class _ComponentTableWidgetState extends State<ComponentTableWidget> {
                                               icon: Images.delete,
                                               color: Colors.black,
                                               description:
-                                              'Do you want to delete this attribute?'.tr,
-                                              title: 'Delete Attribute'.tr,
+                                              'Do you want to delete this component?'.tr,
+                                              title: 'Delete Component'.tr,
                                               onYesPressed: () {
                                                 componentController.deleteComponent(
                                                     context,

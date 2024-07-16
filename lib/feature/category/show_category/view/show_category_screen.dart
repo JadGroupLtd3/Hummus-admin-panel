@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/category/show_category/widget/category_table_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/styles.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
-import 'package:hummus_admin_panel/theme/light_theme.dart';
-import 'package:hummus_admin_panel/widgets/custom_button.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
 
 class ShowCategoryScreen extends StatelessWidget {

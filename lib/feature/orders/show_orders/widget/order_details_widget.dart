@@ -262,7 +262,6 @@ class OrderDetailsWidget extends StatelessWidget {
                             width: 120,
                             height: 45,
                             onPressed: () {
-                              inspect(allOrderController.currentOrderSelected);
                               if (allOrderController.currentOrderSelected.value
                                       ?.executionStep ==
                                   null) {

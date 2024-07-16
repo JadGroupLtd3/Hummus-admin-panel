@@ -29,11 +29,11 @@ class AllOrderController extends GetxController {
     final result = await allOrderRepository.getAllOrder();
     update();
     result.fold(
-      (left) {
+          (left) {
         controllerState.value = ControllerState.error;
         ShowSnackBar.show(context: context, message: left, color: Colors.red);
       },
-      (right) {
+          (right) {
         waitingList.clear();
         rejectedList.clear();
         preparingList.clear();

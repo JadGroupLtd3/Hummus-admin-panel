@@ -60,7 +60,7 @@ class ShowOrdersScreen extends StatelessWidget {
                                     controller: sliderPagesController
                                         .orderStatusPageController,
                                     physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    const NeverScrollableScrollPhysics(),
                                     clipBehavior: Clip.none,
                                     children: [
                                       ...sliderPagesController

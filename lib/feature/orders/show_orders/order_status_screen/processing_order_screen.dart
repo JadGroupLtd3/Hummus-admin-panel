@@ -88,7 +88,7 @@ class ProcessingOrderScreen extends StatelessWidget {
                                             .preparingList[index]);
                                   },
                                   child:
-                                      SvgPicture.asset(Images.order_details)),
+                                  SvgPicture.asset(Images.order_details)),
                             ],
                           ),
                         ],

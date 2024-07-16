@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/feature/users/controller/users_controller.dart';
 import 'package:hummus_admin_panel/feature/users/waiters/widget/waiters_table_widget.dart';
 
 class WaitersScreen extends StatelessWidget {

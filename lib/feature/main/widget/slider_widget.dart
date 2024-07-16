@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hummus_admin_panel/core/utils/images.dart';
-import 'package:hummus_admin_panel/feature/main/controller/slider_pages_controller.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/main/widget/sub_tab_BTN.dart';
 import 'package:hummus_admin_panel/feature/main/widget/tab_slider_BTN.dart';
 

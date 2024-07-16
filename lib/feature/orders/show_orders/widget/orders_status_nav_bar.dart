@@ -24,7 +24,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             questionNavBarItem(0),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.height * 1 / 6,
+              width: MediaQuery.of(context).size.height * 1 / 6.5,
               color: sliderPagesController.currentOrderStatusName.value == 0
                   ? MyThemeData.light.primaryColor
                   : sliderPagesController.currentOrderStatusName.value == 1
@@ -34,7 +34,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             questionNavBarItem(1),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.height * 1 / 6,
+              width: MediaQuery.of(context).size.height * 1 / 6.5,
               color: sliderPagesController.currentOrderStatusName.value == 1
                   ? MyThemeData.light.primaryColor
                   : const Color(0xffE4E4E4),
@@ -42,7 +42,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             questionNavBarItem(2),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.height * 1 / 6,
+              width: MediaQuery.of(context).size.height * 1 / 6.5,
               color: sliderPagesController.currentOrderStatusName.value == 2 ||
                       sliderPagesController.currentOrderStatusName.value == 3
                   ? MyThemeData.light.primaryColor
@@ -55,7 +55,7 @@ class OrdersStatusNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'new Orders'.tr,
+              'New Order'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 0
@@ -69,7 +69,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             ),
             Container(
               height: 1,
-              width: MediaQuery.of(context).size.height * 1 / 12,
+              width: MediaQuery.of(context).size.height * 1 / 13.5,
               color: Colors.transparent,
             ),
             Text(
@@ -87,7 +87,7 @@ class OrdersStatusNavBar extends StatelessWidget {
             ),
             Container(
               height: 1,
-              width: MediaQuery.of(context).size.height * 1 / 12,
+              width: MediaQuery.of(context).size.height * 1 / 13.5,
               color: Colors.transparent,
             ),
             Text(
@@ -101,11 +101,11 @@ class OrdersStatusNavBar extends StatelessWidget {
             ).paddingOnly(top: 10),
             Container(
               height: 1,
-              width: MediaQuery.of(context).size.height * 1 / 12,
+              width: MediaQuery.of(context).size.height * 1 / 12.5,
               color: Colors.transparent,
             ),
             Text(
-              'Completed'.tr,
+              'Complete'.tr,
               style: TajawalRegular.copyWith(
                 fontSize: 14,
                 color: sliderPagesController.currentOrderStatusName.value == 3
