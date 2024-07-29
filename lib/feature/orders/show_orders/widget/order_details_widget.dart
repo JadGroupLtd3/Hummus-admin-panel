@@ -262,26 +262,17 @@ class OrderDetailsWidget extends StatelessWidget {
                             width: 120,
                             height: 45,
                             onPressed: () {
-                              if (allOrderController.currentOrderSelected.value
-                                      ?.executionStep ==
-                                  null) {
+                              if (allOrderController.currentOrderSelected.value?.executionStep == null) {
                                 allOrderController.changeStatusOfOrder(
-                                    allOrderController
-                                        .currentOrderSelected.value?.id,
-                                    "preparing",
-                                    context);
-                              } else if (allOrderController.currentOrderSelected
-                                      .value?.executionStep ==
-                                  "preparing") {
+                                    allOrderController.currentOrderSelected.value?.id,
+                                    "preparing", context);
+                              } else if (allOrderController.currentOrderSelected.value?.executionStep == "preparing") {
                                 allOrderController.changeStatusOfOrder(
-                                    allOrderController
-                                        .currentOrderSelected.value?.id,
-                                    "waiting_delivery",
-                                    context);
+                                    allOrderController.currentOrderSelected.value?.id,
+                                    "waiting_delivery", context);
                                 allOrderController.getAllOrder(context);
                               } else if (allOrderController.currentOrderSelected
-                                      .value?.executionStep ==
-                                  "waiting_delivery") {
+                                      .value?.executionStep == "waiting_delivery") {
                                 allOrderController.changeStatusOfOrder(
                                     allOrderController
                                         .currentOrderSelected.value?.id,

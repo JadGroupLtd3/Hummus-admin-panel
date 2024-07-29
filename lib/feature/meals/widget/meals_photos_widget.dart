@@ -74,8 +74,7 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                     imagePath: mealsController.imagePath,
                     webImage: mealsController.webImage,
                     pickedImage: mealsController.pickedImage,
-                    pickedProfileImageFile:
-                        mealsController.pickedProfileImageFile,
+                    pickedProfileImageFile: mealsController.pickedProfileImageFile,
                   ),
                 ),
               ),

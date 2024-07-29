@@ -29,18 +29,17 @@ class AllOrderRepository {
       int idOfOrderDetails, String stateOfOrder, String? expectedTime) async {
     final http.Response response = await http.get(
         Uri.parse(
-          '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}',
+          '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder',
         ),
         headers: headers);
-    print(
-        '${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder/${stateOfOrder == 'preparing' ? expectedTime : ''}');
-
+    print(response.statusCode);
+    print(response.body);
+    print('${ApiUrl.LOGIN_BASE_URL}/order/update/$idOfOrderDetails/$stateOfOrder');
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return Right(AllOrderModel.fromJson(data));
     } else {
-      return Left(
-          jsonDecode(response.body)['message'] ?? "unknown Error Occurred");
+      return Left(jsonDecode(response.body)['message'] ?? "unknown Error Occurred");
     }
   }
 }

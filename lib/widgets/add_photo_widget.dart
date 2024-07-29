@@ -84,6 +84,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
           }
           if (widget.isMeal == true) {
             Get.find<MealsController>().webImage = widget.webImage;
+            Get.find<MealsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isNotificationAr == true) {
             Get.find<PushNotificationController>().webImageAr = widget.webImage;
