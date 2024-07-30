@@ -15,7 +15,7 @@ class ShowMealsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${'Home'.tr} / ${'Meals'.tr} / ${'Show meals'.tr}',
+                '${'Home'.tr} / ${'Meals'.tr} / ${'Show meals '.tr}',
                 style: TajawalRegular.copyWith(
                   fontSize: 16,
                 ),
