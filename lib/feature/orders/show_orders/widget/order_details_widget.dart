@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
-
 import 'package:hummus_admin_panel/core/core_export.dart';
 
 class OrderDetailsWidget extends StatelessWidget {
@@ -10,7 +7,6 @@ class OrderDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AllOrderController allOrderController = Get.find<AllOrderController>();
-
     return Obx(() {
       return allOrderController.currentOrderSelected.value == null
           ? const SizedBox()
@@ -124,7 +120,7 @@ class OrderDetailsWidget extends StatelessWidget {
                                   3.verticalSpace,
                                   Text(
                                     allOrderController.currentOrderSelected
-                                            .value?.paymentType ??
+                                            .value?.paymentType.toString() ??
                                         'none',
                                     style: TajawalLight.copyWith(
                                       fontSize: 12,
@@ -194,8 +190,9 @@ class OrderDetailsWidget extends StatelessWidget {
                                   child: SizedBox(
                                     width: 30,
                                     height: 30,
-                                    child: Image.asset(
-                                      Images.background,
+                                    child: Image.network(
+                                      allOrderController.currentOrderSelected.value
+                                          ?.meals?[index].primaryImage ?? '',
                                       height: 36,
                                       width: 36,
                                       fit: BoxFit.fill,
@@ -204,9 +201,7 @@ class OrderDetailsWidget extends StatelessWidget {
                                 ),
                                 3.horizontalSpace,
                                 Text(
-                                  allOrderController.currentOrderSelected.value
-                                          ?.meals?[index]?.name?.ar ??
-                                      'none',
+                                  allOrderController.currentOrderSelected.value?.meals?[index].name.ar ?? 'none',
                                   style: TajawalRegular.copyWith(
                                     fontSize: 14,
                                   ),

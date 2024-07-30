@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/home/notification_settings/repo/notification_repo.dart';
 import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
-import 'package:hummus_admin_panel/feature/home/show_notifications/repo/push_notification_repo.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -50,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     await settingsController.getSettings(context);
     await regionsController.getRegions(context);
     await usersController.getWaiters(context);
+    await usersController.getAdmins(context);
     await dealsController.getDeals(context);
     await mealsController.getMeals(context);
     await tablesController.getTables(context);

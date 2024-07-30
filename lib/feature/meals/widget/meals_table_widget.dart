@@ -220,7 +220,7 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                               description:
                                               'Do you want to delete this meal?'
                                                   .tr,
-                                              title: 'Delete Coupon'.tr,
+                                              title: 'Delete Meal'.tr,
                                               onYesPressed: () {
                                                 mealsController.deleteMeals(
                                                   context,

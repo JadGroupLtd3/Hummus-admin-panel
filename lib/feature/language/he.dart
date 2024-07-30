@@ -245,4 +245,5 @@ const Map<String, String> he = {
   "Type of notification": "סוג הודעה",
   "Text of notification": "טקסט הודעה",
   "Send successfully": "שלח בהצלחה",
+  "Delete Meal": "מחק את הארוחה",
 };

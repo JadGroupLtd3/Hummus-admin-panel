@@ -166,6 +166,7 @@ const Map<String, String> en = {
   "Actual Price": "Actual Price",
   "Do you want to delete this meal?": "Do you want to delete this meal?",
   "Delete Coupon": "Delete Coupon",
+  "Delete Meal": "Delete Meal",
   "Orders history": "Orders history",
   "Customer Name": "Customer Name",
   "Waiting": "Waiting",

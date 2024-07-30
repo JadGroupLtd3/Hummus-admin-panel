@@ -1,0 +1,218 @@
+import 'package:get/get.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
+
+class AdminTableWidget extends StatefulWidget {
+  const AdminTableWidget({super.key});
+
+  @override
+  State<AdminTableWidget> createState() => _AdminTableWidgetState();
+}
+
+class _AdminTableWidgetState extends State<AdminTableWidget> {
+  final LanguageController languageController = Get.find<LanguageController>();
+
+  @override
+  void initState() {
+    Get.find<UsersController>().getAdmins(context);
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<UsersController>(
+      builder: (adminController) {
+        return Column(
+          children: [
+            Table(
+              columnWidths: const {
+                1: IntrinsicColumnWidth(),
+                2: IntrinsicColumnWidth(),
+                4: IntrinsicColumnWidth(),
+              },
+              children: [
+                TableRow(
+                  decoration: BoxDecoration(
+                    color: MyThemeData.light.focusColor,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(15),
+                      topLeft: Radius.circular(15),
+                    ),
+                  ),
+                  children: [
+                    const TextUtils(title: '#', color: Colors.white)
+                        .paddingOnly(
+                            right: languageController.langLocal == eng ? 0 : 20,
+                            left: languageController.langLocal == eng ? 20 : 0),
+                    TextUtils(title: 'Name'.tr, color: Colors.white)
+                        .paddingOnly(
+                            left: languageController.langLocal == eng ? 85 : 0,
+                            right:
+                                languageController.langLocal == eng ? 0 : 85),
+                    const TextUtils(title: '   ', color: Colors.white),
+                    const TextUtils(title: '   ', color: Colors.white),
+                    TextUtils(title: 'Email'.tr, color: Colors.white)
+                        .paddingOnly(
+                            left: languageController.langLocal == eng ? 0 : 20,
+                            right:
+                                languageController.langLocal == eng ? 20 : 0),
+                    TextUtils(title: 'Phone'.tr, color: Colors.white).paddingOnly(
+                      right: languageController.langLocal == eng ? 0 : 20,
+                      left: languageController.langLocal == eng ? 50 : 0,
+                    ),
+                    TextUtils(title: 'Kind'.tr, color: Colors.white).paddingOnly(
+                      right: languageController.langLocal == eng ? 0 : 10,
+                      left: languageController.langLocal == eng ? 40 : 0,
+                    ),
+                    TextUtils(
+                        title: 'Activation status'.tr, color: Colors.white),
+                    TextUtils(title: 'Operations'.tr, color: Colors.white)
+                        .paddingOnly(
+                            left: languageController.langLocal == eng ? 10 : 0,
+                            right:
+                                languageController.langLocal == eng ? 0 : 10),
+                  ],
+                ),
+              ],
+            ),
+            Obx(
+                  () {
+                if (adminController.controllerState.value == ControllerState.loading) {
+                  return Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: MyThemeData.light.primaryColor,
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: adminController.adminList.length,
+                      itemBuilder: (context, index) {
+                        final admin = adminController.adminList[index];
+                        return Table(
+                          columnWidths: const {
+                            1: IntrinsicColumnWidth(),
+                            2: IntrinsicColumnWidth(),
+                            4: IntrinsicColumnWidth(),
+                          },
+                          children: [
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                      color: Colors.black.withOpacity(0.1)),
+                                  bottom: BorderSide(
+                                      color: Colors.black.withOpacity(0.1)),
+                                ),
+                              ),
+                              children: [
+                                TextUtils(title: '${admin.id}').paddingOnly(
+                                    right:
+                                    languageController.langLocal == eng ? 0 : 20,
+                                    left:
+                                    languageController.langLocal == eng ? 20 : 0,
+                                    top: 10,
+                                    bottom: 10),
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: SizedBox(
+                                        width: 36,
+                                        height: 36,
+                                        child: Image.network(
+                                          admin.image ?? '',
+                                          height: 20,
+                                          width: 20,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    2.horizontalSpace,
+                                    TextUtils(title: admin.firstName.capitalize ?? ''),
+                                  ],
+                                ).paddingOnly(
+                                    left:
+                                    languageController.langLocal == eng ? 0 : 30,
+                                    right:
+                                    languageController.langLocal == eng ? 30 : 0,
+                                    top: 10,
+                                    bottom: 10),
+                                TextUtils(title: admin.email).paddingOnly(
+                                    left:
+                                    languageController.langLocal == eng ? 20 : 0,
+                                    right:
+                                    languageController.langLocal == eng ? 0 : 20,
+                                    top: 10,
+                                    bottom: 10),
+                                Center(
+                                    child: TextUtils(title: admin.phone)
+                                        .paddingOnly(top: 10, bottom: 10)),
+                                TextUtils(title: 'Waiter'.tr)
+                                    .paddingOnly(top: 10, bottom: 10),
+                                Center(
+                                  child: SvgPicture.asset(
+                                    Images.dot,
+                                    width: 25,
+                                    height: 25,
+                                  ),
+                                ).paddingOnly(
+                                    left:
+                                    languageController.langLocal == eng ? 50 : 0,
+                                    right:
+                                    languageController.langLocal == eng ? 0 : 50,
+                                    top: 10,
+                                    bottom: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    OnHover(
+                                      matrix: 0,
+                                      onTap: (){},
+                                      builder: (isHovered) {
+                                        return SvgPicture.asset(
+                                          Images.edit,
+                                          width: 30,
+                                          height: 30,
+                                        );
+                                      },
+                                    ),
+                                    5.horizontalSpace,
+                                    OnHover(
+                                      matrix: 0,
+                                      onTap: (){},
+                                      builder: (isHovered) {
+                                        return SvgPicture.asset(
+                                          Images.delete,
+                                          width: 30,
+                                          height: 30,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ).paddingOnly(
+                                    left:
+                                    languageController.langLocal == eng ? 0 : 15,
+                                    right:
+                                    languageController.langLocal == eng ? 15 : 0,
+                                    top: 10,
+                                    bottom: 10),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

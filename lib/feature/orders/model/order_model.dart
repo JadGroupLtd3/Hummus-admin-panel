@@ -82,7 +82,7 @@ class AllOrders extends Equatable {
     approveStatus: json["approve_status"],
     executionTime: json["execution_time"],
     executionStep: json["execution_step"],
-    paymentType: paymentTypeValues.map[json["payment_type"]],
+    paymentType: json["payment_type"],
     isPayment: json["is_payment"],
     orderType: json["order_type"],
     note: json["note"],

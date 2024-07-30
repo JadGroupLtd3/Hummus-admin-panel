@@ -58,6 +58,7 @@ class ApiUrl {
   static const String UPDATE_STATUS_NOTIFICATION = '/notification-settings/update-status';
 
   static const String GET_WAITERS = '/waiters';
+  static const String GET_ADMINS = '/admins';
 
   static const String CREATE_MEALS = '/meals/create';
   static const String GET_MEALS = '/meals';
