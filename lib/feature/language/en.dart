@@ -246,4 +246,11 @@ const Map<String, String> en = {
   "Type of notification": "Type of notification",
   "Text of notification": "Text of notification",
   "Send successfully": "Send successfully",
+  "Edit Manager": "Edit Manager",
+  "admin Name": "admin Name",
+  "Delete Admin": "Delete Admin",
+  "Do you want to delete this admin?": "Do you want to delete this admin?",
+  "Delete Waiters": "Delete Waiters",
+  "Do you want to delete this waiter?": "Do you want to delete this waiter?",
+  "Edit Waiter": "Edit Waiter",
 };

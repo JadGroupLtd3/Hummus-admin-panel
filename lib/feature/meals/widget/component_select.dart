@@ -20,7 +20,8 @@ class ComponentSelectState extends State<ComponentSelect> {
       builder: (mealsController) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          margin: const EdgeInsets.symmetric(vertical: 20),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          width: MediaQuery.of(context).size.height * 1 / 0.8,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
@@ -33,11 +34,13 @@ class ComponentSelectState extends State<ComponentSelect> {
               )
             ],
           ),
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -114,7 +117,8 @@ class ComponentSelectState extends State<ComponentSelect> {
                                     });
                                   },
                                   builder: (isHovered) {
-                                    return Container(
+                                    return isSelected
+                                        ? Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(
@@ -291,6 +295,58 @@ class ComponentSelectState extends State<ComponentSelect> {
                                                   ],
                                                 ),
                                               ),
+                                          ],
+                                        ),
+                                      ),
+                                    ).paddingOnly(top: 28)
+                                        : Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                          color: isSelected
+                                              ? MyThemeData.light.primaryColor
+                                              : Colors.transparent,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(0, -1),
+                                            color: Colors.black.withOpacity(.07),
+                                            blurRadius: 8,
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Row(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(100),
+                                              child: SizedBox(
+                                                width: 36,
+                                                height: 36,
+                                                child: Image.network(
+                                                  componentController.componentList[index].image ?? '',
+                                                  height: 36,
+                                                  width: 36,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              languageController.langLocal == eng
+                                                  ? componentController.componentList[index].nameEn ?? ''
+                                                  : languageController.langLocal == ara
+                                                  ? componentController.componentList[index].nameAr ?? ''
+                                                  : componentController.componentList[index].nameHe ?? '',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TajawalRegular.copyWith(
+                                                fontSize: 14,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

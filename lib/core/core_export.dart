@@ -146,7 +146,6 @@ export 'package:hummus_admin_panel/feature/orders/controller/order_controller.da
 export 'package:hummus_admin_panel/feature/orders/show_orders/widget/order_details_widget.dart';
 export 'package:hummus_admin_panel/feature/orders/show_orders/widget/orders_status_nav_bar.dart';
 export 'package:hummus_admin_panel/feature/meals/model/create_meal_model.dart';
-export 'package:get_storage/get_storage.dart';
 export 'package:hummus_admin_panel/core/helper/route_helper.dart';
 export 'package:hummus_admin_panel/feature/auth/controller/sign_in_controller.dart';
 export 'package:hummus_admin_panel/feature/auth/repo/sign_in_repo.dart';

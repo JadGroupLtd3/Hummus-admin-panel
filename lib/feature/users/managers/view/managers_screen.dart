@@ -35,7 +35,7 @@ class ManagersScreen extends StatelessWidget {
                             width: 150,
                             height: 45,
                             onPressed: () {
-                              Get.find<SliderPagesController>().goToTab(32);
+                              Get.find<SliderPagesController>().goToTab(33);
                             },
                           );
                         },

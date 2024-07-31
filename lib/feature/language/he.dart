@@ -246,4 +246,11 @@ const Map<String, String> he = {
   "Text of notification": "טקסט הודעה",
   "Send successfully": "שלח בהצלחה",
   "Delete Meal": "מחק את הארוחה",
+  "Edit Manager": "מנהל עריכה",
+  "admin Name": "שם אדמין",
+  "Delete Admin": "מחק מנהל מערכת",
+  "Do you want to delete this admin?": "האם אתה רוצה למחוק את המנהל הזה؟",
+  "Delete Waiters": "מחק מלצרים",
+  "Do you want to delete this waiter?": "האם אתה רוצה למחוק את המלצר הזה؟",
+  "Edit Waiter": "ערוך מלצר",
 };

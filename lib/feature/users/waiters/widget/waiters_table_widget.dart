@@ -26,7 +26,7 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
               columnWidths: const {
                 1: IntrinsicColumnWidth(),
                 2: IntrinsicColumnWidth(),
-                4: IntrinsicColumnWidth(),
+                3: IntrinsicColumnWidth(),
               },
               children: [
                 TableRow(
@@ -47,13 +47,14 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                             left: languageController.langLocal == eng ? 85 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 85),
-                    const TextUtils(title: '   ', color: Colors.white),
-                    const TextUtils(title: '   ', color: Colors.white),
-                    TextUtils(title: 'Email'.tr, color: Colors.white)
-                        .paddingOnly(
-                            left: languageController.langLocal == eng ? 0 : 20,
-                            right:
-                                languageController.langLocal == eng ? 20 : 0),
+                    const TextUtils(title: '      ', color: Colors.white),
+                    const TextUtils(title: '      ', color: Colors.white),
+                    Center(
+                      child: TextUtils(title: 'Email'.tr, color: Colors.white)
+                          .paddingOnly(
+                              left: languageController.langLocal == eng ? 0 : 20,
+                              right: languageController.langLocal == eng ? 20 : 0),
+                    ),
                     TextUtils(title: 'Phone'.tr, color: Colors.white).paddingOnly(
                       right: languageController.langLocal == eng ? 0 : 20,
                       left: languageController.langLocal == eng ? 50 : 0,
@@ -124,7 +125,7 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                                         width: 36,
                                         height: 36,
                                         child: Image.network(
-                                          waiter.image,
+                                          waiter.image ?? '',
                                           height: 20,
                                           width: 20,
                                           fit: BoxFit.fill,
@@ -132,7 +133,7 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                                       ),
                                     ),
                                     2.horizontalSpace,
-                                    TextUtils(title: waiter.firstName.capitalize ?? ''),
+                                    TextUtils(title: waiter.firstName?.capitalize ?? ''),
                                   ],
                                 ).paddingOnly(
                                     left:
@@ -141,15 +142,17 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                                     languageController.langLocal == eng ? 30 : 0,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(title: waiter.email).paddingOnly(
-                                    left:
-                                    languageController.langLocal == eng ? 20 : 0,
-                                    right:
-                                    languageController.langLocal == eng ? 0 : 20,
-                                    top: 10,
-                                    bottom: 10),
                                 Center(
-                                    child: TextUtils(title: waiter.phone)
+                                  child: TextUtils(title: waiter.email ?? 'email@gmail.com').paddingOnly(
+                                      left:
+                                      languageController.langLocal == eng ? 20 : 0,
+                                      right:
+                                      languageController.langLocal == eng ? 0 : 20,
+                                      top: 10,
+                                      bottom: 10),
+                                ),
+                                Center(
+                                    child: TextUtils(title: waiter.phone ?? "")
                                         .paddingOnly(top: 10, bottom: 10)),
                                 TextUtils(title: 'Waiter'.tr)
                                     .paddingOnly(top: 10, bottom: 10),
@@ -171,7 +174,12 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: (){},
+                                      onTap: () {
+                                        Get.to(() => AddNewWaiterScreen(
+                                          isEdit: true,
+                                          waiter: waiter,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,
@@ -183,7 +191,28 @@ class _WaitersTableWidgetState extends State<WaitersTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: (){},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this waiter?'.tr,
+                                              title: 'Delete Waiter'.tr,
+                                              onYesPressed: () {
+                                                waitersController.deleteWaiters(
+                                                    context,
+                                                    waiterID: waiter.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,

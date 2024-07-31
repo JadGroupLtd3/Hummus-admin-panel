@@ -38,7 +38,7 @@ class NamesTextField extends StatelessWidget {
                 color: Colors.white, borderRadius: BorderRadius.circular(30)),
             child: CustomTextField(
               hintText: hintTitle2 ?? 'Question'.tr,
-              height: 45,
+              height: 40,
               radius: 30,
               filled: false,
               controller: nameController,
@@ -50,7 +50,7 @@ class NamesTextField extends StatelessWidget {
               },
             ),
           ),
-          30.verticalSpace,
+          15.verticalSpace,
           Text(
             hintTitle,
             style: TajawalRegular.copyWith(
@@ -62,8 +62,8 @@ class NamesTextField extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(15)),
             child: TextFormField(
-              minLines: 15,
-              maxLines: 30,
+              minLines: 5,
+              maxLines: 8,
               controller: detailsController,
               style: TajawalRegular.copyWith(
                 fontSize: 16,

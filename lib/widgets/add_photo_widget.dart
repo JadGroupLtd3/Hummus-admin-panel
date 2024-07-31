@@ -22,6 +22,7 @@ class AddPhotoWidget extends StatefulWidget {
   final bool? isSettings;
   final bool? isDeal;
   final bool? isMeal;
+  final bool? isAdmin;
 
   AddPhotoWidget({
     super.key,
@@ -35,6 +36,7 @@ class AddPhotoWidget extends StatefulWidget {
     this.isNotificationHe,
     this.isQuestion,
     this.isMeal,
+    this.isAdmin,
     this.isHashtag,
     this.isDeal,
     this.isComponent,
@@ -85,6 +87,9 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
           if (widget.isMeal == true) {
             Get.find<MealsController>().webImage = widget.webImage;
             Get.find<MealsController>().pickedProfileImageFile = widget.pickedProfileImageFile;
+          }if (widget.isAdmin == true) {
+            Get.find<UsersController>().webImage = widget.webImage;
+            Get.find<UsersController>().pickedProfileImageFile = widget.pickedProfileImageFile;
           }
           if (widget.isNotificationAr == true) {
             Get.find<PushNotificationController>().webImageAr = widget.webImage;

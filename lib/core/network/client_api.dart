@@ -129,10 +129,10 @@ class ApiClient extends GetxService {
 
   static Future<Response> postMultipartData(
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
-      {Map<String, String>? headers}) async {
+      {Map<String, String>? headers,String? basUrl}) async {
     try {
       Http.MultipartRequest _request =
-          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!));
+          Http.MultipartRequest('POST', Uri.parse(basUrl ?? ApiUrl.BASE_URL + uri!));
       _request.headers.addAll(headers ?? mainHeaders);
 
       for (MultipartBody multipart in multipartBody!) {
@@ -169,6 +169,19 @@ class ApiClient extends GetxService {
     try {
       Http.Response _response = await Http.delete(
         Uri.parse('${ApiUrl.BASE_URL}$uri'),
+        headers: headers ?? mainHeaders,
+      ).timeout(const Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  static Future<Response> deleteDataLogin(String? uri,
+      {Map<String, String>? headers}) async {
+    try {
+      Http.Response _response = await Http.delete(
+        Uri.parse('${ApiUrl.LOGIN_BASE_URL}$uri'),
         headers: headers ?? mainHeaders,
       ).timeout(const Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);

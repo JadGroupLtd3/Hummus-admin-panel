@@ -30,7 +30,7 @@ class UsersTableWidget extends StatelessWidget {
           columnWidths: const {
             1: IntrinsicColumnWidth(),
             2: IntrinsicColumnWidth(),
-            4: IntrinsicColumnWidth(),
+            3: IntrinsicColumnWidth(),
           },
           children: [
             TableRow(
@@ -49,8 +49,8 @@ class UsersTableWidget extends StatelessWidget {
                     .paddingOnly(
                     left: languageController.langLocal == eng ? 85 : 0,
                     right: languageController.langLocal == eng ? 0 : 85),
-                const TextUtils(title: '   ', color: Colors.white),
-                const TextUtils(title: '   ', color: Colors.white),
+                const TextUtils(title: '     ', color: Colors.white),
+                const TextUtils(title: '     ', color: Colors.white),
                 TextUtils(title: 'Email'.tr, color: Colors.white).paddingOnly(
                     left: languageController.langLocal == eng ? 0 : 20,
                     right: languageController.langLocal == eng ? 20 : 0),

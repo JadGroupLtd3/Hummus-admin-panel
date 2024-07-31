@@ -29,7 +29,7 @@ class MealsNavBar extends StatelessWidget {
                   ? MyThemeData.light.primaryColor
                   : sliderPagesController.currentMealName.value == 1
                   ? MyThemeData.light.primaryColor
-                  : Colors.white,
+                  : const Color(0xffE4E4E4),
             ),
             questionNavBarItem(1),
             Container(
@@ -38,7 +38,7 @@ class MealsNavBar extends StatelessWidget {
               color: sliderPagesController.currentMealName.value == 1 ||
                   sliderPagesController.currentMealName.value == 2
                   ? MyThemeData.light.primaryColor
-                  : Colors.white,
+                  : const Color(0xffE4E4E4),
             ),
             questionNavBarItem(2),
           ],
@@ -104,7 +104,7 @@ class MealsNavBar extends StatelessWidget {
         sliderPagesController.goToMealsNameTab(page);
       },
       builder: (isHovered) {
-        final color = isHovered ? MyThemeData.light.primaryColor : Colors.white;
+        final color = isHovered ? MyThemeData.light.primaryColor : const Color(0xffE4E4E4);
         return Container(
           height: 20,
           width: 20,

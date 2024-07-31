@@ -246,4 +246,11 @@ const Map<String, String> ar = {
   "Type of notification": "نوع الإشعار",
   "Text of notification": "نص الإشعار",
   "Send successfully": "تم الإرسال بنجاح",
+  "Edit Manager": "تعديل المسؤول",
+  "admin Name": "اسم المسؤول",
+  "Delete Admin": "حذف المسؤول",
+  "Do you want to delete this admin?": "هل تريد حذف هذا المسؤول؟",
+  "Delete Waiters": "حذف النادلين",
+  "Do you want to delete this waiter?": "هل تريد حذف هذا النادل؟",
+  "Edit Waiter": "تعديل النادل",
 };

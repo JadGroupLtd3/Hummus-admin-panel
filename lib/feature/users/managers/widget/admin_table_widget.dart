@@ -26,7 +26,7 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
               columnWidths: const {
                 1: IntrinsicColumnWidth(),
                 2: IntrinsicColumnWidth(),
-                4: IntrinsicColumnWidth(),
+                3: IntrinsicColumnWidth(),
               },
               children: [
                 TableRow(
@@ -47,8 +47,8 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                             left: languageController.langLocal == eng ? 85 : 0,
                             right:
                                 languageController.langLocal == eng ? 0 : 85),
-                    const TextUtils(title: '   ', color: Colors.white),
-                    const TextUtils(title: '   ', color: Colors.white),
+                    const TextUtils(title: '     ', color: Colors.white),
+                    const TextUtils(title: '     ', color: Colors.white),
                     TextUtils(title: 'Email'.tr, color: Colors.white)
                         .paddingOnly(
                             left: languageController.langLocal == eng ? 0 : 20,
@@ -132,7 +132,7 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                                       ),
                                     ),
                                     2.horizontalSpace,
-                                    TextUtils(title: admin.firstName.capitalize ?? ''),
+                                    TextUtils(title: admin.firstName?.capitalize ?? ''),
                                   ],
                                 ).paddingOnly(
                                     left:
@@ -141,7 +141,7 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                                     languageController.langLocal == eng ? 30 : 0,
                                     top: 10,
                                     bottom: 10),
-                                TextUtils(title: admin.email).paddingOnly(
+                                TextUtils(title: admin.email ?? 'email@gmail.com').paddingOnly(
                                     left:
                                     languageController.langLocal == eng ? 20 : 0,
                                     right:
@@ -149,9 +149,9 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                                     top: 10,
                                     bottom: 10),
                                 Center(
-                                    child: TextUtils(title: admin.phone)
+                                    child: TextUtils(title: admin.phone ?? '')
                                         .paddingOnly(top: 10, bottom: 10)),
-                                TextUtils(title: 'Waiter'.tr)
+                                TextUtils(title: 'Admin'.tr)
                                     .paddingOnly(top: 10, bottom: 10),
                                 Center(
                                   child: SvgPicture.asset(
@@ -171,7 +171,12 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                                   children: [
                                     OnHover(
                                       matrix: 0,
-                                      onTap: (){},
+                                      onTap: () {
+                                        Get.to(()=>AddNewManagerScreen(
+                                          isEdit: true,
+                                          admin: admin,
+                                        ));
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.edit,
@@ -183,7 +188,29 @@ class _AdminTableWidgetState extends State<AdminTableWidget> {
                                     5.horizontalSpace,
                                     OnHover(
                                       matrix: 0,
-                                      onTap: (){},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                              backgroundColor: Colors.white,
+                                              padding: 5,
+                                              icon: Images.delete,
+                                              color: Colors.black,
+                                              description:
+                                              'Do you want to delete this admin?'.tr,
+                                              title: 'Delete Admin'.tr,
+                                              onYesPressed: () {
+                                                print(admin.id);
+                                                adminController.deleteAdmins(
+                                                    context,
+                                                    adminID: admin.id!
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
                                       builder: (isHovered) {
                                         return SvgPicture.asset(
                                           Images.delete,
