@@ -107,10 +107,12 @@ class Data {
   Data({
     required this.firstName,
     required this.lastName,
-    this.birthday,
     required this.phone,
     required this.type,
     required this.id,
+    this.birthday,
+    this.email,
+    this.image,
   });
   late final String? firstName;
   late final String? lastName;
@@ -118,6 +120,8 @@ class Data {
   late final String? phone;
   late final String? type;
   late final int? id;
+  late final String? email;
+  late final String? image;
 
   Data.fromJson(Map<String, dynamic> json){
     firstName = json['first_name'];
@@ -125,6 +129,8 @@ class Data {
     birthday = json['birthday'];
     phone = json['phone'];
     type = json['type'];
+    email = json['email'];
+    image = json['image'];
     id = json['id'];
   }
 
@@ -135,6 +141,8 @@ class Data {
     _data['birthday'] = birthday;
     _data['phone'] = phone;
     _data['type'] = type;
+    _data['email'] = email;
+    _data['image'] = image;
     _data['id'] = id;
     return _data;
   }

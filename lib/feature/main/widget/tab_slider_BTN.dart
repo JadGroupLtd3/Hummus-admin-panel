@@ -58,8 +58,10 @@ class TabBTN extends StatelessWidget {
                         transform: transform,
                         child: Text(
                           title,
+                          overflow: TextOverflow.ellipsis,
                           style: TajawalBold.copyWith(
                             fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
                             color: sliderPagesController.currentSection == section
                                 ? Colors.white
                                 : textColor,

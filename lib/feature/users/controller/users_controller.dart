@@ -34,6 +34,7 @@ class UsersController extends GetxController {
     phoneController.clear();
     emailController.clear();
     passwordController.clear();
+    imagePath = null;
     pickedProfileImageFile = null;
   }
   initStateWaiter(){
@@ -41,6 +42,7 @@ class UsersController extends GetxController {
     waiterPhoneController.clear();
     waiterEmailController.clear();
     waiterPasswordController.clear();
+    imagePath = null;
     pickedProfileImageFile = null;
   }
 
@@ -155,8 +157,8 @@ class UsersController extends GetxController {
     controllerState.value = ControllerState.loading;
     Waiters waiters = Waiters(
       firstName: waiterNameController.text,
-      email: waiterPhoneController.text,
-      phone: waiterEmailController.text,
+      email: waiterEmailController.text,
+      phone: waiterPhoneController.text,
       lastName: "last_name",
       password: waiterPasswordController.text,
     );

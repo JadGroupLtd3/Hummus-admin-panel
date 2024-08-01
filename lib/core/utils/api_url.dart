@@ -83,4 +83,10 @@ class ApiUrl {
   static const String GET_MEALS_NOTIFICATION = '/notifications/meals';
   static const String GET_CATEGORY_NOTIFICATION = '/notifications/categories';
 
+  static const String GET_POPULAR_MEALS = '/meals/popular-meals';
+  static const String DELETE_POPULAR_MEALS = '/meals/delete-popular-meals';
+
+  static const String GET_FEATURE_MEALS = '/meals/featured-meals';
+  static const String DELETE_FEATURE_MEALS = '/meals/delete-featured-meals';
+
 }

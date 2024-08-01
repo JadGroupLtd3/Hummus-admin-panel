@@ -24,6 +24,7 @@ class ComponentController extends GetxController {
     componentNameEn.clear();
     componentNameHe.clear();
     status.value = false;
+    imagePath = null;
     pickedProfileImageFile = null;
   }
 
@@ -42,6 +43,7 @@ class ComponentController extends GetxController {
       nameEn: componentNameEn.text,
       nameHe: componentNameHe.text,
       status: status.value == true ? 1 : 0,
+      image: pickedProfileImageFile?.path,
     );
     final result = await componentRepo.createComponent(
       componentModel: component,
@@ -67,10 +69,11 @@ class ComponentController extends GetxController {
       nameEn: componentNameEn.text,
       nameHe: componentNameHe.text,
       status: status.value == true ? 1 : 0,
+      image: pickedProfileImageFile?.path ?? imagePath,
     );
     final result = await componentRepo.updateComponent(
       componentModel: component,
-      webImage: webImage,
+      webImageBytes: webImage,
     );
     result.fold((left) {
       controllerState.value = ControllerState.error;

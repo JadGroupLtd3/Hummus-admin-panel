@@ -34,7 +34,6 @@ class SettingsController extends GetxController {
   Rx<SettingsData?> settings = Rx<SettingsData?>(null);
 
   initTextController() {
-    pickedProfileImageFile = null;
     deliveryPrice.clear();
     appName.clear();
     phone.clear();

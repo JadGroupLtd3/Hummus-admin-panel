@@ -136,7 +136,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
       height: widget.height ?? MediaQuery.of(context).size.height * 1 / 2.5,
       width: widget.width ?? double.infinity,
       decoration: BoxDecoration(
@@ -157,13 +157,15 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
           await pickImage();
         },
         builder: (isHovered) {
-          return widget.pickedProfileImageFile == null
+          return !widget.isEdit &&
+              widget.imagePath == null &&
+               widget.pickedProfileImageFile == null
               ? SvgPicture.asset(
                   Images.add_photo,
                   fit: BoxFit.none,
                 )
               : ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(30),
                   child: SizedBox(
                     height: 50,
                     width: 80,
@@ -172,16 +174,16 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
                             widget.pickedProfileImageFile?.path == null
                         ? Image.network(
                             widget.imagePath!,
-                            fit: BoxFit.none,
+                            fit: BoxFit.fill,
                           )
                         : kIsWeb && widget.webImage != null
                             ? Image.memory(
                                 widget.webImage!,
-                                fit: BoxFit.none,
+                                fit: BoxFit.fill,
                               )
                             : Image.file(
                                 File(widget.pickedProfileImageFile!.path),
-                                fit: BoxFit.none,
+                                fit: BoxFit.fill,
                               ),
                   ),
                 );

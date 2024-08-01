@@ -253,4 +253,9 @@ const Map<String, String> en = {
   "Delete Waiters": "Delete Waiters",
   "Do you want to delete this waiter?": "Do you want to delete this waiter?",
   "Edit Waiter": "Edit Waiter",
+  "Do you want to delete this feature meal?": "Do you want to delete this feature meal?",
+  "Do you want to delete this popular meal?": "Do you want to delete this popular meal?",
+  "Delete Feature Meal": "Delete Feature Meal",
+  "Delete Popular Meal": "Delete Popular Meal",
+  "": "",
 };

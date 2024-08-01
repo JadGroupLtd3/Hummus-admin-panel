@@ -43,10 +43,11 @@ class MealsController extends GetxController {
     mealEnglishDescription.clear();
     mealHebrewName.clear();
     mealHebrewDescription.clear();
+    pickedProfileImageFile = null;
+    imagePath = null;
   }
 
   void isEdit(Meals meal){
-    pickedProfileImageFile = null;
     fakePrice.text = meal.fakePrice;
     mealPrice.text = meal.totalPrice;
     coinPoints.text = meal.coinPoints.toString();

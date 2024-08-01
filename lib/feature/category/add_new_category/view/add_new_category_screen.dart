@@ -47,50 +47,48 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          height: MediaQuery.of(context).size.height * 1 / 1.6,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: AddNewProductFields(
-                            fieldsKey: categoryKey,
-                            controllerAR: categoryController.categoryNameAr,
-                            controllerEN: categoryController.categoryNameEn,
-                            controllerHE: categoryController.categoryNameHe,
-                            sort: categoryController.categorySort,
-                            isCategory: true,
-                            isEdit: widget.isEdit,
-                            onChanged: (val) {
-                              val == true
-                                  ? categoryController.status.value = true
-                                  : categoryController.status.value = false;
-                            },
-                            enable: categoryController.status.value,
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        height: MediaQuery.of(context).size.height * 1 / 1.6,
+                        width: MediaQuery.of(context).size.height * 1 / 1.56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: AddNewProductFields(
+                          fieldsKey: categoryKey,
+                          controllerAR: categoryController.categoryNameAr,
+                          controllerEN: categoryController.categoryNameEn,
+                          controllerHE: categoryController.categoryNameHe,
+                          sort: categoryController.categorySort,
+                          isCategory: true,
+                          isEdit: widget.isEdit,
+                          onChanged: (val) {
+                            val == true
+                                ? categoryController.status.value = true
+                                : categoryController.status.value = false;
+                          },
+                          enable: categoryController.status.value,
                         ),
                       ),
                       7.horizontalSpace,
-                      Expanded(
-                        child: Center(
-                          child: AddPhotoWidget(
-                            isCategory: true,
-                            isEdit: widget.category != null,
-                            imagePath: categoryController.imagePath,
-                            webImage: categoryController.webImage,
-                            pickedImage: categoryController.pickedImage,
-                            pickedProfileImageFile: categoryController.pickedProfileImageFile,
-                          ),
+                      Center(
+                        child: AddPhotoWidget(
+                          isCategory: true,
+                          width: MediaQuery.of(context).size.height * 1 / 1.7,
+                          isEdit: widget.category != null,
+                          imagePath: categoryController.imagePath,
+                          webImage: categoryController.webImage,
+                          pickedImage: categoryController.pickedImage,
+                          pickedProfileImageFile: categoryController.pickedProfileImageFile,
                         ),
                       ),
                     ],

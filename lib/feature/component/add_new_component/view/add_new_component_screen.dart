@@ -47,48 +47,46 @@ class _AddNewComponentScreenState extends State<AddNewComponentScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          height: MediaQuery.of(context).size.height * 1 / 2.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: AddNewProductFields(
-                            fieldsKey: componentKey,
-                            controllerAR: componentController.componentNameAr,
-                            controllerEN: componentController.componentNameEn,
-                            controllerHE: componentController.componentNameHe,
-                            onChanged: (val) {
-                              val == true
-                                  ? componentController.status.value = true
-                                  : componentController.status.value = false;
-                            },
-                            enable: componentController.status.value,
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        height: MediaQuery.of(context).size.height * 1 / 2.0,
+                        width: MediaQuery.of(context).size.height * 1 / 1.56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: AddNewProductFields(
+                          fieldsKey: componentKey,
+                          controllerAR: componentController.componentNameAr,
+                          controllerEN: componentController.componentNameEn,
+                          controllerHE: componentController.componentNameHe,
+                          onChanged: (val) {
+                            val == true
+                                ? componentController.status.value = true
+                                : componentController.status.value = false;
+                          },
+                          enable: componentController.status.value,
                         ),
                       ),
                       7.horizontalSpace,
-                      Expanded(
-                        child: Center(
-                          child: AddPhotoWidget(
-                            isComponent: true,
-                            isEdit: widget.component != null,
-                            imagePath: componentController.imagePath,
-                            webImage: componentController.webImage,
-                            pickedImage: componentController.pickedImage,
-                            pickedProfileImageFile:
-                                componentController.pickedProfileImageFile,
-                          ),
+                      Center(
+                        child: AddPhotoWidget(
+                          isComponent: true,
+                          width: MediaQuery.of(context).size.height * 1 / 1.7,
+                          isEdit: widget.component != null,
+                          imagePath: componentController.imagePath,
+                          webImage: componentController.webImage,
+                          pickedImage: componentController.pickedImage,
+                          pickedProfileImageFile:
+                              componentController.pickedProfileImageFile,
                         ),
                       ),
                     ],

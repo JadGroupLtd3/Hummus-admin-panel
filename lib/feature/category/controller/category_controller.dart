@@ -27,6 +27,7 @@ class CategoryController extends GetxController {
     categoryNameHe.clear();
     categorySort.clear();
     pickedProfileImageFile = null;
+    imagePath = null;
   }
 
   void isEdit(Category category){

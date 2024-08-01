@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/home/notification_settings/repo/notification_repo.dart';
 import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
+import 'package:hummus_admin_panel/feature/home_element/controller/popular_meals_controller.dart';
+import 'package:hummus_admin_panel/feature/home_element/repo/popular_meals_repo.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -29,6 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   final AllOrderController orderController = Get.put(AllOrderController(AllOrderRepository()));
   final NotificationController notificationController = Get.put(NotificationController(NotificationRepo()));
   final PushNotificationController pushNotificationController = Get.put(PushNotificationController(PushNotificationRepo()));
+  final PopularMealsController popularMealsController = Get.put(PopularMealsController(PopularMealsRepo()));
   @override
   void initState() {
     super.initState();
@@ -52,6 +55,8 @@ class _MainScreenState extends State<MainScreen> {
     await usersController.getAdmins(context);
     await dealsController.getDeals(context);
     await mealsController.getMeals(context);
+    await popularMealsController.getPopularMeals(context);
+    await popularMealsController.getFeatureMeals(context);
     await tablesController.getTables(context);
     await orderController.getAllOrder(context);
     await pushNotificationController.getPushNotification(context);

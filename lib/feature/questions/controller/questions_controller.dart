@@ -34,6 +34,7 @@ class QuestionsController extends GetxController {
     answerNameHe.clear();
     status.value = false;
     pickedProfileImageFile = null;
+    imagePath = null;
   }
 
   void isEdit(Questions questions){

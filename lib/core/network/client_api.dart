@@ -55,7 +55,7 @@ class ApiClient extends GetxService {
     } else if (response0.statusCode != 200 && response0.body == null) {
       response0 = const Response(statusCode: 0, statusText: noInternetMessage);
     }
-    //debugPrint('====> API Response: [${_response.statusCode}] $uri\n${_response.body}');
+    //ebugPrint('====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
     return response0;
   }
 
@@ -129,10 +129,10 @@ class ApiClient extends GetxService {
 
   static Future<Response> postMultipartData(
       String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
-      {Map<String, String>? headers,String? basUrl}) async {
+      {Map<String, String>? headers}) async {
     try {
       Http.MultipartRequest _request =
-          Http.MultipartRequest('POST', Uri.parse(basUrl ?? ApiUrl.BASE_URL + uri!));
+          Http.MultipartRequest('POST', Uri.parse(ApiUrl.BASE_URL + uri!));
       _request.headers.addAll(headers ?? mainHeaders);
 
       for (MultipartBody multipart in multipartBody!) {
@@ -157,6 +157,43 @@ class ApiClient extends GetxService {
       _request.fields.addAll(body);
       Http.Response _response =
           await Http.Response.fromStream(await _request.send());
+      print('_response.body ${_response.body}');
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  static Future<Response> postMultipartDataLogin(
+      String? uri, Map<String, String> body, List<MultipartBody>? multipartBody,
+      {Map<String, String>? headers}) async {
+    try {
+      Http.MultipartRequest _request =
+      Http.MultipartRequest('POST', Uri.parse(ApiUrl.LOGIN_BASE_URL + uri!));
+      _request.headers.addAll(headers ?? mainHeaders);
+
+      for (MultipartBody multipart in multipartBody!) {
+        if (multipart.webImage != null) {
+          _request.files.add(Http.MultipartFile.fromBytes(
+            multipart.key!,
+            multipart.webImage!,
+            filename: 'image.jpg',
+            contentType: MediaType('image', 'jpeg'),
+          ));
+        } else if (multipart.file != null) {
+          File _file = File(multipart.file!.path);
+          _request.files.add(Http.MultipartFile(
+            multipart.key!,
+            _file.readAsBytes().asStream(),
+            _file.lengthSync(),
+            filename: _file.path.split('/').last,
+          ));
+        }
+      }
+
+      _request.fields.addAll(body);
+      Http.Response _response =
+      await Http.Response.fromStream(await _request.send());
       print('_response.body ${_response.body}');
       return handleResponse(_response, uri);
     } catch (e) {

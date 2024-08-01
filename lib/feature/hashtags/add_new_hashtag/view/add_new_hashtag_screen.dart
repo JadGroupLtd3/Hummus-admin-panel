@@ -45,47 +45,45 @@ class _AddNewHashtagScreenState extends State<AddNewHashtagScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          height: MediaQuery.of(context).size.height * 1 / 2.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: AddNewProductFields(
-                            fieldsKey: hashtagKey,
-                            controllerAR: hashtagController.hashtagNameAr,
-                            controllerEN: hashtagController.hashtagNameEn,
-                            controllerHE: hashtagController.hashtagNameHe,
-                            onChanged: (val) {
-                              val == true
-                                  ? hashtagController.status.value = true
-                                  : hashtagController.status.value = false;
-                            },
-                            enable: hashtagController.status.value,
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        height: MediaQuery.of(context).size.height * 1 / 2.0,
+                        width: MediaQuery.of(context).size.height * 1 / 1.56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: AddNewProductFields(
+                          fieldsKey: hashtagKey,
+                          controllerAR: hashtagController.hashtagNameAr,
+                          controllerEN: hashtagController.hashtagNameEn,
+                          controllerHE: hashtagController.hashtagNameHe,
+                          onChanged: (val) {
+                            val == true
+                                ? hashtagController.status.value = true
+                                : hashtagController.status.value = false;
+                          },
+                          enable: hashtagController.status.value,
                         ),
                       ),
                       7.horizontalSpace,
-                      Expanded(
-                        child: Center(
-                          child: AddPhotoWidget(
-                            isHashtag: true,
-                            isEdit: widget.hashtag != null,
-                            imagePath: hashtagController.imagePath,
-                            webImage: hashtagController.webImage,
-                            pickedImage: hashtagController.pickedImage,
-                            pickedProfileImageFile: hashtagController.pickedProfileImageFile,
-                          ),
+                      Center(
+                        child: AddPhotoWidget(
+                          isHashtag: true,
+                          width: MediaQuery.of(context).size.height * 1 / 1.7,
+                          isEdit: widget.hashtag != null,
+                          imagePath: hashtagController.imagePath,
+                          webImage: hashtagController.webImage,
+                          pickedImage: hashtagController.pickedImage,
+                          pickedProfileImageFile: hashtagController.pickedProfileImageFile,
                         ),
                       ),
                     ],

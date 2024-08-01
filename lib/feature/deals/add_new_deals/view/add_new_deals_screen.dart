@@ -115,7 +115,6 @@ class _AddNewDealsScreenState extends State<AddNewDealsScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
                   DealsTextsField(
                     dealKey: dealKey,
                   ),

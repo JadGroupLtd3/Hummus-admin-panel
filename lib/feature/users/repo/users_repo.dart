@@ -9,7 +9,7 @@ class UsersRepo {
 
   Future<Either<String, CreateAdminModel>> createAdmins(
       {required Admin adminModel,Uint8List? webImage}) async {
-    Response? response = await ApiClient.postDataLogIn(
+    Response? response = await ApiClient.postMultipartDataLogin(
       ApiUrl.CREATE_ADMINS,
       {
         "first_name": adminModel.firstName ?? "",
@@ -18,6 +18,7 @@ class UsersRepo {
         "password": adminModel.password ?? "",
         "email": adminModel.email ?? "",
       },
+      [MultipartBody('image', webImage: webImage)],
     );
     print(response.statusCode);
     print(response.body);
@@ -30,7 +31,7 @@ class UsersRepo {
 
   Future<Either<String, CreateAdminModel>> updateAdmins(
       {required Admin adminModel,Uint8List? webImage}) async {
-    Response? response = await ApiClient.postDataLogIn(
+    Response? response = await ApiClient.postMultipartDataLogin(
       ApiUrl.UPDATE_ADMINS,
       {
         "id": adminModel.id.toString(),
@@ -40,6 +41,7 @@ class UsersRepo {
         "password": adminModel.password ?? "",
         "email": adminModel.email ?? "",
       },
+      [MultipartBody('image', webImage: webImage)],
     );
     if (response.statusCode == 200) {
       return Right(CreateAdminModel.fromJson(response.body));
@@ -81,7 +83,7 @@ class UsersRepo {
 
   Future<Either<String, CreateWaiterModel>> createWaiters(
       {required Waiters adminModel,Uint8List? webImage}) async {
-    Response? response = await ApiClient.postDataLogIn(
+    Response? response = await ApiClient.postMultipartDataLogin(
       ApiUrl.CREATE_WAITERS,
       {
         "first_name": adminModel.firstName ?? "",
@@ -90,6 +92,7 @@ class UsersRepo {
         "password": adminModel.password ?? "",
         "email": adminModel.email ?? "",
       },
+      [MultipartBody('image', webImage: webImage)],
     );
     print(response.statusCode);
     print(response.body);
@@ -102,7 +105,7 @@ class UsersRepo {
 
   Future<Either<String, CreateWaiterModel>> updateWaiters(
       {required Waiters waiterModel,Uint8List? webImage}) async {
-    Response? response = await ApiClient.postDataLogIn(
+    Response? response = await ApiClient.postMultipartDataLogin(
       ApiUrl.UPDATE_WAITERS,
       {
         "id": waiterModel.id.toString(),
@@ -112,6 +115,7 @@ class UsersRepo {
         "password": waiterModel.password ?? "",
         "email": waiterModel.email ?? "",
       },
+      [MultipartBody('image', webImage: webImage)],
     );
     if (response.statusCode == 200) {
       return Right(CreateWaiterModel.fromJson(response.body));
@@ -132,7 +136,5 @@ class UsersRepo {
       return Left(response.body['message'] ?? "unknown Error Occurred");
     }
   }
-
-
 
 }

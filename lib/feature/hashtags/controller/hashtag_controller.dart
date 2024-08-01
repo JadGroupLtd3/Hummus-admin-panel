@@ -24,6 +24,7 @@ class HashtagController extends GetxController {
     hashtagNameEn.clear();
     hashtagNameHe.clear();
     status.value = false;
+    imagePath = null;
     pickedProfileImageFile = null;
   }
 

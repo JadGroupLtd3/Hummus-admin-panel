@@ -161,4 +161,5 @@ export 'package:hummus_admin_panel/feature/orders/show_orders/order_status_scree
 export 'package:hummus_admin_panel/feature/home/show_notifications/model/push_notification_category_model.dart';
 export 'package:hummus_admin_panel/feature/home/show_notifications/model/push_notification_meals_model.dart';
 export 'package:hummus_admin_panel/feature/home/show_notifications/repo/push_notification_repo.dart';
-
+export 'package:hummus_admin_panel/feature/home_element/controller/popular_meals_controller.dart';
+export 'package:hummus_admin_panel/feature/home_element/popular_meals/widget/popular_meals_table_widget.dart';

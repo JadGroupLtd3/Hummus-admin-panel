@@ -14,9 +14,9 @@ class AllOrderRepository {
   Future<Either<String, AllOrderModel>> getAllOrder() async {
     var url = Uri.parse('${ApiUrl.LOGIN_BASE_URL}/order/index');
     final http.Response response = await http.get(url, headers: headers);
-    print('${ApiUrl.LOGIN_BASE_URL}/order/index');
+    // print('${ApiUrl.LOGIN_BASE_URL}/order/index');
     if (response.statusCode == 200) {
-      log(response.body);
+      //log(response.body);
       return Right(AllOrderModel.fromJson(jsonDecode(response.body)));
     } else {
       log('Api Error ${response.statusCode} . ${response.body}//////////');
