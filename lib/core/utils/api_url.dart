@@ -89,4 +89,8 @@ class ApiUrl {
   static const String GET_FEATURE_MEALS = '/meals/featured-meals';
   static const String DELETE_FEATURE_MEALS = '/meals/delete-featured-meals';
 
+  static const String CREATE_RECOMMENDED_MEALS = '/meals/recommended-product-store';
+  static const String GET_RECOMMENDED_MEALS = '/meals/get-day-recommended-product';
+  static const String DELETE_RECOMMENDED_MEALS = '/meals/recommended-product-delete/';
+
 }

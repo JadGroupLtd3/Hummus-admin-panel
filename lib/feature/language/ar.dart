@@ -257,4 +257,8 @@ const Map<String, String> ar = {
   "Do you want to delete this popular meal?": "هل تريد حذف هذه الوجبة الشعبية؟",
   "Delete Feature Meal": "حذف الوجبة المميزة",
   "Delete Popular Meal": "حذف الوجبة الشعبية",
+  "Select Meal": "اختيار وجبة",
+  "Today's Meal": "وجبة اليوم",
+  "Previous": "السابق",
+  "Next": "التالي",
 };

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
+import 'package:hummus_admin_panel/feature/meals/model/recommended_meal_model.dart';
 
 
 class MealsRepo {
@@ -86,4 +87,42 @@ class MealsRepo {
       return Left(response.body['message'] ?? "unknown Error Occurred");
     }
   }
+
+  Future<Either<String, RecommendedMealModel>> createRecommendedMeals(
+      int mealId) async {
+    Response? response = await ApiClient.postData(
+      ApiUrl.CREATE_RECOMMENDED_MEALS,
+      {
+        "meal_id" : mealId,
+      }
+    );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      return Right(RecommendedMealModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
+  Future<Either<String, MealsModel>> getRecommendedMeals() async {
+    Response? response = await ApiClient.getData(ApiUrl.GET_RECOMMENDED_MEALS);
+    if (response.statusCode == 200) {
+      return Right(MealsModel.fromJson(response.body));
+    } else {
+      return Left(response.body['message'] ?? "Unknown Error Occurred");
+    }
+  }
+
+  Future<Either<String, MealsModel>> deleteRecommendedMeals(int mealID) async {
+    Response? response =
+    await ApiClient.getData('${ApiUrl.DELETE_RECOMMENDED_MEALS}$mealID');
+    if (response.statusCode == 200) {
+      return Right(MealsModel.fromJson(response.body));
+    } else {
+      print('Api Error ${response.statusCode} . ${response.body}//////////');
+      return Left(response.body['message'] ?? "unknown Error Occurred");
+    }
+  }
+
 }

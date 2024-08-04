@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/home/notification_settings/repo/notification_repo.dart';
 import 'package:hummus_admin_panel/feature/home/show_notifications/controller/push_notification_controller.dart';
-import 'package:hummus_admin_panel/feature/home_element/controller/popular_meals_controller.dart';
 import 'package:hummus_admin_panel/feature/home_element/repo/popular_meals_repo.dart';
 
 class MainScreen extends StatefulWidget {
@@ -55,6 +54,7 @@ class _MainScreenState extends State<MainScreen> {
     await usersController.getAdmins(context);
     await dealsController.getDeals(context);
     await mealsController.getMeals(context);
+    await mealsController.getRecommendedMeals(context);
     await popularMealsController.getPopularMeals(context);
     await popularMealsController.getFeatureMeals(context);
     await tablesController.getTables(context);

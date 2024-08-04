@@ -66,6 +66,11 @@ class Images {
   static String get money => 'money'.svg;
 
   static String get logOutDialog => 'logoutcurve'.svg;
+
+  static String get shadow => 'shadow'.png;
+
+  static String get remove => 'remove'.png;
+  static String get add => 'add'.png;
 }
 
 extension on String {

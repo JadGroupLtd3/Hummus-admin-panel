@@ -108,6 +108,7 @@ class CategoryController extends GetxController {
     final result = await categoryRepo.deleteCategory(categoryID);
     result.fold((left) {
       controllerState.value = ControllerState.error;
+      Navigator.pop(context);
       ShowSnackBar.show(context: context, message: left, color: Colors.red);
       update();
     }, (right) async {

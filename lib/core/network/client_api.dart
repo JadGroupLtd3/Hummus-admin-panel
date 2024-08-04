@@ -1,14 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/src/media_type.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as Http;
-import 'package:hummus_admin_panel/core/helper/preferences_helper.dart';
+import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/core/network/model/errors_model.dart';
-import 'package:hummus_admin_panel/core/utils/api_url.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 
 class ApiClient extends GetxService {

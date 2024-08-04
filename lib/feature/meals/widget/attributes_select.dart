@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:image_picker/image_picker.dart'; // Add this import
 
 class AttributesSelect extends StatefulWidget {
   const AttributesSelect({super.key});
@@ -11,18 +11,11 @@ class AttributesSelect extends StatefulWidget {
 }
 
 class AttributesSelectState extends State<AttributesSelect> {
-  final AttributeController attributeController = Get.find<AttributeController>();
+  final AttributeController attributeController =
+      Get.find<AttributeController>();
   final LanguageController languageController = Get.find<LanguageController>();
   final MealsController mealsController = Get.find<MealsController>();
-  final ImagePicker _picker = ImagePicker(); // Add ImagePicker instance
-
-  Map<int, List<CreateAttributes>> attributesMap = {};
-  List<TextEditingController> nameArControllers = [];
-  List<TextEditingController> nameEnControllers = [];
-  List<TextEditingController> nameHeControllers = [];
-  List<TextEditingController> priceControllers = [];
-  List<String> dropdownValues = [];
-  List<XFile?> pickedImages = []; // Store picked images
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +65,7 @@ class AttributesSelectState extends State<AttributesSelect> {
                     );
                   default:
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 2),
@@ -80,7 +74,7 @@ class AttributesSelectState extends State<AttributesSelect> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 120,
                               childAspectRatio: 4.0,
                               mainAxisSpacing: 5,
@@ -88,16 +82,14 @@ class AttributesSelectState extends State<AttributesSelect> {
                             ),
                             itemCount: attributeController.attributeList.length,
                             itemBuilder: (context, index) {
-                              final attribute =
-                              attributeController.attributeList[index];
+                              final attribute = attributeController.attributeList[index];
                               final isSelected = mealsController
-                                  .selectedAttributesList
-                                  .any((element) =>
-                              element.attributeId == attribute.id);
+                                  .selectedAttributesList.any((element) =>
+                                      element.attributeId == attribute.id);
                               final selectedAttribute = mealsController
                                   .selectedAttributesList
                                   .firstWhere(
-                                    (element) => element.attributeId == attribute.id,
+                                (element) => element.attributeId == attribute.id,
                                 orElse: () => CreateAttributes(
                                   attributeId: attribute.id!,
                                   image: '',
@@ -114,70 +106,39 @@ class AttributesSelectState extends State<AttributesSelect> {
                                   OnHover(
                                     matrix: 0,
                                     onTap: () {
-                                      if (isSelected) {
-                                        mealsController.selectedAttributesList
-                                            .removeWhere((element) =>
-                                        element.attributeId ==
-                                            attribute.id);
-                                        attributesMap.remove(attribute.id);
-                                      } else {
-                                        if (!mealsController
-                                            .selectedAttributesList
-                                            .contains(selectedAttribute)) {
-                                          mealsController
-                                              .selectedAttributesList
-                                              .add(selectedAttribute);
+                                      setState(() {
+                                        if (isSelected) {
+                                          mealsController.selectedAttributesList.removeWhere((element) => element.attributeId == attribute.id);
+                                          if (mealsController.selectedAttributesList.any((element) => element.attributeId == attribute.id)) {
+                                            final attributeIndex = mealsController.selectedAttributesList.indexWhere((element) => element.attributeId == attribute.id);
+                                            mealsController.removeItemControllers(attributeIndex, 0);
+                                          }
+                                        } else {
+                                          if (!mealsController.selectedAttributesList.contains(selectedAttribute)) {
+                                            mealsController.selectedAttributesList.add(selectedAttribute);
+                                            mealsController.initializeControllersForAttribute(attribute.id!);
+                                          }
                                         }
-                                        if (!attributesMap
-                                            .containsKey(attribute.id)) {
-                                          attributesMap[attribute.id!] = [
-                                            selectedAttribute
-                                          ];
-                                        }
-                                      }
-                                      setState(() {});
+                                      });
                                     },
                                     builder: (isHovered) {
                                       return Row(
                                         children: [
                                           CircleAvatar(
                                             radius: 8,
-                                            backgroundColor: isSelected
-                                                ? MyThemeData
-                                                .light.primaryColor
-                                                : Colors.grey,
+                                            backgroundColor: isSelected ? MyThemeData.light.primaryColor : Colors.grey,
                                             child: Center(
-                                              child: isSelected
-                                                  ? const Icon(
-                                                Icons.check,
-                                                color: Colors.white,
-                                                size: 13,
-                                              )
-                                                  : null,
+                                              child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 13) : null,
                                             ),
                                           ),
                                           const SizedBox(width: 4),
                                           Text(
                                             languageController.langLocal == eng
-                                                ? attributeController
-                                                .attributeList[index]
-                                                .nameEn ??
-                                                ''
-                                                : languageController.langLocal ==
-                                                ara
-                                                ? attributeController
-                                                .attributeList[
-                                            index]
-                                                .nameAr ??
-                                                ''
-                                                : attributeController
-                                                .attributeList[
-                                            index]
-                                                .nameHe ??
-                                                '',
-                                            style: TajawalRegular.copyWith(
-                                              fontSize: 14,
-                                            ),
+                                                ? attributeController.attributeList[index].nameEn ?? ''
+                                                : languageController.langLocal == ara
+                                                ? attributeController.attributeList[index].nameAr ?? ''
+                                                : attributeController.attributeList[index].nameHe ?? '',
+                                            style: TajawalRegular.copyWith(fontSize: 14),
                                           ).paddingOnly(top: 5),
                                         ],
                                       );
@@ -190,9 +151,13 @@ class AttributesSelectState extends State<AttributesSelect> {
                         ),
                         if (mealsController.selectedAttributesList.isNotEmpty) ...[
                           for (var attribute
-                          in mealsController.selectedAttributesList) ...[
+                              in mealsController.selectedAttributesList) ...[
                             Text(
-                              'Items for ${attribute.nameEn} (${attribute.nameAr}, ${attribute.nameHe})',
+                              languageController.langLocal == eng
+                                  ? attribute.nameEn
+                                  : languageController.langLocal == ara
+                                      ? attribute.nameAr
+                                      : attribute.nameHe,
                               style: TajawalBold.copyWith(fontSize: 16),
                             ),
                             const SizedBox(height: 10),
@@ -211,165 +176,200 @@ class AttributesSelectState extends State<AttributesSelect> {
   }
 
   List<Widget> _buildAttributeForm(CreateAttributes attribute) {
-    final attributeId = attribute.attributeId!;
-    final nameArController = TextEditingController();
-    final nameEnController = TextEditingController();
-    final nameHeController = TextEditingController();
-    final priceController = TextEditingController();
-    String dropdownValue = 'Default';
-    final pickedImage = ValueNotifier<File?>(null);
-
-    nameArControllers.add(nameArController);
-    nameEnControllers.add(nameEnController);
-    nameHeControllers.add(nameHeController);
-    priceControllers.add(priceController);
-    dropdownValues.add(dropdownValue);
-
+    final attributeId = attribute.attributeId;
+    final attributeIndex = mealsController.selectedAttributesList.indexWhere((element) => element.attributeId == attributeId);
+    if (attributeIndex != -1 && mealsController.nameArControllers.length <= attributeIndex) {
+      mealsController.initializeControllersForAttribute(attributeId);
+    }
     return [
-      Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: nameArController,
-              decoration: InputDecoration(
-                labelText: 'اسم العنصر بالعربية',
-              ),
+      Obx(() => Column(
+          children: List.generate(
+            mealsController.nameArControllers[attributeIndex].length,
+                (index) => Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        height: 40,
+                        hintText: 'Name ar'.tr,
+                        controller: mealsController.nameArControllers[attributeIndex][index],
+                        radius: 15,
+                      ),
+                    ),
+                    5.horizontalSpace,
+                    Expanded(
+                      child: CustomTextField(
+                        height: 40,
+                        controller: mealsController.nameEnControllers[attributeIndex][index],
+                        hintText: 'Name en'.tr,
+                        radius: 15,
+                      ),
+                    ),
+                    5.horizontalSpace,
+                    Expanded(
+                      child: CustomTextField(
+                        controller: mealsController.nameHeControllers[attributeIndex][index],
+                        hintText: 'Name He'.tr,
+                        radius: 15,
+                        height: 40,
+                      ),
+                    ),
+                  ],
+                ),
+                10.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              mealsController.isCheckStates[attributeIndex][index] = 1;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 8,
+                                backgroundColor: mealsController.isCheckStates[attributeIndex][index] == 1
+                                    ? MyThemeData.light.primaryColor
+                                    : MyThemeData.light.hoverColor,
+                                child: mealsController.isCheckStates[attributeIndex][index] == 1
+                                    ? const Center(
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 13,
+                                  ),
+                                )
+                                    : null,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'yes'.tr,
+                                style: TajawalRegular.copyWith(fontSize: 14),
+                              ).paddingOnly(top: 5),
+                            ],
+                          ),
+                        ),
+                        5.horizontalSpace,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              mealsController.isCheckStates[attributeIndex][index] = 0;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 8,
+                                backgroundColor: mealsController.isCheckStates[attributeIndex][index] == 0
+                                    ? MyThemeData.light.primaryColor
+                                    : MyThemeData.light.hoverColor,
+                                child: mealsController.isCheckStates[attributeIndex][index] == 0
+                                    ? const Center(
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 13,
+                                  ),
+                                )
+                                    : null,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'no'.tr,
+                                style: TajawalRegular.copyWith(fontSize: 14),
+                              ).paddingOnly(top: 5),
+                            ],
+                          ),
+                        ),
+                        8.horizontalSpace,
+                        if (mealsController.isCheckStates[attributeIndex][index] == 0)
+                          SizedBox(
+                            width: MediaQuery.of(context).size.height * 1 / 8,
+                            child: CustomTextField(
+                              controller: mealsController.priceControllers[attributeIndex][index],
+                              inputType: TextInputType.number,
+                              hintText: 'Price'.tr,
+                              height: 40,
+                              radius: 15,
+                            ),
+                          ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                            if (pickedFile != null) {
+                              setState(() {
+                                attribute.image = pickedFile.path;
+                              });
+                            }
+                            print(pickedFile?.path);
+                          },
+                          child: Text('Pick Image'.tr),
+                        ),
+                        5.horizontalSpace,
+                        ValueListenableBuilder<File?>(
+                          valueListenable: ValueNotifier(attribute.image != '' ? File(attribute.image) : null),
+                          builder: (context, file, child) {
+                            return file != null
+                                ? Text(file.path.substring(28))
+                                : Text('No image selected'.tr);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                5.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                      buttonText: '',
+                      width: 45,
+                      height: 40,
+                      radius: 8,
+                      backGroundColor: MyThemeData.light.primaryColor,
+                      icon: Image.asset(Images.add, height: 24, width: 24),
+                      onPressed: () {
+                        setState(() {
+                          mealsController.addNewItemControllers(attributeIndex);
+                        });
+                      },
+                    ),
+                    5.horizontalSpace,
+                    CustomButton(
+                      buttonText: '',
+                      width: 45,
+                      height: 40,
+                      radius: 8,
+                      backGroundColor: MyThemeData.light.focusColor,
+                      icon: Icon(Icons.delete_outline_outlined, size: 20, color: Colors.grey.shade700),
+                      onPressed: () {
+                        if (mealsController.nameArControllers[attributeIndex].length > 1) {
+                          setState(() {
+                            if (index < mealsController.nameArControllers[attributeIndex].length) {
+                              mealsController.removeItemControllers(attributeIndex, index);
+                            }
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                5.verticalSpace,
+              ],
             ),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: nameEnController,
-              decoration: InputDecoration(
-                labelText: 'اسم العنصر بالإنجليزية',
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: nameHeController,
-              decoration: InputDecoration(
-                labelText: 'اسم العنصر بالعبرية',
-              ),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 10),
-      DropdownButton<String>(
-        value: dropdownValue,
-        items: <String>['Default', 'Not Default']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownValue = newValue!;
-            if (dropdownValue == 'Default') {
-              priceController.clear();
-            }
-          });
-        },
-      ),
-      if (dropdownValue == 'Not Default') ...[
-        const SizedBox(height: 10),
-        TextField(
-          controller: priceController,
-          decoration: InputDecoration(
-            labelText: 'السعر',
-          ),
-          keyboardType: TextInputType.number,
         ),
-      ],
-      const SizedBox(height: 10),
-      Row(
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () async {
-                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                  pickedImage.value = File(pickedFile.path);
-                }
-              },
-              child: Text('Pick Image'),
-            ),
-          ),
-          const SizedBox(width: 10),
-          ValueListenableBuilder<File?>(
-            valueListenable: pickedImage,
-            builder: (context, file, child) {
-              return file != null
-                  ? Text('Image Path: ${file.path}')
-                  : Text('No image selected');
-            },
-          ),
-        ],
-      ),
-      const SizedBox(height: 10),
-      Row(
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {
-                final newAttribute = CreateAttributes(
-                  attributeId: attributeId,
-                  nameAr: nameArController.text,
-                  nameEn: nameEnController.text,
-                  nameHe: nameHeController.text,
-                  price: dropdownValue == 'Not Default'
-                      ? int.tryParse(priceController.text) ?? 0
-                      : 0,
-                  image: pickedImage.value?.path ?? '',
-                  isCheck: 0,
-                );
-                if (attributesMap.containsKey(attributeId)) {
-                  attributesMap[attributeId]?.add(newAttribute);
-                } else {
-                  attributesMap[attributeId] = [newAttribute];
-                }
-                setState(() {
-                  nameArControllers.add(TextEditingController());
-                  nameEnControllers.add(TextEditingController());
-                  nameHeControllers.add(TextEditingController());
-                  priceControllers.add(TextEditingController());
-                  dropdownValues.add('Default');
-                  pickedImages.add(null);
-                });
-              },
-              child: Text('Add Item'),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 10),
-      Column(
-        children: attributesMap[attributeId]
-            ?.map((attr) => ListTile(
-          title: Text(
-            '${attr.nameEn} (${attr.nameAr}, ${attr.nameHe})',
-          ),
-          subtitle: Text('Price: ${attr.price}'),
-          trailing: attributesMap[attributeId]!.length > 2
-              ? IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              setState(() {
-                attributesMap[attributeId]?.remove(attr);
-                if (attributesMap[attributeId]?.isEmpty ?? true) {
-                  attributesMap.remove(attributeId);
-                }
-              });
-            },
-          )
-              : null,
-        ))
-            .toList() ??
-            [],
       ),
     ];
   }

@@ -10,7 +10,8 @@ class WorkAreaTable extends StatefulWidget {
 
 class _WorkAreaTableState extends State<WorkAreaTable> {
   final LanguageController languageController = Get.find<LanguageController>();
-
+  final int itemsPerPage = 6;
+  int currentPage = 0;
   @override
   void initState() {
     Get.find<RegionsController>().getRegions(context);
@@ -69,122 +70,194 @@ class _WorkAreaTableState extends State<WorkAreaTable> {
                     ],
                   );
                 } else {
+                  final int totalPages = (regionsController.regionsList.length / itemsPerPage).ceil();
+                  final currentPageItems = regionsController.regionsList.skip(currentPage * itemsPerPage).take(itemsPerPage).toList();
                   return Expanded(
-                    child: ListView.builder(
-                      itemCount: regionsController.regionsList.length,
-                      itemBuilder: (context, index) {
-                        final regions = regionsController.regionsList[index];
-                        return Table(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: currentPageItems.length,
+                            itemBuilder: (context, index) {
+                              final regions = currentPageItems[index];
+                              return Table(
+                                children: [
+                                  TableRow(
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide(
+                                            color: Colors.black.withOpacity(0.1)),
+                                        bottom: BorderSide(
+                                            color: Colors.black.withOpacity(0.1)),
+                                      ),
+                                    ),
+                                    children: [
+                                      TextUtils(title: '${regions.id}').paddingOnly(
+                                          right: languageController.langLocal == eng
+                                              ? 0
+                                              : 20,
+                                          left: languageController.langLocal == eng
+                                              ? 20
+                                              : 0,
+                                          top: 10,
+                                          bottom: 10),
+                                      TextUtils(title: regions.name).paddingOnly(
+                                          left: languageController.langLocal == eng
+                                              ? 40
+                                              : 0,
+                                          right: languageController.langLocal == eng
+                                              ? 0
+                                              : 40,
+                                          top: 10,
+                                          bottom: 10),
+                                      Center(
+                                        child: SvgPicture.asset(
+                                          Images.dot,
+                                          width: 25,
+                                          height: 25,
+                                        ).paddingOnly(
+                                            left: languageController.langLocal == eng
+                                                ? 0
+                                                : 18,
+                                            right: languageController.langLocal == eng
+                                                ? 18
+                                                : 0,
+                                            top: 10,
+                                            bottom: 10),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          OnHover(
+                                            matrix: 0,
+                                            onTap: () {
+                                              Get.to(()=>AddNewWorkAreaScreen(
+                                                isEdit: true,
+                                                regionsData: regions,
+                                              ));
+                                            },
+                                            builder: (isHovered) {
+                                              return SvgPicture.asset(
+                                                Images.edit,
+                                                width: 30,
+                                                height: 30,
+                                              );
+                                            },
+                                          ),
+                                          5.horizontalSpace,
+                                          OnHover(
+                                            matrix: 0,
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return ConfirmationDialog(
+                                                    backgroundColor: Colors.white,
+                                                    padding: 5,
+                                                    icon: Images.delete,
+                                                    color: Colors.black,
+                                                    description: 'Do you want to delete this region?'.tr,
+                                                    title: 'Delete Regions'.tr,
+                                                    onYesPressed: () {
+                                                      regionsController.deleteRegions(
+                                                        context,
+                                                        regionsID: regions.id!,
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            builder: (isHovered) {
+                                              return SvgPicture.asset(
+                                                Images.delete,
+                                                width: 30,
+                                                height: 30,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ).paddingOnly(
+                                          left: languageController.langLocal == eng
+                                              ? 0
+                                              : 15,
+                                          right: languageController.langLocal == eng
+                                              ? 15
+                                              : 0,
+                                          top: 10,
+                                          bottom: 10),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TableRow(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                      color: Colors.black.withOpacity(0.1)),
-                                  bottom: BorderSide(
-                                      color: Colors.black.withOpacity(0.1)),
-                                ),
-                              ),
-                              children: [
-                                TextUtils(title: '${regions.id}').paddingOnly(
-                                    right: languageController.langLocal == eng
-                                        ? 0
-                                        : 20,
-                                    left: languageController.langLocal == eng
-                                        ? 20
-                                        : 0,
-                                    top: 10,
-                                    bottom: 10),
-                                TextUtils(title: regions.name).paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 40
-                                        : 0,
-                                    right: languageController.langLocal == eng
-                                        ? 0
-                                        : 40,
-                                    top: 10,
-                                    bottom: 10),
-                                Center(
-                                  child: SvgPicture.asset(
-                                    Images.dot,
-                                    width: 25,
-                                    height: 25,
-                                  ).paddingOnly(
-                                      left: languageController.langLocal == eng
-                                          ? 0
-                                          : 18,
-                                      right: languageController.langLocal == eng
-                                          ? 18
-                                          : 0,
-                                      top: 10,
-                                      bottom: 10),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    OnHover(
-                                      matrix: 0,
-                                      onTap: () {
-                                        Get.to(()=>AddNewWorkAreaScreen(
-                                          isEdit: true,
-                                          regionsData: regions,
-                                        ));
-                                      },
-                                      builder: (isHovered) {
-                                        return SvgPicture.asset(
-                                          Images.edit,
-                                          width: 30,
-                                          height: 30,
-                                        );
-                                      },
-                                    ),
-                                    5.horizontalSpace,
-                                    OnHover(
-                                      matrix: 0,
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return ConfirmationDialog(
-                                              backgroundColor: Colors.white,
-                                              padding: 5,
-                                              icon: Images.delete,
-                                              color: Colors.black,
-                                              description: 'Do you want to delete this region?'.tr,
-                                              title: 'Delete Regions'.tr,
-                                              onYesPressed: () {
-                                                regionsController.deleteRegions(
-                                                  context,
-                                                  regionsID: regions.id!,
-                                                );
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
-                                      builder: (isHovered) {
-                                        return SvgPicture.asset(
-                                          Images.delete,
-                                          width: 30,
-                                          height: 30,
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ).paddingOnly(
-                                    left: languageController.langLocal == eng
-                                        ? 0
-                                        : 15,
-                                    right: languageController.langLocal == eng
-                                        ? 15
-                                        : 0,
-                                    top: 10,
-                                    bottom: 10),
-                              ],
+                            TextButton(
+                              onPressed: currentPage > 0
+                                  ? () {
+                                setState(() {
+                                  currentPage--;
+                                });
+                              }
+                                  : null,
+                              child: Text('Previous'.tr).paddingOnly(top: 6),
+                            ),
+                            5.horizontalSpace,
+                            Row(
+                              children: List.generate(totalPages, (index) {
+                                return OnHover(
+                                  matrix: 0,
+                                  onTap: () {
+                                    setState(() {
+                                      currentPage = index;
+                                    });
+                                  },
+                                  builder: (isHovered) {
+                                    return Container(
+                                      height: 31,
+                                      width: 31,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      decoration: BoxDecoration(
+                                        color: currentPage == index
+                                            ? MyThemeData.light.primaryColor
+                                            : const Color(0xff2B2969)
+                                            .withOpacity(.10),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          '${index + 1}',
+                                          style: TextStyle(
+                                            color: currentPage == index
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                            ),
+                            5.horizontalSpace,
+                            TextButton(
+                              onPressed: currentPage < totalPages - 1
+                                  ? () {
+                                setState(() {
+                                  currentPage++;
+                                });
+                              }
+                                  : null,
+                              child: Text('Next'.tr).paddingOnly(top: 6),
                             ),
                           ],
-                        );
-                      },
+                        ).paddingAll(10),
+                      ],
                     ),
                   );
                 }

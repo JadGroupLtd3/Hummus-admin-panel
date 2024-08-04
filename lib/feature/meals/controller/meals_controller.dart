@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
 
+
 class MealsController extends GetxController {
   late MealsRepo mealsRepo;
 
@@ -10,6 +11,7 @@ class MealsController extends GetxController {
 
   var controllerState = ControllerState.idle.obs;
   RxList<Meals> mealsList = <Meals>[].obs;
+  RxList<Meals> recommendedMealList = <Meals>[].obs;
   RxList<CreateComponents> selectedComponentsList = <CreateComponents>[].obs;
   RxList<CreateHashtags> selectedHashtagsList = <CreateHashtags>[].obs;
   RxList<CreateAttributes> selectedAttributesList = <CreateAttributes>[].obs;
@@ -28,6 +30,91 @@ class MealsController extends GetxController {
   TextEditingController mealEnglishDescription = TextEditingController();
   TextEditingController mealHebrewName = TextEditingController();
   TextEditingController mealHebrewDescription = TextEditingController();
+
+  var nameArController = <TextEditingController>[].obs;
+  var nameEnController = <TextEditingController>[].obs;
+  var nameHeController = <TextEditingController>[].obs;
+  var priceController = <TextEditingController>[].obs;
+
+  var nameArControllers = <List<TextEditingController>>[].obs;
+  var nameEnControllers = <List<TextEditingController>>[].obs;
+  var nameHeControllers = <List<TextEditingController>>[].obs;
+  var priceControllers = <List<TextEditingController>>[].obs;
+  var isCheckStates = <List<int>>[].obs;
+
+  void initializeControllers() {
+  nameArControllers.add([TextEditingController()]);
+  nameEnControllers.add([TextEditingController()]);
+  nameHeControllers.add([TextEditingController()]);
+  priceControllers.add([TextEditingController()]);
+  isCheckStates.add([0]);
+  }
+
+  void addNewItemControllers(int attributeIndex) {
+  nameArControllers[attributeIndex].add(TextEditingController());
+  nameEnControllers[attributeIndex].add(TextEditingController());
+  nameHeControllers[attributeIndex].add(TextEditingController());
+  priceControllers[attributeIndex].add(TextEditingController());
+  isCheckStates[attributeIndex].add(0);
+  }
+
+  void removeItemControllers(int attributeIndex, int index) {
+    if (attributeIndex < nameArControllers.length &&
+        attributeIndex < nameEnControllers.length &&
+        attributeIndex < nameHeControllers.length &&
+        attributeIndex < isCheckStates.length &&
+        attributeIndex < priceControllers.length &&
+        index < nameArControllers[attributeIndex].length &&
+        index < nameEnControllers[attributeIndex].length &&
+        index < nameHeControllers[attributeIndex].length &&
+        index < isCheckStates[attributeIndex].length &&
+        index < priceControllers[attributeIndex].length) {
+
+      nameArControllers[attributeIndex].removeAt(index);
+      nameEnControllers[attributeIndex].removeAt(index);
+      nameHeControllers[attributeIndex].removeAt(index);
+      isCheckStates[attributeIndex].removeAt(index);
+      priceControllers[attributeIndex].removeAt(index);
+    }
+  }
+
+  void initializeControllersForAttribute(int attributeId) {
+    final attributeIndex = selectedAttributesList.indexWhere((element) => element.attributeId == attributeId);
+
+    if (attributeIndex != -1 && nameArControllers.length <= attributeIndex) {
+      // Initialize the lists if they are not already initialized
+      nameArControllers.add([]);
+      nameEnControllers.add([]);
+      nameHeControllers.add([]);
+      isCheckStates.add([]);
+      priceControllers.add([]);
+
+      // Add the initial controller for the attribute
+      addNewItemControllers(attributeIndex);
+    }
+  }
+
+  @override
+  void onInit() {
+    initializeControllers();
+    super.onInit();
+  }
+
+  var selectedMeal = Rxn<Meals>();
+
+  void selectMeal(Meals? meal) {
+    selectedMeal.value = meal;
+    if (meal != null) {
+      print('Selected meal: ${meal.name}');
+    } else {
+      print('Meal selection cleared');
+    }
+  }
+
+  void clearSelectedMeal() {
+    selectedMeal.value = null;
+    print('Meal selection cleared');
+  }
 
   initState(){
     selectedHashtagsList.clear();
@@ -222,6 +309,48 @@ class MealsController extends GetxController {
       Navigator.pop(context);
       ShowSnackBar.show(
           context: context, message: right.message, color: Colors.green);
+    });
+  }
+
+
+  Future<void> createRecommendedMeals(BuildContext context,int mealId) async {
+    controllerState.value = ControllerState.loading;
+    final result = await mealsRepo.createRecommendedMeals(mealId);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      getRecommendedMeals(context);
+      // ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      update();
+    });
+  }
+
+  Future<void> getRecommendedMeals(BuildContext context) async {
+    controllerState.value = ControllerState.loading;
+    final result = await mealsRepo.getRecommendedMeals();
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+    }, (right) {
+      controllerState.value = ControllerState.success;
+      recommendedMealList.value = right.data;
+    });
+  }
+
+  Future<void> deleteRecommendedMeals(BuildContext context, {required int mealID}) async {
+    controllerState.value = ControllerState.loading;
+    final result = await mealsRepo.deleteRecommendedMeals(mealID);
+    result.fold((left) {
+      controllerState.value = ControllerState.error;
+      ShowSnackBar.show(context: context, message: left, color: Colors.red);
+      update();
+    }, (right) async {
+      controllerState.value = ControllerState.success;
+      await getRecommendedMeals(context);
+      update();
+      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
     });
   }
 }
