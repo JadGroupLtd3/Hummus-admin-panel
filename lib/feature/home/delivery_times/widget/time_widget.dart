@@ -45,9 +45,7 @@ class TimeWidgetState extends State<TimeWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: ResponsiveHelper.isDesktop(context)
-              ? MediaQuery.of(context).size.height * 1 / 2.8
-              : MediaQuery.of(context).size.height * 1 / 3.3,
+          width: MediaQuery.of(context).size.height * 1 / 4.3,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -81,9 +79,7 @@ class TimeWidgetState extends State<TimeWidget> {
         Row(
           children: [
             Container(
-              width: ResponsiveHelper.isDesktop(context)
-                  ? MediaQuery.of(context).size.height * 1 / 2.5
-                  : MediaQuery.of(context).size.height * 1 / 3.3,
+              width: MediaQuery.of(context).size.height * 1 / 3.3,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -120,9 +116,7 @@ class TimeWidgetState extends State<TimeWidget> {
             ),
             const SizedBox(width: 15),
             Container(
-              width: ResponsiveHelper.isDesktop(context)
-                  ? MediaQuery.of(context).size.height * 1 / 2.5
-                  : MediaQuery.of(context).size.height * 1 / 3.3,
+              width: MediaQuery.of(context).size.height * 1 / 3.3,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),

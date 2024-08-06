@@ -48,54 +48,50 @@ class _AddNewCouponScreenState extends State<AddNewCouponScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          height: MediaQuery.of(context).size.height * 1 / 2.21,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: AddNewProductFields(
-                            isCoupon: true,
-                            fieldsKey: couponNameKey,
-                            controllerAR: couponController.couponNameAr,
-                            controllerEN: couponController.couponNameEn,
-                            controllerHE: couponController.couponNameHe,
-                            enable: couponController.status.value,
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        height: MediaQuery.of(context).size.height * 1 / 2.21,
+                        width: MediaQuery.of(context).size.height * 1 / 1.9,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: AddNewProductFields(
+                          isCoupon: true,
+                          fieldsKey: couponNameKey,
+                          controllerAR: couponController.couponNameAr,
+                          controllerEN: couponController.couponNameEn,
+                          controllerHE: couponController.couponNameHe,
+                          enable: couponController.status.value,
                         ),
                       ),
                       7.horizontalSpace,
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          height:
-                              MediaQuery.of(context).size.height * 1 / 1.3999,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: CouponDetailsFields(
-                            couponKey: couponKey,
-                          ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        height: MediaQuery.of(context).size.height * 1 / 1.3999,
+                        width: MediaQuery.of(context).size.height * 1 / 1.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: CouponDetailsFields(
+                          couponKey: couponKey,
                         ),
                       ),
                     ],

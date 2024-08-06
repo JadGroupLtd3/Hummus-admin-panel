@@ -207,6 +207,7 @@ class ApiClient extends GetxService {
       ).timeout(const Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);
     } catch (e) {
+      print('erorr => ${e}');
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }

@@ -29,7 +29,7 @@ class _NotificationTableWidgetState extends State<NotificationTableWidget> {
               children: [
                 TableRow(
                   decoration: BoxDecoration(
-                    color: MyThemeData.light.focusColor,
+                    color: const Color(0xff36D000),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(15),
                       topLeft: Radius.circular(15),
@@ -98,6 +98,7 @@ class _NotificationTableWidgetState extends State<NotificationTableWidget> {
                           children: [
                             TableRow(
                               decoration: BoxDecoration(
+                                color: index % 2 == 0 ? const Color(0xffF8F8F8) : Colors.white,
                                 border: Border(
                                   top: BorderSide(
                                       color: Colors.black.withOpacity(0.1)),

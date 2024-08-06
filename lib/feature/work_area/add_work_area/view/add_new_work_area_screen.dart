@@ -41,47 +41,43 @@ class _AddNewWorkAreaScreenState extends State<AddNewWorkAreaScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      height: MediaQuery.of(context).size.height * 1 / 2.8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 0),
-                            color: Colors.black.withOpacity(0.02),
-                            blurRadius: 14,
-                            spreadRadius: 9,
-                          )
-                        ],
-                      ),
-                      child: const AddressTextField(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    height: MediaQuery.of(context).size.height * 1 / 2.8,
+                    width: MediaQuery.of(context).size.height * 1 / 2.7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 0),
+                          color: Colors.black.withOpacity(0.02),
+                          blurRadius: 14,
+                          spreadRadius: 9,
+                        )
+                      ],
                     ),
+                    child: const AddressTextField(),
                   ),
                   7.horizontalSpace,
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      height: MediaQuery.of(context).size.height * 1 / 1.5,
-                      decoration: BoxDecoration(
-                        color: MyThemeData.light.backgroundColor,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 0),
-                            color: Colors.black.withOpacity(0.02),
-                            blurRadius: 14,
-                            spreadRadius: 9,
-                          )
-                        ],
-                      ),
-                      child: MapWidget(
-                        isEdit: widget.regionsData != null,
-                        regionsData: widget.regionsData,
-                      ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    height: MediaQuery.of(context).size.height * 1 / 1.5,
+                    width: MediaQuery.of(context).size.height * 1 / 1.1,
+                    decoration: BoxDecoration(
+                      color: MyThemeData.light.backgroundColor,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 0),
+                          color: Colors.black.withOpacity(0.02),
+                          blurRadius: 14,
+                          spreadRadius: 9,
+                        )
+                      ],
+                    ),
+                    child: MapWidget(
+                      isEdit: widget.regionsData != null,
+                      regionsData: widget.regionsData,
                     ),
                   ),
                 ],

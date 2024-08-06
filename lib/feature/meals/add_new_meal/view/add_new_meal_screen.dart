@@ -51,7 +51,7 @@ class _AddNewMealScreenState extends State<AddNewMealScreen> {
                         builder: (sliderPagesController) {
                           return Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            width: MediaQuery.of(context).size.height * 1 / 1.56,
+                            width: MediaQuery.of(context).size.height * 1 / 1.46,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
@@ -83,8 +83,7 @@ class _AddNewMealScreenState extends State<AddNewMealScreen> {
                                   child: Column(
                                     children: [
                                       MealsNavBar(
-                                        sliderPagesController:
-                                        sliderPagesController,
+                                        sliderPagesController: sliderPagesController,
                                       ),
                                       const SizedBox(height: 10),
                                       SizedBox(
@@ -111,7 +110,7 @@ class _AddNewMealScreenState extends State<AddNewMealScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         margin: const EdgeInsets.symmetric(vertical: 10),
-                        width: MediaQuery.of(context).size.height * 1 / 1.7,
+                        width: MediaQuery.of(context).size.height * 1 / 1.6,
                         decoration: BoxDecoration(
                           color: const Color(0xff2D2D2D),
                           borderRadius: BorderRadius.circular(15),
@@ -121,7 +120,7 @@ class _AddNewMealScreenState extends State<AddNewMealScreen> {
                               color: Colors.black.withOpacity(0.02),
                               blurRadius: 14,
                               spreadRadius: 9,
-                            )
+                            ),
                           ],
                         ),
                         child: MealsPhotosWidget(
@@ -135,63 +134,80 @@ class _AddNewMealScreenState extends State<AddNewMealScreen> {
                   const SizedBox(height: 15),
                   const AttributesSelect(),
                   const SizedBox(height: 15),
-                  Obx(() {
-                    switch (mealsController.controllerState.value) {
-                      case ControllerState.loading:
-                        return Center(
-                          child: CircularProgressIndicator(
-                              color: MyThemeData.light.primaryColor),
-                        );
-                      case ControllerState.error:
-                        return Center(
-                          child: CustomButton(
-                            buttonText:
-                                widget.isEdit == true ? 'edit'.tr : 'save'.tr,
-                            icon: SvgPicture.asset(Images.correct)
-                                .paddingSymmetric(horizontal: 4),
-                            style: TajawalBold.copyWith(
-                              color: Colors.white,
-                            ),
-                            radius: 20,
-                            width: 160,
-                            height: 45,
-                            backGroundColor: MyThemeData.light.primaryColor,
-                            onPressed: () {
-                              if (widget.isEdit == true) {
-                                mealsController.updateMeals(
-                                    context, widget.meals!.id);
-                              } else {
-                                mealsController.createMeals(context);
-                              }
-                            },
-                          ),
-                        );
-                      default:
-                        return Center(
-                          child: CustomButton(
-                            buttonText:
-                            widget.isEdit == true ? 'edit'.tr : 'save'.tr,
-                            icon: SvgPicture.asset(Images.correct)
-                                .paddingSymmetric(horizontal: 4),
-                            style: TajawalBold.copyWith(
-                              color: Colors.white,
-                            ),
-                            radius: 20,
-                            width: 160,
-                            height: 45,
-                            backGroundColor: MyThemeData.light.primaryColor,
-                            onPressed: () {
-                              if (widget.isEdit == true) {
-                                mealsController.updateMeals(
-                                    context, widget.meals!.id);
-                              } else {
-                                mealsController.createMeals(context);
-                              }
-                            },
-                          ),
-                        );
-                    }
-                  }),
+                  Center(
+                    child: CustomButton(
+                      buttonText:
+                      widget.isEdit == true ? 'edit'.tr : 'save'.tr,
+                      icon: SvgPicture.asset(Images.correct)
+                          .paddingSymmetric(horizontal: 4),
+                      style: TajawalBold.copyWith(
+                        color: Colors.white,
+                      ),
+                      radius: 20,
+                      width: 160,
+                      height: 45,
+                      backGroundColor: MyThemeData.light.primaryColor,
+                      onPressed: () {
+                        mealsController.createMeals(context);
+                      },
+                    ),
+                  ),
+                  // Obx(() {
+                  //   switch (mealsController.controllerState.value) {
+                  //     case ControllerState.loading:
+                  //       return Center(
+                  //         child: CircularProgressIndicator(
+                  //             color: MyThemeData.light.primaryColor),
+                  //       );
+                  //     case ControllerState.error:
+                  //       return Center(
+                  //         child: CustomButton(
+                  //           buttonText: widget.isEdit == true ? 'edit'.tr : 'save'.tr,
+                  //           icon: SvgPicture.asset(Images.correct)
+                  //               .paddingSymmetric(horizontal: 4),
+                  //           style: TajawalBold.copyWith(
+                  //             color: Colors.white,
+                  //           ),
+                  //           radius: 20,
+                  //           width: 160,
+                  //           height: 45,
+                  //           backGroundColor: MyThemeData.light.primaryColor,
+                  //           onPressed: () {
+                  //             if (widget.isEdit == true) {
+                  //               mealsController.updateMeals(
+                  //                   context, widget.meals!.id);
+                  //             } else {
+                  //               mealsController.createMeals(context);
+                  //             }
+                  //           },
+                  //         ),
+                  //       );
+                  //     default:
+                  //       return Center(
+                  //         child: CustomButton(
+                  //           buttonText:
+                  //           widget.isEdit == true ? 'edit'.tr : 'save'.tr,
+                  //           icon: SvgPicture.asset(Images.correct)
+                  //               .paddingSymmetric(horizontal: 4),
+                  //           style: TajawalBold.copyWith(
+                  //             color: Colors.white,
+                  //           ),
+                  //           radius: 20,
+                  //           width: 160,
+                  //           height: 45,
+                  //           backGroundColor: MyThemeData.light.primaryColor,
+                  //           onPressed: () {
+                  //             if (widget.isEdit == true) {
+                  //               mealsController.updateMeals(
+                  //                   context, widget.meals!.id);
+                  //             } else {
+                  //               mealsController.createMeals(context);
+                  //             }
+                  //           },
+                  //         ),
+                  //       );
+                  //   }
+                  // }),
                   const SizedBox(height: 50),
                 ],
               );

@@ -81,10 +81,10 @@ class CreateMealModel {
     for (int i = 0; i < attributes.length; i++) {
       attributeList.addAll({
         'attributes[$i][attribute_id]': attributes[i].attributeId.toString(),
-        'attributes[$i][image]': attributes[i].image,
-        'attributes[$i][name_ar]': attributes[i].nameAr,
-        'attributes[$i][name_en]': attributes[i].nameEn,
-        'attributes[$i][name_he]': attributes[i].nameHe,
+        'attributes[$i][image]': attributes[i].image ?? '',
+        'attributes[$i][name_ar]': attributes[i].nameAr ?? '',
+        'attributes[$i][name_en]': attributes[i].nameEn ?? '',
+        'attributes[$i][name_he]': attributes[i].nameHe ?? '',
         'attributes[$i][is_check]': attributes[i].isCheck.toString(),
         'attributes[$i][price]': attributes[i].price.toString(),
       });
@@ -234,18 +234,20 @@ class CreateComponents {
 class CreateAttributes {
   CreateAttributes({
     required this.attributeId,
-    required this.image,
-    required this.nameAr,
-    required this.nameEn,
-    required this.nameHe,
-    required this.isCheck,
-    required this.price,
+    this.image,
+    this.attributeName,
+    this.nameAr,
+    this.nameEn,
+    this.nameHe,
+    this.isCheck,
+    this.price,
   });
   late final int attributeId;
-  late final String image;
-  late final String nameAr;
-  late final String nameEn;
-  late final String nameHe;
+  String? image;
+  String? attributeName;
+  String? nameAr;
+  String? nameEn;
+  String? nameHe;
   int? isCheck;
   int? price;
 
@@ -257,6 +259,10 @@ class CreateAttributes {
     nameHe = json['name_he'];
     isCheck = json['is_check'];
     price = json['price'];
+  }
+
+  validateThisModel(){
+    // check required data
   }
 
   Map<String, dynamic> toJson() {

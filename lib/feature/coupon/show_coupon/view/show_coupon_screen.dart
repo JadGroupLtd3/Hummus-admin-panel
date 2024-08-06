@@ -27,7 +27,7 @@ class ShowCouponScreen extends StatelessWidget {
                     builder: (isHovered) {
                       return CustomButton(
                         buttonText: 'Add New'.tr,
-                        backGroundColor: MyThemeData.light.focusColor,
+                        backGroundColor: const Color(0xff36D000),
                         radius: 7,
                         width: 150,
                         height: 45,

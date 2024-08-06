@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
@@ -31,7 +33,7 @@ class _AddNewDealsScreenState extends State<AddNewDealsScreen> {
           child: GetBuilder<DealsController>(
             builder: (dealsController) {
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.isEdit == true
@@ -47,69 +49,65 @@ class _AddNewDealsScreenState extends State<AddNewDealsScreen> {
                     children: [
                       GetBuilder<SliderPagesController>(
                         builder: (sliderPagesController) {
-                          return Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 0),
-                                    color: Colors.black.withOpacity(0.02),
-                                    blurRadius: 14,
-                                    spreadRadius: 9,
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  DealsNavBar(
-                                    sliderPagesController: sliderPagesController,
+                          return Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            height: MediaQuery.of(context).size.height * 1 / 2.15,
+                            width: MediaQuery.of(context).size.height * 1 / 1.77,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 0),
+                                  color: Colors.black.withOpacity(0.02),
+                                  blurRadius: 14,
+                                  spreadRadius: 9,
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                DealsNavBar(
+                                  sliderPagesController: sliderPagesController,
+                                ),
+                                const SizedBox(height: 20),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 1 / 3.0,
+                                  child: PageView(
+                                    onPageChanged: sliderPagesController.animateToDealsNameTab,
+                                    controller: sliderPagesController.dealPageController,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    clipBehavior: Clip.none,
+                                    children: [...sliderPagesController.dealNamesPages],
                                   ),
-                                  const SizedBox(height: 20),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        1 /
-                                        1.77,
-                                    child: PageView(
-                                      onPageChanged: sliderPagesController.animateToDealsNameTab,
-                                      controller: sliderPagesController.dealPageController,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      clipBehavior: Clip.none,
-                                      children: [...sliderPagesController.dealNamesPages],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           );
                         },
                       ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          height: MediaQuery.of(context).size.height * 1 / 2.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: Center(
-                            child: AddPhotoWidget(
-                              isDeal: true,
-                              webImage: dealsController.webImage,
-                              pickedImage: dealsController.pickedImage,
-                              pickedProfileImageFile: dealsController.pickedProfileImageFile,
-                            ),
+                      const SizedBox(width: 20),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        margin: const EdgeInsets.only(top: 10),
+                        height: MediaQuery.of(context).size.height * 1 / 2.5,
+                        width: MediaQuery.of(context).size.height * 1 / 1.77,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
+                        ),
+                        child: Center(
+                          child: AddPhotoWidget(
+                            isDeal: true,
+                            webImage: dealsController.webImage,
+                            pickedImage: dealsController.pickedImage,
+                            pickedProfileImageFile: dealsController.pickedProfileImageFile,
                           ),
                         ),
                       ),

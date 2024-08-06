@@ -15,7 +15,7 @@ class NotificationSettingsScreen extends StatelessWidget {
           child: GetBuilder<NotificationController>(
             builder: (notificationController) {
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '${'Home'.tr} / ${'Notification'.tr} / ${'Notification Settings'.tr}',
@@ -29,73 +29,70 @@ class NotificationSettingsScreen extends StatelessWidget {
                     children: [
                       GetBuilder<SliderPagesController>(
                         builder: (sliderPagesController) {
-                          return Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 0),
-                              height:
-                                  MediaQuery.of(context).size.height * 1 / 1.4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 0),
-                                    color: Colors.black.withOpacity(0.02),
-                                    blurRadius: 14,
-                                    spreadRadius: 9,
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  NotificationNavBar(
-                                    sliderPagesController:
-                                        sliderPagesController,
+                          return Container(
+                            padding: const EdgeInsets.symmetric(vertical: 0),
+                            height: MediaQuery.of(context).size.height * 1 / 1.4,
+                            width: MediaQuery.of(context).size.height * 1 / 1.7,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 0),
+                                  color: Colors.black.withOpacity(0.02),
+                                  blurRadius: 14,
+                                  spreadRadius: 9,
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                NotificationNavBar(
+                                  sliderPagesController:
+                                      sliderPagesController,
+                                ),
+                                20.verticalSpace,
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      1 /
+                                      1.77,
+                                  child: PageView(
+                                    onPageChanged: sliderPagesController
+                                        .animateToNotificationNameTab,
+                                    controller: sliderPagesController
+                                        .notificationPageController,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      ...sliderPagesController
+                                          .notificationNamesPages
+                                    ],
                                   ),
-                                  20.verticalSpace,
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        1 /
-                                        1.77,
-                                    child: PageView(
-                                      onPageChanged: sliderPagesController
-                                          .animateToNotificationNameTab,
-                                      controller: sliderPagesController
-                                          .notificationPageController,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        ...sliderPagesController
-                                            .notificationNamesPages
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           );
                         },
                       ),
                       7.horizontalSpace,
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          margin: const EdgeInsets.only(top: 20),
-                          height: MediaQuery.of(context).size.height * 1 / 1.6,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: Colors.black.withOpacity(0.02),
-                                blurRadius: 14,
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                          child: const NotificationStatusWidget(),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        margin: const EdgeInsets.only(top: 20),
+                        height: MediaQuery.of(context).size.height * 1 / 1.6,
+                        width: MediaQuery.of(context).size.height * 1 / 1.7,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0),
+                              color: Colors.black.withOpacity(0.02),
+                              blurRadius: 14,
+                              spreadRadius: 9,
+                            )
+                          ],
                         ),
+                        child: const NotificationStatusWidget(),
                       ),
                     ],
                   ),

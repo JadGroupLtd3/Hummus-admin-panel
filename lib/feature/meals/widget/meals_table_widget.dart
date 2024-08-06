@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
+import 'package:hummus_admin_panel/theme/light_theme.dart';
 
 class MealsTableWidget extends StatefulWidget {
   const MealsTableWidget({super.key});
@@ -31,8 +32,8 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
               },
               children: [
                 TableRow(
-                  decoration: BoxDecoration(
-                    color: MyThemeData.light.focusColor,
+                  decoration:  BoxDecoration(
+                    color: const Color(0xff36D000),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(15),
                       topLeft: Radius.circular(15),
@@ -93,6 +94,7 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                 children: [
                                   TableRow(
                                     decoration: BoxDecoration(
+                                      color: index % 2 == 0 ? const Color(0xffF8F8F8) : Colors.white,
                                       border: Border(
                                         top: BorderSide(
                                             color: Colors.black.withOpacity(0.1)),
@@ -113,12 +115,10 @@ class _MealsTableWidgetState extends State<MealsTableWidget> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(100),
                                         child: SizedBox(
-                                          height: 36,
-                                          width: 41,
+                                          height: 45,
+                                          width: 45,
                                           child: Image.network(
                                             meal.primaryImage,
-                                            height: 36,
-                                            width: 41,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
