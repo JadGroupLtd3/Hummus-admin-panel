@@ -28,7 +28,7 @@ class SliderPagesController extends GetxController {
   RxInt pushNotificationStatusName = 0.obs;
 
   List<Widget> pages = [
-    const AddNewMealScreen(),
+    // const AddNewMealScreen(),
 
     const StatisticsScreen(),
     const SettingsScreen(),
