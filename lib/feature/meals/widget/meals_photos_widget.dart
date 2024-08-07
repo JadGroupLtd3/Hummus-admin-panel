@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
+import 'package:hummus_admin_panel/feature/meals/widget/sub_images_widget.dart';
 
 class MealsPhotosWidget extends StatefulWidget {
   final Meals? meals;
@@ -78,48 +79,10 @@ class _MealsPhotosWidgetState extends State<MealsPhotosWidget> {
                   ),
                 ),
               ),
-              // 10.verticalSpace,
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: SizedBox(
-              //         height: MediaQuery.of(context).size.height * 1 / 7.5,
-              //         child: ListView.builder(
-              //           scrollDirection: Axis.horizontal,
-              //           itemCount: 2,
-              //           itemBuilder: (context, index) {
-              //             return Container(
-              //               padding: const EdgeInsets.symmetric(
-              //                   vertical: 10, horizontal: 10),
-              //               margin: EdgeInsets.only(
-              //                 right:
-              //                     languageController.langLocal == eng ? 10 : 0,
-              //                 left:
-              //                     languageController.langLocal == eng ? 0 : 10,
-              //               ),
-              //               width: MediaQuery.of(context).size.height * 1 / 4.5,
-              //               height:
-              //                   MediaQuery.of(context).size.height * 1 / 7.5,
-              //               decoration: BoxDecoration(
-              //                 borderRadius: BorderRadius.circular(15),
-              //                 color: Colors.white,
-              //                 boxShadow: [
-              //                   BoxShadow(
-              //                     offset: const Offset(0, 0),
-              //                     color: Colors.black.withOpacity(0.02),
-              //                     blurRadius: 14,
-              //                     spreadRadius: 9,
-              //                   )
-              //                 ],
-              //               ),
-              //               child: Center(child: AddPhotoWidget()),
-              //             );
-              //           },
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              10.verticalSpace,
+              SubImagesWidget(
+                languageController: languageController,
+              ),
               15.verticalSpace,
               Text(
                 'Category'.tr,

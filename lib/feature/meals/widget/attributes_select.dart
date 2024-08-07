@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:hummus_admin_panel/widgets/on_hover.dart';
 
 class AttributesSelect extends StatefulWidget {
   const AttributesSelect({super.key});

@@ -1,112 +1,90 @@
-import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 
 class StatisticsWidget extends StatelessWidget {
-  const StatisticsWidget({super.key});
+  final String quantity;
+  final String title;
+  final String imagePath;
+
+  const StatisticsWidget({
+    super.key,
+    required this.quantity,
+    required this.title,
+    required this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, 0),
-                color: Colors.black.withOpacity(0.02),
-                blurRadius: 17,
-                spreadRadius: 0,
-              )
-            ]),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  statisticWidget(
-                    context: context,
-                    number: "0",
-                    title: 'Orders Today'.tr,
-                    page: 30,
-                  ),
-                  const SizedBox(width: 10),
-                  statisticWidget(
-                    context: context,
-                    number: "0",
-                    title: 'Orders'.tr,
-                    page: 30,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Obx(() =>statisticWidget(
-                    context: context,
-                    number: "${Get.find<CouponController>().couponList.length}",
-                    title: 'Coupons'.tr,
-                    page: 5,
-                  )),
-                  const SizedBox(width: 10),
-                  Obx(() => statisticWidget(
-                    context: context,
-                    number: "${Get.find<MealsController>().mealsList.length}",
-                    title: 'Meals'.tr,
-                    page: 28,
-                  ),),
-                ],
-              ),
-            ],
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black.withOpacity(0.10),
           ),
         ),
+        child: ResponsiveHelper.isDesktop(context)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        quantity,
+                        style: TajawalBold.copyWith(
+                          fontSize: 30,
+                          color: MyThemeData.light.focusColor,
+                        ),
+                      ),
+                      Text(
+                        title,
+                        style: TajawalBold.copyWith(
+                          fontSize: 13,
+                          color: const Color(0xff9D9D9D),
+                        ),
+                      ),
+                      60.verticalSpace,
+                    ],
+                  ),
+                  8.horizontalSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      20.verticalSpace,
+                      Image.asset(
+                        imagePath,
+                        height: MediaQuery.of(context).size.height * 1 / 7.5,
+                        width: MediaQuery.of(context).size.height * 1 / 7.0,
+                        fit: BoxFit.fill,
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    quantity,
+                    style: TajawalBold.copyWith(
+                      fontSize: 30,
+                      color: MyThemeData.light.focusColor,
+                    ),
+                  ),
+                  Text(
+                    title,
+                    style: TajawalBold.copyWith(
+                      fontSize: 13,
+                      color: const Color(0xff9D9D9D),
+                    ),
+                  ),
+                  if (ResponsiveHelper.isDesktop(context)) 60.verticalSpace,
+                ],
+              ),
       ),
-    );
-  }
-
-  Widget statisticWidget({required BuildContext context,required final number,
-    required final title,final page}){
-    return OnHover(
-      onTap: () {
-        Get.find<SliderPagesController>().goToTab(page);
-      },
-      builder: (bool isHovered){
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 5),
-          width: MediaQuery.of(context).size.width * 1 / 3.8,
-          height: MediaQuery.of(context).size.height * 1 / 6.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: MyThemeData.light.focusColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                number,
-                style: TajawalRegular.copyWith(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-              10.verticalSpace,
-              Text(
-                title,
-                style: TajawalRegular.copyWith(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

@@ -23,10 +23,17 @@ class MealsRepo {
     _body.addAll(mealModel.decodeImage());
     _body.addAll(mealModel.decodeRelated());
     _body.addAll(mealModel.decodeHomeProduct());
+    _body.addAll(mealModel.decodeRelated());
+    var attributeImageList = await attributeImages(mealModel.attributes);
+    var subMealImageList = await subMealImages(mealModel.images);
     Response? response = await ApiClient.postMultipartData(
       ApiUrl.CREATE_MEALS,
       _body,
-      [MultipartBody('image', webImage: webImageBytes)],
+      [
+        MultipartBody('image', webImage: webImageBytes),
+        ...attributeImageList,
+        ...subMealImageList,
+      ],
     );
     print(response.statusCode);
     print(response.body);
@@ -35,6 +42,24 @@ class MealsRepo {
     } else {
       return Left(response.body['message'] ?? "Unknown Error Occurred");
     }
+  }
+
+  Future<List<MultipartBody>> attributeImages(List<CreateAttributes> attributes) async{
+    List<MultipartBody> attributeImages = [];
+    for(int i=0; i < attributes.length ; i++ ){
+      var image = await XFile(attributes[i].image!).readAsBytes();
+      attributeImages.add(MultipartBody('attributes[$i][image]',webImage: image));
+    }
+    return attributeImages;
+  }
+
+  Future<List<MultipartBody>> subMealImages(List<CreateMealImages> subMealImages) async{
+    List<MultipartBody> attributeImages = [];
+    for(int i=0; i < subMealImages.length ; i++ ){
+      var image = await XFile(subMealImages[i].image).readAsBytes();
+      attributeImages.add(MultipartBody('images[$i][image]',webImage: image));
+    }
+    return attributeImages;
   }
 
   Future<Either<String, MealsModel>> updateMeals(

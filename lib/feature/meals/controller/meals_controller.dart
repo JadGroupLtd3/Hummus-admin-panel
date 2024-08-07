@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
@@ -14,8 +15,11 @@ class MealsController extends GetxController {
   RxList<Meals> recommendedMealList = <Meals>[].obs;
   RxList<CreateComponents> selectedComponentsList = <CreateComponents>[].obs;
   RxList<CreateHashtags> selectedHashtagsList = <CreateHashtags>[].obs;
+  Map<String,List<CreateAttributes>> selectedMapAttributesList = {};
   RxList<CreateAttributes> selectedAttributesList = <CreateAttributes>[].obs;
+  RxList<CreateMealImages> selectedImagesList = <CreateMealImages>[].obs;
   RxList<CreateHomeCategories> selectedHomeCategoriesList = <CreateHomeCategories>[].obs;
+  RxList<CreateRelatedProducts> selectedRelatedProductsList = <CreateRelatedProducts>[].obs;
   XFile? pickedProfileImageFile;
   Uint8List webImage = Uint8List(8);
   File? pickedImage;
@@ -120,6 +124,7 @@ class MealsController extends GetxController {
     selectedHashtagsList.clear();
     selectedComponentsList.clear();
     selectedAttributesList.clear();
+    selectedImagesList.clear();
     selectedHomeCategoriesList.clear();
     fakePrice.clear();
     mealPrice.clear();
@@ -132,6 +137,7 @@ class MealsController extends GetxController {
     mealHebrewDescription.clear();
     pickedProfileImageFile = null;
     imagePath = null;
+    Get.find<CategoryController>().categorySelectedId.value = 0;
   }
 
   void isEdit(Meals meal){
@@ -209,15 +215,15 @@ class MealsController extends GetxController {
           lang: 'he',
         ),
       ],
-      images: [],
+      images: selectedImagesList,
       hashtags: selectedHashtagsList,
       components: selectedComponentsList,
       attributes: selectedAttributesList,
       homeCategories: selectedHomeCategoriesList,
-      relatedProducts: [],
+      relatedProducts: selectedRelatedProductsList,
       coinPoints: 0, // coinPoints.text,
     );
-    print(mealModel.toJson());
+    print(jsonEncode(mealModel.toJson()));
     final result = await mealsRepo.createMeals(mealModel, webImage);
     result.fold((left) {
       controllerState.value = ControllerState.error;

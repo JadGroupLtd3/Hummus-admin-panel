@@ -261,4 +261,6 @@ const Map<String, String> he = {
   "Today's Meal": "הארוחה של היום",
   "Previous": "קודם",
   "Next": "הַבָּא",
+  "Related Meals": "ארוחות קשורות",
+  "Today's orders": "הפקודות של היום",
 };

@@ -261,9 +261,6 @@ class CreateAttributes {
     price = json['price'];
   }
 
-  validateThisModel(){
-    // check required data
-  }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};

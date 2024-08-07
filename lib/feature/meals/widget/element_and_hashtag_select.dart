@@ -12,6 +12,11 @@ class ElementAndHashtagSelectState extends State<ElementAndHashtagSelect> {
   final HashtagController hashtagController = Get.find<HashtagController>();
   final LanguageController languageController = Get.find<LanguageController>();
 
+  @override
+  void initState() {
+    hashtagController.getHashtag(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +63,7 @@ class ElementAndHashtagSelectState extends State<ElementAndHashtagSelect> {
                     switch (mealsController.controllerState.value) {
                       case ControllerState.loading:
                         return const Center(
-                          child: SizedBox(height: 120,),
+                          child: SizedBox(height: 40),
                         );
                       default:
                         return Row(
@@ -209,7 +214,7 @@ class ElementAndHashtagSelectState extends State<ElementAndHashtagSelect> {
                     switch (mealsController.controllerState.value) {
                       case ControllerState.loading:
                         return const Center(
-                          child: SizedBox(height: 120,),
+                          child: SizedBox(height: 40),
                         );
                       default:
                         return GridView.builder(

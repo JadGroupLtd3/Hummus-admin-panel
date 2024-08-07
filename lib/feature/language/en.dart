@@ -261,5 +261,7 @@ const Map<String, String> en = {
   "Today's Meal": "Today's Meal",
   "Previous": "Previous",
   "Next": "Next",
+  "Related Meals": "Related Meals",
+  "Today's orders": "Today's orders",
   "": "",
 };

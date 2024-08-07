@@ -70,7 +70,20 @@ class Images {
   static String get shadow => 'shadow'.png;
 
   static String get remove => 'remove'.png;
+
   static String get add => 'add'.png;
+
+  static String get orders => 'orders'.png;
+
+  static String get categories => 'category'.png;
+
+  static String get coupons => 'coupons'.png;
+
+  static String get attributes => 'attributes'.png;
+
+  static String get today_order => 'today_order'.png;
+
+  static String get meals => 'meals'.png;
 }
 
 extension on String {
