@@ -263,4 +263,10 @@ const Map<String, String> ar = {
   "Next": "التالي",
   "Related Meals": "وجبات ذات صلة",
   "Today's orders": "طلبات اليوم",
+  "Pick Image": "اختيار صورة",
+  "No image selected": "لم يتم اختيار صورة",
+  "Attribute name Arabic": "اسم العنصر عربي",
+  "Attribute name English": "اسم العنصر انجليزي",
+  "Attribute name Hebrew": "اسم العنصر عبري",
+  "Coins points": "نقاط العملات",
 };

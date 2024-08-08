@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
 import 'package:hummus_admin_panel/feature/meals/model/meals_model.dart';
 
-
 class MealsController extends GetxController {
   late MealsRepo mealsRepo;
 
@@ -27,7 +26,7 @@ class MealsController extends GetxController {
   String? imagePath;
   TextEditingController fakePrice = TextEditingController();
   TextEditingController mealPrice = TextEditingController();
-  TextEditingController coinPoints = TextEditingController();
+  TextEditingController coinPoints = TextEditingController(text: '0');
   TextEditingController mealArabicName = TextEditingController();
   TextEditingController mealArabicDescription = TextEditingController();
   TextEditingController mealEnglishName = TextEditingController();
@@ -35,10 +34,12 @@ class MealsController extends GetxController {
   TextEditingController mealHebrewName = TextEditingController();
   TextEditingController mealHebrewDescription = TextEditingController();
 
-  var nameArController = <TextEditingController>[].obs;
-  var nameEnController = <TextEditingController>[].obs;
-  var nameHeController = <TextEditingController>[].obs;
-  var priceController = <TextEditingController>[].obs;
+  Uint8List? webImage1;
+  Uint8List? webImage2;
+  Uint8List? webImage3;
+  XFile? pickedFile1;
+  XFile? pickedFile2;
+  XFile? pickedFile3;
 
   var nameArControllers = <List<TextEditingController>>[].obs;
   var nameEnControllers = <List<TextEditingController>>[].obs;
@@ -47,19 +48,19 @@ class MealsController extends GetxController {
   var isCheckStates = <List<int>>[].obs;
 
   void initializeControllers() {
-  nameArControllers.add([TextEditingController()]);
-  nameEnControllers.add([TextEditingController()]);
-  nameHeControllers.add([TextEditingController()]);
-  priceControllers.add([TextEditingController()]);
-  isCheckStates.add([0]);
+    nameArControllers.add([TextEditingController()]);
+    nameEnControllers.add([TextEditingController()]);
+    nameHeControllers.add([TextEditingController()]);
+    priceControllers.add([TextEditingController()]);
+    isCheckStates.add([0]);
   }
 
   void addNewItemControllers(int attributeIndex) {
-  nameArControllers[attributeIndex].add(TextEditingController());
-  nameEnControllers[attributeIndex].add(TextEditingController());
-  nameHeControllers[attributeIndex].add(TextEditingController());
-  priceControllers[attributeIndex].add(TextEditingController());
-  isCheckStates[attributeIndex].add(0);
+    nameArControllers[attributeIndex].add(TextEditingController());
+    nameEnControllers[attributeIndex].add(TextEditingController());
+    nameHeControllers[attributeIndex].add(TextEditingController());
+    priceControllers[attributeIndex].add(TextEditingController());
+    isCheckStates[attributeIndex].add(0);
   }
 
   void removeItemControllers(int attributeIndex, int index) {
@@ -73,7 +74,6 @@ class MealsController extends GetxController {
         index < nameHeControllers[attributeIndex].length &&
         index < isCheckStates[attributeIndex].length &&
         index < priceControllers[attributeIndex].length) {
-
       nameArControllers[attributeIndex].removeAt(index);
       nameEnControllers[attributeIndex].removeAt(index);
       nameHeControllers[attributeIndex].removeAt(index);
@@ -83,17 +83,15 @@ class MealsController extends GetxController {
   }
 
   void initializeControllersForAttribute(int attributeId) {
-    final attributeIndex = selectedAttributesList.indexWhere((element) => element.attributeId == attributeId);
+    final attributeIndex = selectedAttributesList
+        .indexWhere((element) => element.attributeId == attributeId);
 
     if (attributeIndex != -1 && nameArControllers.length <= attributeIndex) {
-      // Initialize the lists if they are not already initialized
       nameArControllers.add([]);
       nameEnControllers.add([]);
       nameHeControllers.add([]);
       isCheckStates.add([]);
       priceControllers.add([]);
-
-      // Add the initial controller for the attribute
       addNewItemControllers(attributeIndex);
     }
   }
@@ -102,6 +100,30 @@ class MealsController extends GetxController {
   void onInit() {
     initializeControllers();
     super.onInit();
+  }
+
+  void selectAttribute(int attributeId) {
+    if (!selectedMapAttributesList.containsKey(attributeId.toString())) {
+      selectedMapAttributesList[attributeId.toString()] = <CreateAttributes>[];
+    }
+  }
+
+  void addCreateAttribute(int attributeId, CreateAttributes newAttribute) {
+    if (selectedMapAttributesList.containsKey(attributeId.toString())) {
+      selectedMapAttributesList[attributeId.toString()]!.add(newAttribute);
+    } else {
+      selectedMapAttributesList[attributeId.toString()] = [newAttribute];
+    }
+  }
+
+  void removeCreateAttribute(int attributeId, int index) {
+    final attributeList = selectedMapAttributesList[attributeId.toString()];
+    if (attributeList != null && attributeList.length > index) {
+      attributeList.removeAt(index);
+      if (attributeList.isEmpty) {
+        selectedMapAttributesList.remove(attributeId.toString());
+      }
+    }
   }
 
   var selectedMeal = Rxn<Meals>();
@@ -120,10 +142,11 @@ class MealsController extends GetxController {
     print('Meal selection cleared');
   }
 
-  initState(){
+  initState() {
     selectedHashtagsList.clear();
     selectedComponentsList.clear();
     selectedAttributesList.clear();
+    selectedMapAttributesList.clear();
     selectedImagesList.clear();
     selectedHomeCategoriesList.clear();
     fakePrice.clear();
@@ -137,10 +160,16 @@ class MealsController extends GetxController {
     mealHebrewDescription.clear();
     pickedProfileImageFile = null;
     imagePath = null;
+    webImage1 = null;
+    webImage2 = null;
+    webImage3 = null;
+    pickedFile1 = null;
+    pickedFile2 = null;
+    pickedFile3 = null;
     Get.find<CategoryController>().categorySelectedId.value = 0;
   }
 
-  void isEdit(Meals meal){
+  void isEdit(Meals meal) {
     fakePrice.text = meal.fakePrice;
     mealPrice.text = meal.totalPrice;
     coinPoints.text = meal.coinPoints.toString();
@@ -152,20 +181,20 @@ class MealsController extends GetxController {
     mealHebrewDescription.text = meal.description.he;
     imagePath = meal.primaryImage;
     Get.find<CategoryController>().categorySelectedId.value = meal.category.id;
-    for(var homeCategory in meal.homeCategoriesMeals){
+    for (var homeCategory in meal.homeCategoriesMeals) {
       selectedHomeCategoriesList.add(CreateHomeCategories(type: homeCategory));
     }
-    for(var hashtag in meal.hashtags){
+    for (var hashtag in meal.hashtags) {
       selectedHashtagsList.add(CreateHashtags(hashtagId: hashtag.id));
     }
-    for(var component in meal.components){
+    for (var component in meal.components) {
       selectedComponentsList.add(
-          CreateComponents(
-            componentId: component.id,
-            status: 1,
-            isDefault: component.isDefault,
-            price: 0,
-          ),
+        CreateComponents(
+          componentId: component.id,
+          status: 1,
+          isDefault: component.isDefault,
+          price: 0,
+        ),
       );
     }
     print(selectedComponentsList);
@@ -184,6 +213,26 @@ class MealsController extends GetxController {
     // }
   }
 
+  RxList<CreateAttributes> generateSelectedAttributesList(Map<String, List<CreateAttributes>> selectedMapAttributesList) {
+    RxList<CreateAttributes> selectedAttributesList = <CreateAttributes>[].obs;
+    selectedMapAttributesList.forEach((attributeId, attributeList) {
+      for (var attribute in attributeList) {
+        selectedAttributesList.add(CreateAttributes(
+          attributeId: int.tryParse(attributeId) ?? 0,
+          image: attribute.image ?? '',
+          nameAr: attribute.nameAr ?? '',
+          nameEn: attribute.nameEn ?? '',
+          nameHe: attribute.nameHe ?? '',
+          isCheck: attribute.isCheck ?? 0,
+          price: attribute.price ?? 0,
+        ));
+      }
+    });
+
+    return selectedAttributesList;
+  }
+
+
   Future<void> createMeals(BuildContext context) async {
     if (pickedProfileImageFile == null) {
       ShowSnackBar.show(
@@ -192,6 +241,7 @@ class MealsController extends GetxController {
           color: Colors.red);
       return;
     }
+    final selectedAttributesList = generateSelectedAttributesList(selectedMapAttributesList);
     controllerState.value = ControllerState.loading;
     CreateMealModel mealModel = CreateMealModel(
       categoryId: Get.find<CategoryController>().categorySelectedId.value,
@@ -221,7 +271,7 @@ class MealsController extends GetxController {
       attributes: selectedAttributesList,
       homeCategories: selectedHomeCategoriesList,
       relatedProducts: selectedRelatedProductsList,
-      coinPoints: 0, // coinPoints.text,
+      coinPoints: coinPoints.text.isEmpty ? 0 : coinPoints.text,
     );
     print(jsonEncode(mealModel.toJson()));
     final result = await mealsRepo.createMeals(mealModel, webImage);
@@ -231,15 +281,19 @@ class MealsController extends GetxController {
     }, (right) async {
       controllerState.value = ControllerState.success;
       getMeals(context);
-      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      ShowSnackBar.show(
+          context: context, message: right.message, color: Colors.green);
       initState();
       update();
     });
   }
 
-  Future<void> updateMeals(BuildContext context,int mealId) async {
+  Future<void> updateMeals(BuildContext context, int mealId) async {
     if (pickedProfileImageFile == null) {
-      ShowSnackBar.show(context: context, message: "Please select an image", color: Colors.red);
+      ShowSnackBar.show(
+          context: context,
+          message: "Please select an image",
+          color: Colors.red);
       return;
     }
     controllerState.value = ControllerState.loading;
@@ -282,7 +336,8 @@ class MealsController extends GetxController {
     }, (right) async {
       controllerState.value = ControllerState.success;
       getMeals(context);
-      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      ShowSnackBar.show(
+          context: context, message: right.message, color: Colors.green);
       initState();
       Get.back();
       update();
@@ -318,8 +373,7 @@ class MealsController extends GetxController {
     });
   }
 
-
-  Future<void> createRecommendedMeals(BuildContext context,int mealId) async {
+  Future<void> createRecommendedMeals(BuildContext context, int mealId) async {
     controllerState.value = ControllerState.loading;
     final result = await mealsRepo.createRecommendedMeals(mealId);
     result.fold((left) {
@@ -345,7 +399,8 @@ class MealsController extends GetxController {
     });
   }
 
-  Future<void> deleteRecommendedMeals(BuildContext context, {required int mealID}) async {
+  Future<void> deleteRecommendedMeals(BuildContext context,
+      {required int mealID}) async {
     controllerState.value = ControllerState.loading;
     final result = await mealsRepo.deleteRecommendedMeals(mealID);
     result.fold((left) {
@@ -356,7 +411,8 @@ class MealsController extends GetxController {
       controllerState.value = ControllerState.success;
       await getRecommendedMeals(context);
       update();
-      ShowSnackBar.show(context: context, message: right.message, color: Colors.green);
+      ShowSnackBar.show(
+          context: context, message: right.message, color: Colors.green);
     });
   }
 }

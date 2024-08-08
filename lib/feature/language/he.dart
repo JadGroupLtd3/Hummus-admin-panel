@@ -263,4 +263,10 @@ const Map<String, String> he = {
   "Next": "הַבָּא",
   "Related Meals": "ארוחות קשורות",
   "Today's orders": "הפקודות של היום",
+  "Pick Image": "בחר תמונה",
+  "No image selected": "לא נבחרה תמונה",
+  "Attribute name Arabic": "שם תכונה בערבית",
+  "Attribute name English": "שם תכונה באנגלית",
+  "Attribute name Hebrew": "שם תכונה בעברית",
+  "Coins points": "נקודות מטבעות",
 };

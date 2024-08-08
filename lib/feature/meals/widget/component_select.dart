@@ -22,7 +22,6 @@ class ComponentSelectState extends State<ComponentSelect> {
       builder: (mealsController) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          margin: const EdgeInsets.symmetric(vertical: 10),
           width: MediaQuery.of(context).size.height * 1 / 0.7,
           decoration: BoxDecoration(
             color: Colors.white,

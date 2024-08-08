@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hummus_admin_panel/core/core_export.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'dart:io';
 
@@ -17,12 +15,6 @@ class SubImagesWidget extends StatefulWidget {
 
 class _SubImagesWidgetState extends State<SubImagesWidget> {
   final ImagePicker _picker = ImagePicker();
-  Uint8List? webImage1;
-  Uint8List? webImage2;
-  Uint8List? webImage3;
-  XFile? pickedFile1;
-  XFile? pickedFile2;
-  XFile? pickedFile3;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +32,20 @@ class _SubImagesWidgetState extends State<SubImagesWidget> {
                   setState(() {
                     var image = CreateMealImages(image: pickedFile.path);
                     controller.selectedImagesList.add(image);
-                    pickedFile1 = pickedFile;
-                    webImage1 = bytes;
+                    controller.pickedFile1 = pickedFile;
+                    controller.webImage1 = bytes;
                   });
                 }
               },
               onTapRemove: () {
                 setState(() {
-                  controller.selectedImagesList.removeWhere((image) => image.image == pickedFile1?.path);
-                  pickedFile1 = null;
-                  webImage1 = null;
+                  controller.selectedImagesList.removeWhere((image) => image.image == controller.pickedFile1?.path);
+                  controller.pickedFile1 = null;
+                  controller.webImage1 = null;
                 });
               },
-              pickedProfileImageFile: pickedFile1,
-              webImage: webImage1,
+              pickedProfileImageFile: controller.pickedFile1,
+              webImage: controller.webImage1,
               languageController: widget.languageController,
             ),
             addPhoto(
@@ -65,20 +57,20 @@ class _SubImagesWidgetState extends State<SubImagesWidget> {
                   setState(() {
                     var image = CreateMealImages(image: pickedFile.path);
                     controller.selectedImagesList.add(image);
-                    pickedFile2 = pickedFile;
-                    webImage2 = bytes;
+                    controller.pickedFile2 = pickedFile;
+                    controller.webImage2 = bytes;
                   });
                 }
               },
               onTapRemove: () {
                 setState(() {
-                  controller.selectedImagesList.removeWhere((image) => image.image == pickedFile2?.path);
-                  pickedFile2 = null;
-                  webImage2 = null;
+                  controller.selectedImagesList.removeWhere((image) => image.image == controller.pickedFile2?.path);
+                  controller.pickedFile2 = null;
+                  controller.webImage2 = null;
                 });
               },
-              pickedProfileImageFile: pickedFile2,
-              webImage: webImage2,
+              pickedProfileImageFile: controller.pickedFile2,
+              webImage: controller.webImage2,
               languageController: widget.languageController,
             ),
             addPhoto(
@@ -90,20 +82,20 @@ class _SubImagesWidgetState extends State<SubImagesWidget> {
                   setState(() {
                     var image = CreateMealImages(image: pickedFile.path);
                     controller.selectedImagesList.add(image);
-                    pickedFile3 = pickedFile;
-                    webImage3 = bytes;
+                    controller.pickedFile3 = pickedFile;
+                    controller.webImage3 = bytes;
                   });
                 }
               },
               onTapRemove: () {
                 setState(() {
-                  controller.selectedImagesList.removeWhere((image) => image.image == pickedFile3?.path);
-                  pickedFile3 = null;
-                  webImage3 = null;
+                  controller.selectedImagesList.removeWhere((image) => image.image == controller.pickedFile3?.path);
+                  controller.pickedFile3 = null;
+                  controller.webImage3 = null;
                 });
               },
-              pickedProfileImageFile: pickedFile3,
-              webImage: webImage3,
+              pickedProfileImageFile: controller.pickedFile3,
+              webImage: controller.webImage3,
               languageController: widget.languageController,
             ),
           ],

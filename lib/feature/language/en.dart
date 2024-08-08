@@ -263,5 +263,11 @@ const Map<String, String> en = {
   "Next": "Next",
   "Related Meals": "Related Meals",
   "Today's orders": "Today's orders",
+  "Pick Image": "Pick Image",
+  "No image selected": "No image selected",
+  "Attribute name Arabic": "Attribute name Arabic",
+  "Attribute name English": "Attribute name English",
+  "Attribute name Hebrew": "Attribute name Hebrew",
+  "Coins points": "Coins points",
   "": "",
 };

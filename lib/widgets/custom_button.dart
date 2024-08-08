@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final double? radius;
+  final double? paddingTop;
   final Widget? icon;
   final Color? color;
   final TextStyle? style;
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     this.onPressed,
+    this.paddingTop,
     this.buttonText,
     this.transparent = false,
     this.margin,
@@ -78,7 +80,7 @@ class CustomButton extends StatelessWidget {
                         fontSize: fontSize ?? 16,
                         fontWeight: fontWeight ?? FontWeight.bold,
                       ),
-                ).paddingOnly(top: 8),
+                ).paddingOnly(top: paddingTop ?? 8),
               ],
             ),
           ),
